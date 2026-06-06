@@ -1,0 +1,424 @@
+export type Lang = 'en' | 'fa'
+
+export interface Project {
+  id: number
+  title: string
+  titleFa?: string
+  description: string
+  descriptionFa?: string
+  tags: string[]
+  color: string
+  icon: string
+  github: string | null
+  live: string | null
+  featured: boolean
+}
+
+export const projects: Project[] = [
+  {
+    id: 1,
+    title: 'Bim Faa',
+    titleFa: 'Bim Faa',
+    description: 'BIM platform for multidisciplinary 3D building modeling — architecture, structural, mechanical, and electrical — enabling seamless coordination across design teams.',
+    descriptionFa: 'پلتفرم مدلسازی اطلاعات ساختمان (BIM) در دیسیپلین‌های معماری، سازه، مکانیک و برق — هماهنگی یکپارچه میان تیم‌های طراحی.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind', 'React.js'],
+    color: '#0ea5e9',
+    icon: 'Building2',
+    github: null,
+    live: 'https://bimfaa.ir',
+    featured: true,
+  },
+  {
+    id: 2,
+    title: 'Apply Fa',
+    titleFa: 'Apply Fa',
+    description: 'Comprehensive portal for academic admissions, employment contracts, and Ausbildung placement in Germany — from document preparation to final acceptance.',
+    descriptionFa: 'پورتال جامع اخذ پذیرش تحصیلی، قرارداد کاری و اوسبیلدونگ در آلمان — از آماده‌سازی مدارک تا پذیرش نهایی.',
+    tags: ['Next.js', 'TypeScript', 'API Integration', 'Tailwind'],
+    color: '#6366f1',
+    icon: 'GraduationCap',
+    github: null,
+    live: 'https://applyfa.com',
+    featured: true,
+  },
+  {
+    id: 3,
+    title: 'Watermark Builder',
+    description: 'Browser-based batch watermarking tool — no server, no uploads. Drop images, configure text/logo watermarks, and export all at once. Built entirely with TypeScript and Canvas API.',
+    tags: ['TypeScript', 'Canvas API', 'Browser-only'],
+    color: '#0891b2',
+    icon: 'Droplets',
+    github: 'https://github.com/Alirewa/watermark-builder',
+    live: null,
+    featured: true,
+  },
+  {
+    id: 4,
+    title: 'Inventory Manager',
+    description: 'Full-featured inventory management application with product tracking, stock alerts, and reporting. Built with JavaScript and Tailwind CSS, deployed on Vercel.',
+    tags: ['JavaScript', 'Tailwind CSS', 'LocalStorage'],
+    color: '#10b981',
+    icon: 'Package',
+    github: 'https://github.com/Alirewa/Inventory-App',
+    live: 'https://inventory-application-js.vercel.app',
+    featured: true,
+  },
+  {
+    id: 5,
+    title: 'TG Bot → Google Drive',
+    description: 'Python Telegram bot that automatically uploads any file sent to it directly to a configured Google Drive folder. Supports all file types with progress feedback.',
+    tags: ['Python', 'Telegram API', 'Google Drive API'],
+    color: '#f59e0b',
+    icon: 'FileUp',
+    github: 'https://github.com/Alirewa/tg-bot-uploader-drive',
+    live: null,
+    featured: false,
+  },
+  {
+    id: 6,
+    title: 'Telegram Auto Sender',
+    description: 'Automated Telegram channel message sender built with TypeScript. Schedule and broadcast messages across multiple channels with configurable delays and templates.',
+    tags: ['TypeScript', 'Telegram API', 'Automation'],
+    color: '#8b5cf6',
+    icon: 'SendHorizontal',
+    github: 'https://github.com/Alirewa/tg-bot-auto-sender',
+    live: null,
+    featured: false,
+  },
+  {
+    id: 7,
+    title: 'Note App',
+    description: 'Clean, modular note-taking application with localStorage persistence. Demonstrates well-structured JavaScript architecture with create, edit, delete, and search functionality.',
+    tags: ['JavaScript', 'CSS', 'Modular JS'],
+    color: '#ec4899',
+    icon: 'StickyNote',
+    github: 'https://github.com/Alirewa/NoteApp',
+    live: 'https://note-app-alirewa.vercel.app',
+    featured: false,
+  },
+  {
+    id: 8,
+    title: 'Shopping Cart',
+    description: 'JavaScript shopping cart with add/remove items, quantity management, and localStorage-based state persistence. Clean UI with real-time total calculation.',
+    tags: ['JavaScript', 'CSS', 'LocalStorage'],
+    color: '#14b8a6',
+    icon: 'ShoppingCart',
+    github: 'https://github.com/Alirewa/ShopingCart-App',
+    live: null,
+    featured: false,
+  },
+]
+
+// ─── Per-language content ─────────────────────────────────────────────────────
+
+export const content = {
+  en: {
+    nav: {
+      home: 'Home',
+      about: 'About',
+      skills: 'Skills',
+      projects: 'Projects',
+      contact: 'Contact',
+    },
+    hero: {
+      greeting: "Hello, I'm",
+      name: 'Alireza Pourgholam',
+      roles: [
+        'Frontend Developer',
+        'React.js Expert',
+        'Next.js Specialist',
+        'Telegram Bot Creator',
+        'UI/UX Enthusiast',
+      ],
+      tagline: 'Crafting digital experiences at the intersection of code and creativity.',
+      cta: 'View My Work',
+      ctaSecondary: 'Get In Touch',
+      scrollHint: 'Scroll to explore',
+      available: 'Available for freelance work',
+    },
+    about: {
+      title: 'About Me',
+      subtitle: 'Passionate developer. Creative thinker. Problem solver.',
+      bio1: "I'm Alireza Pourgholam, a Frontend Developer specializing in building exceptional digital experiences. With deep expertise in React.js, Next.js, and TypeScript, I transform complex ideas into elegant, high-performance web applications.",
+      bio2: 'Beyond web development, I architect intelligent Telegram bots with Python — automating workflows and creating seamless user interactions at scale. I believe clean, maintainable code is the foundation of any great product.',
+      bio3: "When I'm not shipping features, I'm exploring new technologies, contributing to open-source, and constantly pushing the boundaries of what's possible on the web.",
+      stats: [
+        { value: '5+', label: 'Years Experience' },
+        { value: '11+', label: 'Projects Delivered' },
+        { value: '+50/wk', label: 'Weekly Contributions' },
+      ],
+      downloadCv: 'Download CV',
+    },
+    skills: {
+      title: 'Technical Skills',
+      subtitle: 'My technology stack — the tools I use to bring ideas to life.',
+      also: '// also comfortable with',
+      categories: [
+        {
+          name: 'Frontend',
+          icon: 'Zap',
+          color: '#6366f1',
+          skills: [
+            { name: 'React.js', level: 95 },
+            { name: 'Next.js', level: 92 },
+            { name: 'TypeScript', level: 88 },
+            { name: 'Tailwind CSS', level: 95 },
+            { name: 'Framer Motion', level: 80 },
+            { name: 'Three.js', level: 70 },
+          ],
+        },
+        {
+          name: 'Backend & Tools',
+          icon: 'Wrench',
+          color: '#0ea5e9',
+          skills: [
+            { name: 'Python', level: 85 },
+            { name: 'Telegram Bot API', level: 90 },
+            { name: 'REST APIs', level: 88 },
+            { name: 'Git & GitHub', level: 92 },
+            { name: 'Node.js', level: 72 },
+            { name: 'PostgreSQL', level: 68 },
+          ],
+        },
+      ],
+      extras: ['Figma', 'Docker', 'Redis', 'MongoDB', 'Supabase', 'Vercel', 'VS Code', 'Linux', 'Webpack', 'ESLint'],
+    },
+    projects: {
+      title: 'Featured Projects',
+      subtitle: "A curated selection of work I'm proud of.",
+      viewMore: 'View All Projects',
+      showLess: 'Show Less',
+      liveDemo: 'Live',
+      sourceCode: 'Code',
+    },
+    contact: {
+      title: "Let's Work Together",
+      subtitle: "Have a project in mind? I'd love to hear about it. Let's build something great together.",
+      form: {
+        name: 'Your Name',
+        email: 'Your Email',
+        message: 'Tell me about your project...',
+        send: 'Send Message',
+        sending: 'Sending...',
+        success: "Message sent! I'll get back to you soon.",
+        error: 'Something went wrong. Please try again.',
+      },
+      info: {
+        phone: '+98 911 310 1767',
+        email: 'alireza.pourgholam444@gmail.com',
+        location: 'Kish Island, Iran',
+        availability: 'Available for freelance',
+      },
+      social: [
+        { name: 'GitHub', url: 'https://github.com/Alirewa', icon: 'Github' },
+        { name: 'LinkedIn', url: 'https://linkedin.com/in/Alirewa', icon: 'Linkedin' },
+        { name: 'Telegram', url: 'https://t.me/Alirewa', icon: 'Send' },
+      ],
+    },
+    aiTools: {
+      label: '// how I work',
+      title: 'AI-Augmented Development',
+      subtitle: 'I use AI as an intelligent coding partner — accelerating execution while maintaining full architectural ownership and code quality.',
+      tools: [
+        {
+          name: 'Claude.ai',
+          by: 'Anthropic',
+          color: '#c084fc',
+          badge: 'Primary',
+          description: 'Architecture decisions, complex debugging, deep code review and system design. My primary reasoning partner.',
+        },
+        {
+          name: 'Cursor',
+          by: 'Anysphere',
+          color: '#6366f1',
+          badge: 'Daily editor',
+          description: 'AI-native IDE with codebase-aware suggestions, inline diff generation, and context-rich chat.',
+        },
+        {
+          name: 'ChatGPT',
+          by: 'OpenAI',
+          color: '#10b981',
+          badge: 'Exploration',
+          description: 'Rapid concept exploration, writing assistance, and quick prototyping of ideas before implementation.',
+        },
+        {
+          name: 'Codex',
+          by: 'OpenAI',
+          color: '#f59e0b',
+          badge: 'Automation',
+          description: 'Automated code generation, boilerplate elimination, and scripting repetitive development tasks.',
+        },
+        {
+          name: 'Antigravity',
+          by: 'AI',
+          color: '#38bdf8',
+          badge: 'Workflow',
+          description: 'Specialized AI assistant integrated into the development workflow for targeted productivity boosts.',
+        },
+      ],
+    },
+    footer: {
+      tagline: 'Building the web, one component at a time.',
+      rights: 'All rights reserved.',
+      builtWith: 'Built with',
+      quickLinks: 'Quick Links',
+      connect: 'Connect',
+    },
+  },
+
+  fa: {
+    nav: {
+      home: 'خانه',
+      about: 'درباره من',
+      skills: 'مهارت‌ها',
+      projects: 'پروژه‌ها',
+      contact: 'تماس',
+    },
+    hero: {
+      greeting: 'سلام، من',
+      name: 'علیرضا پورغلام',
+      roles: [
+        'توسعه‌دهنده فرانت‌اند',
+        'متخصص React.js',
+        'توسعه‌دهنده Next.js',
+        'سازنده ربات تلگرام',
+        'علاقه‌مند به UI/UX',
+      ],
+      tagline: 'خلق تجربه‌های دیجیتال در تقاطع کد و خلاقیت — جایی که ایده‌ها به واقعیت تبدیل می‌شوند.',
+      cta: 'مشاهده کارها',
+      ctaSecondary: 'تماس با من',
+      scrollHint: 'اسکرول کنید',
+      available: 'آماده همکاری فریلنسری',
+    },
+    about: {
+      title: 'درباره من',
+      subtitle: 'توسعه‌دهنده‌ای پرشور. متفکری خلاق. حل‌کننده مسئله.',
+      bio1: 'من علیرضا پورغلام هستم، توسعه‌دهنده فرانت‌اند با تخصص در ساخت تجربه‌های دیجیتال استثنایی. با تسلط عمیق بر React.js، Next.js و TypeScript، ایده‌های پیچیده را به وب‌اپلیکیشن‌های زیبا و پرفرمنس تبدیل می‌کنم.',
+      bio2: 'علاوه بر توسعه وب، ربات‌های تلگرامی هوشمند با Python طراحی می‌کنم — اتوماسیون فرآیندها و خلق تعاملات روان با کاربران در مقیاس بزرگ. کد تمیز و قابل نگهداری پایه هر محصول خوبیه.',
+      bio3: 'وقتی کد نمی‌نویسم، در حال کاوش تکنولوژی‌های جدید، مشارکت در پروژه‌های متن‌باز و گسترش مرزهای ممکن در وب هستم.',
+      stats: [
+        { value: '+۵', label: 'سال تجربه' },
+        { value: '+۱۱', label: 'پروژه تحویل‌داده‌شده' },
+        { value: '+۵۰', label: 'کانتریبیوت هفتگی' },
+      ],
+      downloadCv: 'دانلود رزومه',
+    },
+    skills: {
+      title: 'مهارت‌های فنی',
+      subtitle: 'استک تکنولوژی من — ابزارهایی که با آن‌ها ایده‌ها را زنده می‌کنم.',
+      also: '// همچنین آشنا با',
+      categories: [
+        {
+          name: 'فرانت‌اند',
+          icon: 'Zap',
+          color: '#6366f1',
+          skills: [
+            { name: 'React.js', level: 95 },
+            { name: 'Next.js', level: 92 },
+            { name: 'TypeScript', level: 88 },
+            { name: 'Tailwind CSS', level: 95 },
+            { name: 'Framer Motion', level: 80 },
+            { name: 'Three.js', level: 70 },
+          ],
+        },
+        {
+          name: 'بک‌اند و ابزارها',
+          icon: 'Wrench',
+          color: '#0ea5e9',
+          skills: [
+            { name: 'Python', level: 85 },
+            { name: 'Telegram Bot API', level: 90 },
+            { name: 'REST APIs', level: 88 },
+            { name: 'Git & GitHub', level: 92 },
+            { name: 'Node.js', level: 72 },
+            { name: 'PostgreSQL', level: 68 },
+          ],
+        },
+      ],
+      extras: ['Figma', 'Docker', 'Redis', 'MongoDB', 'Supabase', 'Vercel', 'VS Code', 'Linux', 'Webpack', 'ESLint'],
+    },
+    projects: {
+      title: 'پروژه‌های برجسته',
+      subtitle: 'مجموعه‌ای از کارهایی که به آن‌ها افتخار می‌کنم.',
+      viewMore: 'مشاهده همه پروژه‌ها',
+      showLess: 'نمایش کمتر',
+      liveDemo: 'نمایش زنده',
+      sourceCode: 'کد منبع',
+    },
+    contact: {
+      title: 'بیایید با هم کار کنیم',
+      subtitle: 'پروژه‌ای در ذهن دارید؟ خوشحال می‌شوم بشنوم. بیایید چیز بزرگی بسازیم.',
+      form: {
+        name: 'نام شما',
+        email: 'ایمیل شما',
+        message: 'درباره پروژه‌تان بگویید...',
+        send: 'ارسال پیام',
+        sending: 'در حال ارسال...',
+        success: 'پیام ارسال شد! به زودی پاسخ می‌دهم.',
+        error: 'خطایی رخ داد. لطفاً دوباره تلاش کنید.',
+      },
+      info: {
+        phone: '۰۹۱۱ ۳۱۰ ۱۷۶۷',
+        email: 'alireza.pourgholam444@gmail.com',
+        location: 'کیش، گلدیس، خ. وصال ۱، ساختمان اداری ایران، ط. دوم، واحد ۱۳',
+        availability: 'آماده همکاری فریلنسری',
+      },
+      social: [
+        { name: 'GitHub', url: 'https://github.com/Alirewa', icon: 'Github' },
+        { name: 'LinkedIn', url: 'https://linkedin.com/in/Alirewa', icon: 'Linkedin' },
+        { name: 'Telegram', url: 'https://t.me/Alirewa', icon: 'Send' },
+      ],
+    },
+    aiTools: {
+      label: '// چطور کار می‌کنم',
+      title: 'توسعه با هوش مصنوعی',
+      subtitle: 'از AI به‌عنوان همکار هوشمند توسعه استفاده می‌کنم — اجرا را شتاب می‌دهم و کنترل کامل معماری و کیفیت کد را حفظ می‌کنم.',
+      tools: [
+        {
+          name: 'Claude.ai',
+          by: 'Anthropic',
+          color: '#c084fc',
+          badge: 'اصلی',
+          description: 'تصمیمات معماری، دیباگ پیچیده، بررسی عمیق کد و طراحی سیستم. شریک استدلالی اصلی من.',
+        },
+        {
+          name: 'Cursor',
+          by: 'Anysphere',
+          color: '#6366f1',
+          badge: 'ادیتور روزانه',
+          description: 'IDE نیتیو AI با پیشنهادات آگاه از کدبیس، تولید diff درخطی و چت با زمینه غنی.',
+        },
+        {
+          name: 'ChatGPT',
+          by: 'OpenAI',
+          color: '#10b981',
+          badge: 'اکتشاف',
+          description: 'بررسی سریع ایده‌ها، کمک نوشتاری و نمونه‌سازی اولیه قبل از پیاده‌سازی.',
+        },
+        {
+          name: 'Codex',
+          by: 'OpenAI',
+          color: '#f59e0b',
+          badge: 'اتوماسیون',
+          description: 'تولید خودکار کد، حذف boilerplate و اسکریپت‌نویسی وظایف تکراری توسعه.',
+        },
+        {
+          name: 'Antigravity',
+          by: 'AI',
+          color: '#38bdf8',
+          badge: 'جریان کار',
+          description: 'دستیار AI تخصصی یکپارچه در جریان کار توسعه برای افزایش بهره‌وری هدفمند.',
+        },
+      ],
+    },
+    footer: {
+      tagline: 'ساخت وب، یک کامپوننت در هر بار.',
+      rights: 'تمام حقوق محفوظ است.',
+      builtWith: 'ساخته شده با',
+      quickLinks: 'لینک‌های سریع',
+      connect: 'ارتباط',
+    },
+  },
+}
+
+export type Content = typeof content.en
