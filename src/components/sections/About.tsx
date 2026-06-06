@@ -38,12 +38,12 @@ export default function About() {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-14"
+          className="mb-8"
         >
-          <p className="text-xs font-mono text-indigo-400 mb-2 tracking-widest uppercase">
+          <p className="text-xs font-mono text-indigo-400 mb-1 tracking-widest uppercase">
             {lang === 'en' ? '// who I am' : '// من کی‌ام'}
           </p>
-          <h2 className="text-3xl md:text-4xl font-black dark:text-white text-gray-900 mb-3">
+          <h2 className="text-3xl md:text-4xl font-black dark:text-white text-gray-900 mb-2">
             {t.title}
           </h2>
           <p className="text-gray-500 text-base max-w-lg">{t.subtitle}</p>
@@ -60,25 +60,30 @@ export default function About() {
             {/* Tech skill cloud */}
             {(() => {
               const TECH: Array<{ name: string; size: string; weight: string; color: string; x: number; y: number; dur: number; delay: number }> = [
-                { name: 'React.js',    size: 'text-sm',     weight: 'font-black',    color: '#61dafb', x: 48, y: 12, dur: 3.2, delay: 0   },
-                { name: 'Next.js',     size: 'text-sm',     weight: 'font-black',    color: '#e2e8f0', x: 10, y: 30, dur: 2.8, delay: 0.4 },
-                { name: 'TypeScript',  size: 'text-sm',     weight: 'font-bold',     color: '#3b82f6', x: 64, y: 46, dur: 3.6, delay: 0.8 },
-                { name: 'Tailwind',    size: 'text-xs',     weight: 'font-semibold', color: '#06b6d4', x: 16, y: 62, dur: 3.0, delay: 1.2 },
-                { name: 'Python',      size: 'text-xs',     weight: 'font-semibold', color: '#fbbf24', x: 56, y: 76, dur: 2.6, delay: 1.6 },
-                { name: 'Git',         size: 'text-xs',     weight: 'font-medium',   color: '#f97316', x: 28, y: 84, dur: 3.4, delay: 2.0 },
-                { name: 'Docker',      size: 'text-[10px]', weight: 'font-medium',   color: '#60a5fa', x: 76, y: 24, dur: 2.4, delay: 2.4 },
+                { name: 'React.js',    size: 'text-sm',     weight: 'font-black',    color: '#61dafb', x: 44, y: 10, dur: 3.2, delay: 0   },
+                { name: 'Next.js',     size: 'text-sm',     weight: 'font-black',    color: '#94a3b8', x: 8,  y: 28, dur: 2.8, delay: 0.4 },
+                { name: 'TypeScript',  size: 'text-sm',     weight: 'font-bold',     color: '#3b82f6', x: 66, y: 42, dur: 3.6, delay: 0.8 },
+                { name: 'Tailwind',    size: 'text-xs',     weight: 'font-semibold', color: '#06b6d4', x: 14, y: 58, dur: 3.0, delay: 1.2 },
+                { name: 'Three.js',    size: 'text-xs',     weight: 'font-semibold', color: '#049ef4', x: 72, y: 22, dur: 2.5, delay: 1.0 },
+                { name: 'Python',      size: 'text-xs',     weight: 'font-semibold', color: '#fbbf24', x: 52, y: 78, dur: 2.6, delay: 1.6 },
+                { name: 'Framer',      size: 'text-[10px]', weight: 'font-medium',   color: '#d946ef', x: 24, y: 16, dur: 2.9, delay: 1.8 },
+                { name: 'Git',         size: 'text-[10px]', weight: 'font-medium',   color: '#f97316', x: 26, y: 82, dur: 3.4, delay: 2.0 },
+                { name: 'Docker',      size: 'text-[10px]', weight: 'font-medium',   color: '#60a5fa', x: 80, y: 62, dur: 2.4, delay: 2.4 },
               ]
               return (
                 <div
                   className="relative w-full max-w-[280px] mx-auto mb-6"
-                  style={{ height: '240px' }}
+                  style={{ height: '255px' }}
                 >
                   {/* Decorative rings */}
                   <div className="absolute inset-0 rounded-full border border-dashed border-indigo-500/15" />
                   <div className="absolute inset-8 rounded-full border border-sky-500/10" />
-                  {/* Center glow */}
+                  {/* Center glow + icon */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-600/20 to-sky-500/15 blur-xl" />
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <Code2 className="w-9 h-9 dark:text-indigo-300/30 text-indigo-500/20" />
                   </div>
                   {/* Tech labels */}
                   {TECH.map((t) => (

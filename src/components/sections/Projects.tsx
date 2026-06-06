@@ -173,11 +173,11 @@ export default function Projects() {
         </div>
 
           {/* Scroll-continue shadow — dark */}
-          <div className="absolute right-0 top-0 bottom-4 w-16 pointer-events-none md:hidden hidden dark:block rounded-r-3xl"
-            style={{ background: 'linear-gradient(to left, #06060a 0%, transparent 100%)' }} />
+          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none md:hidden hidden dark:block"
+            style={{ background: 'linear-gradient(to left, rgba(6,6,10,1) 0%, rgba(6,6,10,0) 100%)' }} />
           {/* Scroll-continue shadow — light */}
-          <div className="absolute right-0 top-0 bottom-4 w-16 pointer-events-none md:hidden dark:hidden rounded-r-3xl"
-            style={{ background: 'linear-gradient(to left, #f4f6ff 0%, transparent 100%)' }} />
+          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none md:hidden dark:hidden"
+            style={{ background: 'linear-gradient(to left, rgba(244,246,255,1) 0%, rgba(244,246,255,0) 100%)' }} />
         </div>
         <p className="text-center text-xs text-gray-400 mt-2 mb-2 md:hidden">swipe →</p>
 

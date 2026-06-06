@@ -147,16 +147,6 @@ function BracketGroup() {
           <meshStandardMaterial color="#b89ffc" emissive="#8b5cf6" emissiveIntensity={2.2} {...mat} />
         </mesh>
 
-        {/* Outer glow ring — frames the symbol like an emblem */}
-        <mesh position={[0, 0, -0.18]} rotation={[0.05, 0, 0]}>
-          <torusGeometry args={[1.28, 0.008, 6, 90]} />
-          <meshBasicMaterial color="#6366f1" transparent opacity={0.38} blending={THREE.AdditiveBlending} depthWrite={false} />
-        </mesh>
-        <mesh position={[0, 0, -0.22]} rotation={[0.05, 0, 0]}>
-          <torusGeometry args={[1.36, 0.005, 6, 90]} />
-          <meshBasicMaterial color="#38bdf8" transparent opacity={0.22} blending={THREE.AdditiveBlending} depthWrite={false} />
-        </mesh>
-
         {/* Core glow nucleus */}
         <mesh position={[0, 0, -0.15]}>
           <sphereGeometry args={[0.12, 16, 16]} />

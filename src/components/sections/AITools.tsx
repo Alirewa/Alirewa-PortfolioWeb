@@ -116,10 +116,10 @@ export default function AITools() {
           </motion.div>
 
           {/* Scroll-continue shadows */}
-          <div className="absolute right-0 top-0 bottom-3 w-12 pointer-events-none hidden dark:block"
-            style={{ background: 'linear-gradient(to left, #06060a 0%, transparent 100%)' }} />
-          <div className="absolute right-0 top-0 bottom-3 w-12 pointer-events-none dark:hidden"
-            style={{ background: 'linear-gradient(to left, #f4f6ff 0%, transparent 100%)' }} />
+          <div className="absolute right-0 top-0 bottom-3 w-28 pointer-events-none hidden dark:block"
+            style={{ background: 'linear-gradient(to left, rgba(6,6,10,1) 0%, rgba(6,6,10,0) 100%)' }} />
+          <div className="absolute right-0 top-0 bottom-3 w-28 pointer-events-none dark:hidden"
+            style={{ background: 'linear-gradient(to left, rgba(244,246,255,1) 0%, rgba(244,246,255,0) 100%)' }} />
         </div>
       </div>
     </section>
