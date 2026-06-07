@@ -221,7 +221,6 @@ export default function Projects() {
                   cardsPerPage === 3 ? 'grid-cols-3' :
                   'grid-cols-1'
                 }`}
-                style={{ direction: 'ltr' }}
               >
                 {currentCards.map((project) => (
                   <div key={project.id} className="min-w-0 h-full">

@@ -296,6 +296,9 @@ canvas { touch-action: none; }
   z-index: 1;
   transition: opacity 0.3s;
 }
+.dark .cursor-glow {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.13) 0%, transparent 65%);
+}
 
 /* ═══════════════════════════════════════════════════════
    RTL HELPERS

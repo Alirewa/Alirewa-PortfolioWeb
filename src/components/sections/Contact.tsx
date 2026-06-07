@@ -191,7 +191,7 @@ export default function Contact() {
           <h2 className="text-3xl md:text-4xl font-black mb-3 dark:text-white text-gray-900 tracking-tight">
             {t.title}
           </h2>
-          <p className="text-gray-500 text-base max-w-lg leading-relaxed">{t.subtitle}</p>
+          <p className="text-slate-600 dark:text-slate-400 text-base max-w-lg leading-relaxed">{t.subtitle}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
@@ -225,7 +225,7 @@ export default function Contact() {
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <div className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest mb-0.5">
+                  <div className="text-[10px] text-slate-600 dark:text-slate-400 font-semibold uppercase tracking-widest mb-0.5">
                     {item.label}
                   </div>
                   {item.href ? (
@@ -252,7 +252,7 @@ export default function Contact() {
               transition={{ delay: 0.7 }}
               className="pt-2"
             >
-              <p className="text-[10px] text-gray-500 font-semibold mb-4 uppercase tracking-[0.16em]">
+              <p className="text-[10px] text-slate-600 dark:text-slate-400 font-semibold mb-4 uppercase tracking-[0.16em]">
                 {lang === 'en' ? 'Find me on' : 'پیدام کن'}
               </p>
               <div className="flex gap-3">
@@ -266,7 +266,7 @@ export default function Contact() {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.12, y: -3 }}
                       whileTap={{ scale: 0.9 }}
-                      className="w-11 h-11 rounded-2xl glass-card flex items-center justify-center text-gray-400 hover:text-indigo-400 hover:border-indigo-500/40 transition-all duration-200 cursor-pointer"
+                      className="w-11 h-11 rounded-2xl glass-card flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-indigo-400 hover:border-indigo-500/40 transition-all duration-200 cursor-pointer"
                       title={link.name}
                     >
                       <Icon className="w-5 h-5" />

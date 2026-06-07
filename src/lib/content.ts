@@ -130,7 +130,7 @@ export const content = {
         'Telegram Bot Creator',
         'UI/UX Enthusiast',
       ],
-      tagline: 'Crafting digital experiences at the intersection of code and creativity.',
+      tagline: 'Frontend developer focused on building modern, fast, and user-centered interfaces. Passionate about web technologies, AI, and open-source.',
       cta: 'View My Work',
       ctaSecondary: 'Get In Touch',
       scrollHint: 'Scroll to explore',
@@ -139,9 +139,9 @@ export const content = {
     about: {
       title: 'About Me',
       subtitle: 'Frontend developer · Kish Island, Iran · Open to freelance.',
-      bio1: "I'm Alireza Pourgholam, a Frontend Developer based in Kish Island, Iran. I design and build custom web applications with a focus on clean UI, solid architecture, and smooth user experience — turning complex ideas into products that actually feel good to use.",
-      bio2: "I stay current with the latest tools and technologies, including AI, and use them naturally as part of how I work — not as a gimmick, but as a genuine productivity layer. I'm also active in open-source, building Telegram bots and web applications that solve real problems.",
-      bio3: "Good code, to me, means code that's readable, maintainable, and built to last. I care about the craft — from pixel-level details in the UI to the architecture decisions that hold everything together.",
+      bio1: "Hi, I'm Alireza Pourgholam — a Frontend Developer passionate about building modern, practical user experiences. Based on Kish Island, I focus on fast, clean, and scalable UIs using the latest web technologies. From UI/UX design and implementation to performance optimization and frontend architecture, I always strive to balance visual aesthetics with great user experience.",
+      bio2: "Throughout development I use AI tools like Claude, Cursor, Gemini, ChatGPT, and other smart assistants to make the process faster, more precise, and more efficient. I believe AI doesn't replace developers — it's a powerful tool for boosting productivity and staying focused on solving more meaningful problems.",
+      bio3: "Beyond commercial work, I'm passionate about open-source. I spend part of my time building tools, libraries, and public projects, publishing them on GitHub so other developers can use, extend, or draw inspiration from them. Continuous learning, knowledge sharing, and contributing to the open-source community are some of my favorite parts of programming.",
       stats: [
         { value: '5+', label: 'Years Experience' },
         { value: '11+', label: 'Projects Delivered' },
@@ -235,7 +235,7 @@ export const content = {
     aiTools: {
       label: '// how I work',
       title: 'AI-Augmented Development',
-      subtitle: 'Tools that accelerate the development workflow — used as a natural part of how I build.',
+      subtitle: 'I use tools like Claude, Cursor, Gemini, and ChatGPT throughout development to improve speed, code quality, and problem-solving — so I can focus more time on architecture, user experience, and meaningful decisions.',
       tools: [
         {
           name: 'Claude.ai',
@@ -274,13 +274,6 @@ export const content = {
         },
       ],
     },
-    footer: {
-      tagline: 'Building the web, one component at a time.',
-      rights: 'All rights reserved.',
-      builtWith: 'Built with',
-      quickLinks: 'Quick Links',
-      connect: 'Connect',
-    },
   },
 
   fa: {
@@ -301,7 +294,7 @@ export const content = {
         'سازنده ربات تلگرام',
         'علاقه‌مند به UI/UX',
       ],
-      tagline: 'خلق تجربه‌های دیجیتال در تقاطع کد و خلاقیت — جایی که ایده‌ها به واقعیت تبدیل می‌شوند.',
+      tagline: 'توسعه‌دهنده فرانت‌اند با تمرکز بر ساخت رابط‌های کاربری مدرن، سریع و کاربرمحور. علاقه‌مند به تکنولوژی‌های وب، هوش مصنوعی و پروژه‌های متن‌باز.',
       cta: 'مشاهده کارها',
       ctaSecondary: 'تماس با من',
       scrollHint: 'اسکرول کنید',
@@ -310,9 +303,9 @@ export const content = {
     about: {
       title: 'درباره من',
       subtitle: 'توسعه‌دهنده فرانت‌اند · جزیره کیش · آماده همکاری فریلنسری.',
-      bio1: 'علیرضا پورغلام هستم، توسعه‌دهنده فرانت‌اند ساکن جزیره کیش. وب‌اپلیکیشن‌های سفارشی طراحی و می‌سازم — با تمرکز بر رابط کاربری تمیز، معماری محکم و تجربه‌کاربری روان. ایده‌های پیچیده را به محصولاتی تبدیل می‌کنم که واقعاً استفاده از آن‌ها لذت‌بخش باشد.',
-      bio2: 'با آخرین ابزارها و فناوری‌ها — از جمله هوش مصنوعی — همگام می‌مانم و آن‌ها را به‌طور طبیعی در فرآیند کارم به کار می‌برم؛ نه به‌عنوان یک مُد زودگذر، بلکه به‌عنوان یک لایه واقعی بهره‌وری. در حوزه متن‌باز هم فعالم و پروژه‌هایی در قالب ربات تلگرام و وب‌اپلیکیشن می‌سازم.',
-      bio3: 'کد خوب برایم یعنی کدی که خواندنش راحت، نگهداریش ساده و برای ماندن ساخته شده باشد. به جزئیات اهمیت می‌دهم — از ریزترین نکات بصری در رابط کاربری تا تصمیمات معماری که همه چیز را سرپا نگه می‌دارد.',
+      bio1: 'سلام، من علیرضا پورغلام هستم؛ توسعه‌دهنده فرانت‌اند و علاقه‌مند به ساخت تجربه‌های کاربری مدرن و کاربردی. در جزیره کیش فعالیت می‌کنم و تمرکزم روی توسعه رابط‌های کاربری سریع، تمیز و مقیاس‌پذیر با تکنولوژی‌های روز وب است. از طراحی و پیاده‌سازی UI/UX گرفته تا بهینه‌سازی عملکرد، معماری فرانت‌اند و تبدیل ایده‌ها به محصولی قابل استفاده، همیشه سعی می‌کنم بین زیبایی بصری و تجربه کاربری تعادل برقرار کنم.',
+      bio2: 'در مسیر توسعه، از ابزارهای هوش مصنوعی مانند Claude، Cursor، Gemini، ChatGPT و سایر دستیارهای هوشمند به عنوان ابزارهای کمکی استفاده می‌کنم تا فرآیند توسعه سریع‌تر، دقیق‌تر و بهینه‌تر پیش برود. به نظرم هوش مصنوعی جایگزین توسعه‌دهنده نیست؛ بلکه ابزاری قدرتمند برای افزایش بهره‌وری و تمرکز روی حل مسائل مهم‌تر است.',
+      bio3: 'علاوه بر پروژه‌های تجاری، به توسعه پروژه‌های متن‌باز نیز علاقه زیادی دارم. بخشی از زمانم را صرف ساخت ابزارها، کتابخانه‌ها و پروژه‌های عمومی می‌کنم و آن‌ها را در گیت‌هاب منتشر می‌کنم تا برای سایر توسعه‌دهندگان نیز مفید باشند. یادگیری مداوم، اشتراک دانش و مشارکت در جامعه متن‌باز از بخش‌های مورد علاقه من در دنیای برنامه‌نویسی است.',
       stats: [
         { value: '+۵', label: 'سال تجربه' },
         { value: '+۱۱', label: 'پروژه تحویل‌داده‌شده' },
@@ -406,7 +399,7 @@ export const content = {
     aiTools: {
       label: '// رویکرد کاری من',
       title: 'توسعه با هوش مصنوعی',
-      subtitle: 'ابزارهایی که مسیر توسعه رو سریع‌تر جلو می‌برن — بخش طبیعی از روش کار من.',
+      subtitle: 'در فرآیند توسعه از ابزارهایی مانند Claude، Cursor، Gemini و ChatGPT استفاده می‌کنم تا سرعت توسعه، کیفیت کد و فرآیند حل مسئله را بهبود دهم. این ابزارها کمک می‌کنند زمان بیشتری صرف معماری، تجربه کاربری و تصمیم‌های مهم‌تر کنم.',
       tools: [
         {
           name: 'Claude.ai',
@@ -444,13 +437,6 @@ export const content = {
           description: 'دستیار AI تخصصی یکپارچه در جریان کار توسعه برای افزایش بهره‌وری هدفمند.',
         },
       ],
-    },
-    footer: {
-      tagline: 'ساخت وب، یک کامپوننت در هر بار.',
-      rights: 'تمام حقوق محفوظ است.',
-      builtWith: 'ساخته شده با',
-      quickLinks: 'لینک‌های سریع',
-      connect: 'ارتباط',
     },
   },
 }

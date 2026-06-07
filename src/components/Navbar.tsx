@@ -65,10 +65,10 @@ export default function Navbar() {
         className="fixed top-4 inset-x-0 z-50 flex justify-center px-4"
       >
         <nav
-          className="w-full max-w-5xl rounded-2xl glass-card border border-white/10 dark:border-white/8 px-3 py-2 flex items-center justify-between gap-2"
+          className="w-full max-w-5xl rounded-2xl glass-card border border-gray-200/60 dark:border-white/10 px-3 py-2 flex items-center justify-between gap-2"
           style={{
             direction: isRTL ? 'rtl' : 'ltr',
-            background: 'rgba(6, 6, 10, 0.72)',
+            background: theme === 'dark' ? 'rgba(6,6,10,0.78)' : 'rgba(255,255,255,0.88)',
             backdropFilter: 'blur(24px) saturate(180%)',
             WebkitBackdropFilter: 'blur(24px) saturate(180%)',
           }}
@@ -83,7 +83,7 @@ export default function Navbar() {
             <span className="gradient-text font-black text-sm tracking-tight">
               {lang === 'fa' ? 'علیرضا پورغلام' : 'Alireza'}
             </span>
-            <span className="text-[9px] text-gray-500 font-medium mt-0.5 group-hover:text-indigo-400 transition-colors duration-200">
+            <span className="text-[9px] text-gray-600 dark:text-gray-400 font-medium mt-0.5 group-hover:text-indigo-400 transition-colors duration-200">
               {lang === 'fa' ? 'توسعه‌دهنده' : 'Frontend Dev'}
             </span>
           </motion.button>
@@ -133,7 +133,7 @@ export default function Navbar() {
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="w-8 h-8 rounded-xl border border-white/10 flex items-center justify-center hover:bg-white/8 hover:border-white/20 transition-all duration-200 cursor-pointer"
+              className="w-8 h-8 rounded-xl border border-gray-200/60 dark:border-white/10 flex items-center justify-center hover:bg-white/8 hover:border-white/20 transition-all duration-200 cursor-pointer"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
@@ -148,7 +148,7 @@ export default function Navbar() {
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
               onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden w-8 h-8 rounded-xl border border-white/10 flex items-center justify-center hover:bg-white/8 transition-all duration-200 text-gray-400 cursor-pointer"
+              className="md:hidden w-8 h-8 rounded-xl border border-gray-200/60 dark:border-white/10 flex items-center justify-center hover:bg-white/8 transition-all duration-200 text-gray-600 dark:text-gray-400 cursor-pointer"
               aria-label="Toggle menu"
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -202,7 +202,7 @@ export default function Navbar() {
               className="fixed top-[72px] inset-x-4 z-50 rounded-2xl p-4 shadow-2xl md:hidden"
               style={{
                 direction: isRTL ? 'rtl' : 'ltr',
-                background: 'rgba(10, 10, 18, 0.96)',
+                background: theme === 'dark' ? 'rgba(10,10,18,0.97)' : 'rgba(255,255,255,0.97)',
                 backdropFilter: 'blur(24px)',
                 WebkitBackdropFilter: 'blur(24px)',
                 border: '1px solid rgba(99, 102, 241, 0.18)',

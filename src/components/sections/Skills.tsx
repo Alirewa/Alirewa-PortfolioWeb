@@ -133,7 +133,7 @@ function CategoryPanel({
         {/* Honest disclaimer for secondary categories */}
         {!category.isPrimary && category.note && (
           <p
-            className="mt-3 text-[11px] italic text-slate-500 dark:text-slate-500 leading-snug"
+            className="mt-3 text-[11px] italic text-slate-600 dark:text-slate-400 leading-snug"
             style={{ direction: 'ltr' }}
           >
             {lang === 'fa' && category.noteFa ? category.noteFa : category.note}
@@ -186,7 +186,7 @@ export default function Skills() {
           transition={{ duration: 0.7 }}
           className="mb-12"
         >
-          <p className="text-xs font-mono text-indigo-400 mb-2 tracking-[0.18em] uppercase">
+          <p className="text-xs font-mono text-indigo-600 dark:text-indigo-400 mb-2 tracking-[0.18em] uppercase">
             {lang === 'en' ? '// what I know' : '// مهارت‌های من'}
           </p>
           <h2 className="text-3xl md:text-4xl font-black mb-3 dark:text-white text-gray-900 tracking-tight">
