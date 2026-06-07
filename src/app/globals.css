@@ -1,5 +1,5 @@
-/* Inter + JetBrains Mono from Google Fonts (Latin only — no Persian) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Space Grotesk (headings) + DM Sans (body) + JetBrains Mono (code) — Tech Startup pairing from UI/UX Pro Max */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 /* Vazirmatn — self-hosted from /public/fonts (works on Iranian hosting without CDN) */
 @font-face { font-family: 'Vazirmatn'; src: url('/fonts/Vazirmatn-RD-FD-Thin.woff2') format('woff2'); font-weight: 100; font-style: normal; font-display: swap; }
@@ -45,8 +45,19 @@ body {
     rgb(var(--background-start-rgb)),
     rgb(var(--background-end-rgb))
   );
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Space Grotesk for all headings — Tech Startup pairing */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
 body.fa {
@@ -108,37 +119,44 @@ canvas {
   touch-action: none;
 }
 
-/* Glow effects */
+/* Glow effects — refined per UI/UX Pro Max Glassmorphism style */
 .glow-text {
-  text-shadow: 0 0 20px rgba(99, 102, 241, 0.5), 0 0 40px rgba(99, 102, 241, 0.3);
+  text-shadow:
+    0 0 20px rgba(99, 102, 241, 0.55),
+    0 0 50px rgba(139, 92, 246, 0.30),
+    0 0 80px rgba(14, 165, 233, 0.15);
 }
 
 .glow-border {
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.05);
+  box-shadow: 0 0 24px rgba(99, 102, 241, 0.25), inset 0 0 20px rgba(99, 102, 241, 0.04);
 }
 
-/* Gradient text */
+/* Gradient text — Space Grotesk with wider violet-to-cyan arc */
 .gradient-text {
-  background: linear-gradient(135deg, #6366f1, #0ea5e9, #6366f1);
-  background-size: 200% auto;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 40%, #06b6d4 70%, #6366f1 100%);
+  background-size: 300% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient 4s linear infinite;
+  animation: gradient 6s ease infinite;
 }
 
-/* Glass morphism — dark mode: deep dark; light mode: crisp white-card */
+/* Glass morphism — Glassmorphism style #3 from UI/UX Pro Max
+   Dark:  translucent with saturate for vivid blurs
+   Light: crisp white card with indigo border */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 :root:not(.dark) .glass {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(99, 102, 241, 0.16);
-  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.07), 0 1px 4px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(99, 102, 241, 0.14);
+  box-shadow: 0 4px 32px rgba(99, 102, 241, 0.08), 0 1px 6px rgba(0, 0, 0, 0.04);
 }
 
 .glass-light {

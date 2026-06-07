@@ -2,7 +2,7 @@
 
 import { useRef, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Float } from '@react-three/drei'
+
 import * as THREE from 'three'
 
 // Orbiting light for dynamic highlights that sell the 3D depth
@@ -25,7 +25,7 @@ function ParticleHalo() {
   const ref = useRef<THREE.Points>(null)
 
   const { positions, speeds, radii } = useMemo(() => {
-    const count = 32
+    const count = 18
     const positions = new Float32Array(count * 3)
     const speeds: number[] = []
     const radii: number[] = []
@@ -83,12 +83,12 @@ function BracketGroup() {
   const rightTopRef = useRef<THREE.Mesh>(null)
   const rightBotRef = useRef<THREE.Mesh>(null)
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock }, delta) => {
     if (!groupRef.current) return
     const t = clock.getElapsedTime()
 
-    // Continuous 360° Y rotation — full spin reveals depth on all sides
-    groupRef.current.rotation.y = t * 0.65
+    // Continuous 360° Y rotation — delta-based (frame-rate independent, no lag)
+    groupRef.current.rotation.y += delta * 0.65
     // Gentle X tilt bobbing for extra 3D depth feel
     groupRef.current.rotation.x = Math.sin(t * 0.28) * 0.14
 
@@ -117,8 +117,7 @@ function BracketGroup() {
   const mat = { roughness: 0.08, metalness: 0.55 } as const
 
   return (
-    <Float speed={0.9} rotationIntensity={0.15} floatIntensity={0.40}>
-      <group ref={groupRef}>
+    <group ref={groupRef}>
         <ParticleHalo />
 
         {/* ── < (indigo) ── */}
@@ -153,20 +152,16 @@ function BracketGroup() {
           <meshStandardMaterial color="#6366f1" emissive="#4f46e5" emissiveIntensity={4.0} transparent opacity={0.50} />
         </mesh>
       </group>
-    </Float>
   )
 }
 
 export default function HeroOrb() {
   return (
-    <div
-      className="mx-auto mb-2 pointer-events-none select-none"
-      style={{ width: '280px', height: '160px' }}
-    >
+    <div className="mx-auto mb-2 pointer-events-none select-none w-[280px] h-[175px] lg:w-[360px] lg:h-[240px]">
       <Canvas
         camera={{ position: [0, 0, 2.8], fov: 46 }}
-        gl={{ antialias: true, alpha: true }}
-        dpr={[1, 2]}
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        dpr={[1, 1.5]}
       >
         {/* Ambient for base visibility */}
         <ambientLight intensity={0.30} />

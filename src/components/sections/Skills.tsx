@@ -88,7 +88,7 @@ export default function Skills() {
 
         {/* Skills — slider on mobile, grid on lg+ */}
         <div className="relative mb-12">
-          <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 lg:grid lg:grid-cols-2 lg:gap-6 lg:overflow-visible lg:pb-0"
+          <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}
           >
             {t.categories.map((category, catIndex) => (
@@ -97,7 +97,7 @@ export default function Skills() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: catIndex * 0.15 }}
-                className="snap-start shrink-0 w-[min(340px,82vw)] lg:w-auto dark:bg-white/5 bg-white/80 backdrop-blur-xl dark:border-white/8 border-indigo-100/70 border rounded-2xl p-6 hover:border-indigo-500/25 transition-colors"
+                className="snap-start shrink-0 w-[min(340px,82vw)] md:w-[330px] dark:bg-white/5 bg-white/80 backdrop-blur-xl dark:border-white/8 border-indigo-100/70 border rounded-2xl p-6 hover:border-indigo-500/25 transition-colors"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div
@@ -125,10 +125,10 @@ export default function Skills() {
             ))}
           </div>
           {/* Scroll-continue shadow — dark */}
-          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none lg:hidden hidden dark:block"
+          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none hidden dark:block"
             style={{ background: 'linear-gradient(to left, rgba(6,6,10,1) 0%, rgba(6,6,10,0) 100%)' }} />
           {/* Scroll-continue shadow — light */}
-          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none lg:hidden dark:hidden"
+          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none dark:hidden"
             style={{ background: 'linear-gradient(to left, rgba(244,246,255,1) 0%, rgba(244,246,255,0) 100%)' }} />
           <p className="text-center text-xs text-gray-400 mt-3 lg:hidden">swipe →</p>
         </div>

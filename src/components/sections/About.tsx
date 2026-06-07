@@ -49,7 +49,7 @@ export default function About() {
           <p className="text-gray-500 text-base max-w-lg">{t.subtitle}</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-start">
           {/* ── Left: Visual column ── */}
           <motion.div
             initial={{ opacity: 0, x: isRTL ? 40 : -40 }}
@@ -72,8 +72,8 @@ export default function About() {
               ]
               return (
                 <div
-                  className="relative w-full max-w-[280px] mx-auto mb-6"
-                  style={{ height: '255px' }}
+                  className="relative w-full max-w-[260px] mx-auto mb-4 lg:mb-5"
+                  style={{ height: '230px' }}
                 >
                   {/* Decorative rings */}
                   <div className="absolute inset-0 rounded-full border border-dashed border-indigo-500/15" />
@@ -110,12 +110,12 @@ export default function About() {
               )
             })()}
 
-            {/* Code card — always LTR */}
+            {/* Code card — always LTR, hidden on desktop to reduce clutter */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.5 }}
-              className="dark:bg-[#0d0d14] bg-white/90 border dark:border-white/8 border-indigo-100 rounded-2xl p-4 font-mono text-sm overflow-hidden"
+              className="lg:hidden dark:bg-[#0d0d14] bg-white/90 border dark:border-white/8 border-indigo-100 rounded-2xl p-4 font-mono text-sm overflow-hidden"
               style={{ direction: 'ltr', textAlign: 'left' }}
             >
               <div className="flex items-center gap-1.5 mb-3">
@@ -132,6 +132,28 @@ export default function About() {
                 <p className="pl-4"><span className="text-indigo-300">open</span>: <span className="text-yellow-300">true</span></p>
                 <p>{'}'}</p>
               </div>
+            </motion.div>
+
+            {/* Desktop: compact code identity badge (replaces card on lg+) */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.5 }}
+              className="hidden lg:flex items-center gap-3 px-4 py-2.5 rounded-xl dark:bg-white/5 bg-white/80 border dark:border-white/8 border-indigo-100/60"
+              style={{ direction: 'ltr' }}
+            >
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full bg-red-400/70" />
+                <div className="w-2 h-2 rounded-full bg-yellow-400/70" />
+                <div className="w-2 h-2 rounded-full bg-green-400/70" />
+              </div>
+              <span className="font-mono text-xs text-gray-500">profile.ts</span>
+              <span className="ml-auto font-mono text-xs">
+                <span className="text-purple-400">const</span>
+                <span className="text-sky-300"> dev</span>
+                <span className="text-gray-500"> = </span>
+                <span className="text-green-300">&quot;Alireza Pourgholam&quot;</span>
+              </span>
             </motion.div>
 
             {/* Live GitHub stats row */}

@@ -66,7 +66,7 @@ export default function Projects() {
         {/* Projects — horizontal slider on mobile, grid on md+ */}
         <div className="relative">
         <div
-          className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-6 md:overflow-visible md:pb-0 md:snap-none"
+          className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}
         >
           <AnimatePresence mode="popLayout">
@@ -80,7 +80,7 @@ export default function Projects() {
                 transition={{ duration: 0.45, delay: i * 0.07 }}
                 onHoverStart={() => setHoveredId(project.id)}
                 onHoverEnd={() => setHoveredId(null)}
-                className="snap-start shrink-0 w-[min(300px,78vw)] md:w-auto relative group"
+                className="snap-start shrink-0 w-[min(300px,78vw)] md:w-[310px] relative group"
               >
                 <div
                   className="relative h-full glass border rounded-3xl p-6 flex flex-col transition-all duration-500 overflow-hidden"
@@ -173,13 +173,13 @@ export default function Projects() {
         </div>
 
           {/* Scroll-continue shadow — dark */}
-          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none md:hidden hidden dark:block"
+          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none hidden dark:block"
             style={{ background: 'linear-gradient(to left, rgba(6,6,10,1) 0%, rgba(6,6,10,0) 100%)' }} />
           {/* Scroll-continue shadow — light */}
-          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none md:hidden dark:hidden"
+          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none dark:hidden"
             style={{ background: 'linear-gradient(to left, rgba(244,246,255,1) 0%, rgba(244,246,255,0) 100%)' }} />
         </div>
-        <p className="text-center text-xs text-gray-400 mt-2 mb-2 md:hidden">swipe →</p>
+        <p className="text-center text-xs text-gray-400 mt-2 mb-2 lg:hidden">swipe →</p>
 
         {/* Show more/less */}
         <motion.div

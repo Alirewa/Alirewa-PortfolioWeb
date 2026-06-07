@@ -9,7 +9,7 @@ import { content } from '@/lib/content'
 
 const HeroOrb = dynamic(() => import('@/components/three/HeroOrb'), {
   ssr: false,
-  loading: () => <div style={{ width: '280px', height: '160px' }} />,
+  loading: () => <div className="w-[280px] h-[175px] lg:w-[360px] lg:h-[240px]" />,
 })
 
 const TECH_TAGS = ['React.js', 'Next.js', 'TypeScript', 'Tailwind', 'Python', 'Three.js']
