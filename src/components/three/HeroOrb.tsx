@@ -99,7 +99,7 @@ function BracketGroup() {
   )
 }
 
-export default function HeroOrb() {
+export default function HeroOrb({ isDark = true }: { isDark?: boolean }) {
   return (
     <div className="mx-auto mb-2 pointer-events-none select-none w-[300px] h-[200px] lg:w-[460px] lg:h-[320px]">
       <Canvas
@@ -107,12 +107,12 @@ export default function HeroOrb() {
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         dpr={[1, 1.5]}
       >
-        <ambientLight intensity={0.28} />
-        <pointLight position={[0, 0, 3.5]} color="#ffffff" intensity={5} />
-        <pointLight position={[2.5, 3, 2.5]} color="#818cf8" intensity={22} />
-        <pointLight position={[-2, -2, 2]} color="#38bdf8" intensity={14} />
-        <pointLight position={[0, 1, -2]} color="#a78bfa" intensity={8} />
-        <pointLight position={[1.5, -1.5, 1.5]} color="#ff6b9d" intensity={9} distance={6} />
+        <ambientLight intensity={isDark ? 0.28 : 2.2} />
+        <pointLight position={[0, 0, 3.5]} color="#ffffff" intensity={isDark ? 5 : 18} />
+        <pointLight position={[2.5, 3, 2.5]} color="#818cf8" intensity={isDark ? 22 : 38} />
+        <pointLight position={[-2, -2, 2]} color="#38bdf8" intensity={isDark ? 14 : 24} />
+        <pointLight position={[0, 1, -2]} color="#a78bfa" intensity={isDark ? 8 : 16} />
+        <pointLight position={[1.5, -1.5, 1.5]} color="#ff6b9d" intensity={isDark ? 9 : 16} distance={6} />
         <OrbitLight />
         <BracketGroup />
       </Canvas>

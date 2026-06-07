@@ -235,7 +235,7 @@ export const content = {
     aiTools: {
       label: '// how I work',
       title: 'AI-Augmented Development',
-      subtitle: 'I use AI as an intelligent coding partner — accelerating execution while maintaining full architectural ownership and code quality.',
+      subtitle: 'Tools that accelerate the development workflow — used as a natural part of how I build.',
       tools: [
         {
           name: 'Claude.ai',
@@ -406,7 +406,7 @@ export const content = {
     aiTools: {
       label: '// رویکرد کاری من',
       title: 'توسعه با هوش مصنوعی',
-      subtitle: 'از AI به‌عنوان همکار هوشمند توسعه استفاده می‌کنم — اجرا را شتاب می‌دهم و کنترل کامل معماری و کیفیت کد را حفظ می‌کنم.',
+      subtitle: 'ابزارهایی که مسیر توسعه رو سریع‌تر جلو می‌برن — بخش طبیعی از روش کار من.',
       tools: [
         {
           name: 'Claude.ai',

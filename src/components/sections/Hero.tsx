@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
+import { useTheme } from 'next-themes'
 import { TypeAnimation } from 'react-type-animation'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
@@ -16,6 +17,8 @@ const TECH_TAGS = ['React.js', 'Next.js', 'TypeScript', 'Tailwind', 'Python', 'T
 
 export default function Hero() {
   const { lang, isRTL } = useLang()
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme !== 'light'
   const t = content[lang].hero
   const roles = t.roles.flatMap((role) => [role, 2000])
 
@@ -203,7 +206,7 @@ export default function Hero() {
                   filter: 'blur(20px)',
                 }}
               />
-              <HeroOrb />
+              <HeroOrb isDark={isDark} />
             </div>
           </motion.div>
 

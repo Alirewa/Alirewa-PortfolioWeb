@@ -25,8 +25,8 @@
 :root {
   /* Colours */
   --foreground-rgb: 20, 20, 35;
-  --background-start-rgb: 244, 246, 255;
-  --background-end-rgb: 238, 242, 255;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 248, 250, 255;
 
   /* Text contrast — WCAG 4.5:1 compliant */
   --text-muted: #475569;   /* slate-600 — 5.1:1 on white */

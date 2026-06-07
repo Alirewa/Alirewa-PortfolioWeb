@@ -44,11 +44,14 @@ function FloatingInput({
   value: string
   onChange: (v: string) => void
   required?: boolean
-  forceLtr?: boolean   // email, phone — always LTR
+  forceLtr?: boolean   // email — text flows LTR but label follows page direction
   isRTL?: boolean
 }) {
   const hasValue = value.length > 0
-  const rtl = isRTL && !forceLtr
+  // Label side always follows page RTL direction
+  // Input text direction: forceLtr overrides (for email/phone), else follows RTL
+  const textDir = forceLtr ? 'ltr' : isRTL ? 'rtl' : 'ltr'
+  const side = isRTL ? 'right' : 'left'
 
   return (
     <div className="relative group">
@@ -60,12 +63,12 @@ function FloatingInput({
         onChange={(e) => onChange(e.target.value)}
         placeholder=" "
         className="peer w-full px-4 pt-5 pb-2 rounded-xl border text-sm dark:bg-white/5 bg-white/80 dark:text-gray-200 text-gray-800 focus:outline-none transition-all duration-200 dark:border-white/10 border-indigo-200/60 focus:border-indigo-500/60 focus:ring-2 focus:ring-indigo-500/15"
-        style={{ direction: forceLtr ? 'ltr' : rtl ? 'rtl' : 'ltr' }}
+        style={{ direction: textDir }}
       />
       <label
         htmlFor={id}
         className={`absolute text-xs font-medium pointer-events-none transition-all duration-200 ${
-          rtl
+          side === 'right'
             ? hasValue
               ? 'top-1.5 right-4 text-[10px] text-indigo-400'
               : 'top-3.5 right-4 text-gray-400 peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:text-indigo-400'
@@ -125,7 +128,7 @@ function FloatingTextarea({
 
 export default function Contact() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isInView = useInView(ref, { once: false, margin: '-100px' })
   const { lang, isRTL } = useLang()
   const t = content[lang].contact
 

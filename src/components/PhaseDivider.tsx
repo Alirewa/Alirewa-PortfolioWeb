@@ -15,10 +15,10 @@ export default function PhaseDivider({ num, color = '#6366f1' }: PhaseDividerPro
       className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-5"
       style={{ direction: isRTL ? 'rtl' : 'ltr' }}
     >
-      {/* Large ghost number */}
+      {/* Ghost number — visible in both light and dark */}
       <span
-        className="text-7xl font-black font-mono leading-none select-none tabular-nums tracking-tighter shrink-0"
-        style={{ color: `${color}12` }}
+        className="text-7xl font-black font-mono leading-none select-none tabular-nums tracking-tighter shrink-0 dark:opacity-[0.18] opacity-[0.12]"
+        style={{ color }}
       >
         {num}
       </span>
@@ -28,14 +28,13 @@ export default function PhaseDivider({ num, color = '#6366f1' }: PhaseDividerPro
         <div
           className="h-px rounded-full"
           style={{
-            background: `linear-gradient(${isRTL ? 'to left' : 'to right'}, ${color}60, ${color}10, transparent)`,
-            boxShadow: `0 0 8px ${color}30`,
+            background: `linear-gradient(${isRTL ? 'to left' : 'to right'}, ${color}90, ${color}30, transparent)`,
           }}
         />
         <div
-          className="h-px rounded-full opacity-30"
+          className="h-px rounded-full"
           style={{
-            background: `linear-gradient(${isRTL ? 'to left' : 'to right'}, ${color}40, transparent)`,
+            background: `linear-gradient(${isRTL ? 'to left' : 'to right'}, ${color}45, transparent)`,
           }}
         />
       </div>
@@ -45,7 +44,7 @@ export default function PhaseDivider({ num, color = '#6366f1' }: PhaseDividerPro
         className="w-1.5 h-1.5 rounded-full shrink-0"
         style={{
           background: color,
-          boxShadow: `0 0 8px ${color}, 0 0 16px ${color}60`,
+          boxShadow: `0 0 6px ${color}, 0 0 14px ${color}60`,
         }}
       />
     </div>

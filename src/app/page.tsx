@@ -16,7 +16,7 @@ import SectionReveal from '@/components/SectionReveal'
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen dark:bg-[#020208] bg-[#f4f6ff] transition-colors duration-500">
+    <main className="relative min-h-screen dark:bg-[#020208] bg-white transition-colors duration-500">
       <AuroraBackground />
       <BackgroundShapes />
       <OrbRings />

@@ -14,45 +14,48 @@ function CategoryIcon({ name, color }: { name: string; color: string }) {
   return <Icon className="w-4 h-4" style={{ color }} />
 }
 
-/* ── Single square skill card ── */
+/* ── Single square skill card — filled, no number ── */
 function SkillCard({
   name,
-  level,
   color,
   delay,
   isInView,
 }: {
   name: string
-  level: number
   color: string
   delay: number
   isInView: boolean
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.88, y: 12 }}
-      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.88, y: 12 }}
-      transition={{ duration: 0.4, delay }}
-      whileHover={{ y: -3, scale: 1.04 }}
-      className="relative flex flex-col items-center justify-center text-center px-2 py-3 rounded-xl cursor-default transition-all duration-200 dark:bg-white/[0.04] bg-white/80 border dark:border-white/8 border-gray-200/60 hover:border-opacity-60 overflow-hidden"
+      initial={{ opacity: 0, scale: 0.88, y: 10 }}
+      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.88, y: 10 }}
+      transition={{ duration: 0.35, delay }}
+      whileHover={{ y: -2, scale: 1.05 }}
+      className="relative flex items-center justify-center text-center px-2 py-3 rounded-xl cursor-default transition-all duration-200 overflow-hidden"
       style={{
-        borderBottomColor: `${color}55`,
-        borderBottomWidth: '2px',
-        minHeight: '72px',
+        background: `${color}14`,
+        border: `1px solid ${color}30`,
+        minHeight: '52px',
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
-        el.style.boxShadow = `0 4px 22px ${color}22, 0 0 0 1px ${color}30`
+        el.style.background = `${color}24`
+        el.style.boxShadow = `0 4px 18px ${color}28`
+        el.style.borderColor = `${color}50`
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow = ''
+        const el = e.currentTarget as HTMLElement
+        el.style.background = `${color}14`
+        el.style.boxShadow = ''
+        el.style.borderColor = `${color}30`
       }}
     >
-      <span className="text-xs font-semibold dark:text-gray-200 text-gray-700 leading-tight mb-1" style={{ direction: 'ltr' }}>
+      <span
+        className="text-xs font-semibold leading-tight"
+        style={{ color, direction: 'ltr' }}
+      >
         {name}
-      </span>
-      <span className="text-[11px] font-black font-mono" style={{ color }}>
-        {level}%
       </span>
     </motion.div>
   )
@@ -120,7 +123,6 @@ function CategoryPanel({
             <SkillCard
               key={skill.name}
               name={skill.name}
-              level={skill.level}
               color={category.color}
               delay={catIndex * 0.08 + si * 0.06}
               isInView={isInView}

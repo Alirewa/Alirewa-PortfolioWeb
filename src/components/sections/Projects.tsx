@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useCallback } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import * as Icons from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
@@ -20,7 +20,6 @@ function GithubIcon() {
   )
 }
 
-/* ── Project card (unchanged design) ── */
 function ProjectCard({
   project,
   getStars,
@@ -35,97 +34,85 @@ function ProjectCard({
   const [hovered, setHovered] = useState(false)
   return (
     <div
-      className="relative h-full glass-card p-6 flex flex-col overflow-hidden transition-all duration-300 cursor-default rounded-[1.25rem]"
+      className="h-full glass-card p-5 flex flex-col overflow-hidden transition-all duration-300 cursor-default rounded-[1.25rem]"
       style={{
         borderColor: hovered ? `${project.color}50` : undefined,
-        boxShadow: hovered ? `0 0 0 1px ${project.color}30, 0 24px 56px ${project.color}15` : undefined,
-        transform: hovered ? 'translateY(-4px)' : undefined,
+        boxShadow: hovered ? `0 0 0 1px ${project.color}28, 0 20px 48px ${project.color}14` : undefined,
+        transform: hovered ? 'translateY(-3px)' : undefined,
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div
-        className="absolute inset-0 opacity-0 transition-opacity duration-400 pointer-events-none rounded-[1.25rem]"
-        style={{
-          opacity: hovered ? 1 : 0,
-          background: `radial-gradient(circle at top left, ${project.color}10, transparent 60%)`,
-        }}
-      />
-
       {/* Top row */}
-      <div className="flex items-start justify-between gap-3 mb-5 relative z-10">
+      <div className="flex items-start justify-between gap-3 mb-4">
         <div
-          className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300"
+          className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300"
           style={{
             background: `${project.color}16`,
             border: `1px solid ${project.color}30`,
-            boxShadow: hovered ? `0 0 24px ${project.color}30` : 'none',
+            boxShadow: hovered ? `0 0 20px ${project.color}28` : 'none',
           }}
         >
           <ProjectIcon name={project.icon} color={project.color} />
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {project.github && (
-            <motion.a
+            <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass border border-white/10 text-slate-600 dark:text-gray-500 hover:text-white hover:border-indigo-500/40 transition-all text-xs font-mono cursor-pointer h-9 min-w-[2.25rem] justify-center"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg glass border border-white/10 text-slate-500 dark:text-gray-500 hover:text-indigo-500 dark:hover:text-indigo-400 hover:border-indigo-500/35 transition-all text-xs font-mono cursor-pointer min-w-[2rem] justify-center"
               title={t.sourceCode}
             >
               <GithubIcon />
               {getStars(project.github) !== null && <span>{getStars(project.github)}</span>}
-            </motion.a>
+            </a>
           )}
           {project.live && (
-            <motion.a
+            <a
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-9 h-9 rounded-lg glass border border-white/10 flex items-center justify-center text-slate-600 dark:text-gray-500 hover:text-white hover:border-indigo-500/40 transition-all cursor-pointer"
+              className="w-8 h-8 rounded-lg glass border border-white/10 flex items-center justify-center text-slate-500 dark:text-gray-500 hover:text-indigo-500 dark:hover:text-indigo-400 hover:border-indigo-500/35 transition-all cursor-pointer"
               title={t.liveDemo}
             >
               <Icons.ExternalLink className="w-3.5 h-3.5" />
-            </motion.a>
+            </a>
           )}
         </div>
       </div>
 
       {/* Title + description */}
-      <div className="flex-1 relative z-10 mb-5">
+      <div className="flex-1 mb-4">
         <h3
-          className="text-lg font-bold dark:text-white text-gray-800 mb-2 transition-colors duration-300 leading-tight"
+          className="text-base font-bold dark:text-white text-gray-800 mb-1.5 leading-tight transition-colors duration-200"
           style={{ color: hovered ? project.color : undefined }}
         >
           {lang === 'fa' && project.titleFa ? project.titleFa : project.title}
         </h3>
-        <p className="text-sm text-slate-600 dark:text-gray-400 leading-relaxed line-clamp-2">
+        <p className="text-xs text-slate-600 dark:text-gray-400 leading-relaxed line-clamp-3">
           {lang === 'fa' && project.descriptionFa ? project.descriptionFa : project.description}
         </p>
       </div>
 
       {/* Tags */}
-      <div className="flex flex-wrap gap-2 relative z-10">
-        {project.tags.slice(0, 4).map((tag) => (
+      <div className="flex flex-wrap gap-1.5">
+        {project.tags.slice(0, 3).map((tag) => (
           <span
             key={tag}
-            className="px-2.5 py-1 text-xs font-mono rounded-lg transition-colors"
+            className="px-2 py-0.5 text-[10px] font-mono rounded-md"
             style={{
               background: `${project.color}10`,
               color: project.color,
-              border: `1px solid ${project.color}25`,
+              border: `1px solid ${project.color}22`,
             }}
           >
             {tag}
           </span>
         ))}
-        {project.tags.length > 4 && (
-          <span className="px-2.5 py-1 text-xs font-mono rounded-lg dark:bg-white/5 bg-gray-100 text-slate-600 dark:text-gray-500 border border-white/10">
-            +{project.tags.length - 4}
+        {project.tags.length > 3 && (
+          <span className="px-2 py-0.5 text-[10px] font-mono rounded-md dark:bg-white/5 bg-gray-100/80 text-slate-500 dark:text-gray-500 border border-white/10">
+            +{project.tags.length - 3}
           </span>
         )}
       </div>
@@ -138,14 +125,13 @@ export default function Projects() {
   const isInView = useInView(ref, { once: false, margin: '-80px' })
   const { lang, isRTL } = useLang()
   const t = content[lang].projects
-  const [showAll, setShowAll] = useState(false)
-  const [page, setPage] = useState(0)
-  const [direction, setDirection] = useState(1)
   const { repos } = useGithubRepos()
 
-  const CARDS_PER_PAGE = 2 // shown per slide on desktop (md+)
-  const displayed = showAll ? projects : projects.filter((p) => p.featured)
-  const totalPages = Math.ceil(displayed.length / CARDS_PER_PAGE)
+  const [page, setPage] = useState(0)
+  const [cardsPerPage, setCardsPerPage] = useState(1)
+  const [paused, setPaused] = useState(false)
+
+  const totalPages = Math.ceil(projects.length / cardsPerPage)
 
   const getStars = (githubUrl: string | null): number | null => {
     if (!githubUrl) return null
@@ -154,21 +140,36 @@ export default function Projects() {
     return repo ? repo.stargazers_count : null
   }
 
-  const goTo = useCallback((newPage: number) => {
-    setDirection(newPage > page ? 1 : -1)
-    setPage(newPage)
-  }, [page])
+  // Responsive cards per page
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth
+      if (w >= 1024) setCardsPerPage(4)
+      else if (w >= 768) setCardsPerPage(3)
+      else setCardsPerPage(1)
+    }
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [])
 
-  const prev = () => goTo(Math.max(0, page - 1))
-  const next = () => goTo(Math.min(totalPages - 1, page + 1))
+  // Auto-rotate
+  const advance = useCallback(() => {
+    setPage((p) => (p + 1) % totalPages)
+  }, [totalPages])
 
-  const currentCards = displayed.slice(page * CARDS_PER_PAGE, page * CARDS_PER_PAGE + CARDS_PER_PAGE)
+  useEffect(() => {
+    if (paused || !isInView) return
+    const iv = setInterval(advance, 3500)
+    return () => clearInterval(iv)
+  }, [advance, paused, isInView])
 
-  const variants = {
-    enter: (dir: number) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
-    center: { x: 0, opacity: 1 },
-    exit:   (dir: number) => ({ x: dir > 0 ? -60 : 60, opacity: 0 }),
-  }
+  // Reset page when cardsPerPage changes
+  useEffect(() => {
+    setPage(0)
+  }, [cardsPerPage])
+
+  const currentCards = projects.slice(page * cardsPerPage, page * cardsPerPage + cardsPerPage)
 
   return (
     <section
@@ -195,24 +196,28 @@ export default function Projects() {
           <p className="text-slate-600 dark:text-slate-400 text-base max-w-lg leading-relaxed">{t.subtitle}</p>
         </motion.div>
 
-        {/* Slider area */}
+        {/* Carousel */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
         >
           {/* Cards */}
-          <div className="relative overflow-hidden min-h-[260px]">
-            <AnimatePresence custom={direction} mode="wait">
+          <div className="overflow-hidden">
+            <AnimatePresence mode="wait">
               <motion.div
-                key={page}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.38, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-5"
+                key={`${page}-${cardsPerPage}`}
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -30 }}
+                transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className={`grid gap-4 ${
+                  cardsPerPage === 4 ? 'grid-cols-4' :
+                  cardsPerPage === 3 ? 'grid-cols-3' :
+                  'grid-cols-1'
+                }`}
               >
                 {currentCards.map((project) => (
                   <ProjectCard
@@ -227,61 +232,20 @@ export default function Projects() {
             </AnimatePresence>
           </div>
 
-          {/* Navigation row */}
-          <div className="flex items-center justify-between mt-7">
-            {/* Prev / Next buttons */}
-            <div className="flex items-center gap-2">
-              <motion.button
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.92 }}
-                onClick={prev}
-                disabled={page === 0}
-                className="w-10 h-10 rounded-full glass-card flex items-center justify-center transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed hover:border-indigo-500/40 cursor-pointer"
-              >
-                <Icons.ChevronLeft className={`w-5 h-5 dark:text-gray-300 text-gray-600 ${isRTL ? 'scale-x-[-1]' : ''}`} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.92 }}
-                onClick={next}
-                disabled={page >= totalPages - 1}
-                className="w-10 h-10 rounded-full glass-card flex items-center justify-center transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed hover:border-indigo-500/40 cursor-pointer"
-              >
-                <Icons.ChevronRight className={`w-5 h-5 dark:text-gray-300 text-gray-600 ${isRTL ? 'scale-x-[-1]' : ''}`} />
-              </motion.button>
-            </div>
-
-            {/* Dot indicators */}
-            <div className="flex items-center gap-1.5">
-              {Array.from({ length: totalPages }).map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  className="transition-all duration-200 rounded-full cursor-pointer"
-                  style={{
-                    width: i === page ? 20 : 6,
-                    height: 6,
-                    background: i === page ? '#6366f1' : 'rgba(99,102,241,0.3)',
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Show all toggle */}
-            <motion.button
-              whileHover={{ scale: 1.04, y: -1 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={() => { setShowAll(!showAll); setPage(0) }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass-card border border-indigo-500/25 dark:text-indigo-400 text-indigo-600 hover:bg-indigo-500/8 hover:border-indigo-500/40 transition-all duration-200 font-medium text-sm cursor-pointer"
-            >
-              {showAll ? t.showLess : t.viewMore}
-              <motion.span
-                animate={{ rotate: showAll ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Icons.ChevronDown className="w-4 h-4" />
-              </motion.span>
-            </motion.button>
+          {/* Dots */}
+          <div className="flex items-center justify-center gap-2 mt-6">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setPage(i)}
+                className="transition-all duration-300 rounded-full cursor-pointer"
+                style={{
+                  width: i === page ? 22 : 6,
+                  height: 6,
+                  background: i === page ? '#6366f1' : 'rgba(99,102,241,0.28)',
+                }}
+              />
+            ))}
           </div>
         </motion.div>
 
