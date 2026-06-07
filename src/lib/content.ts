@@ -138,10 +138,10 @@ export const content = {
     },
     about: {
       title: 'About Me',
-      subtitle: 'Passionate developer. Creative thinker. Problem solver.',
-      bio1: "I'm Alireza Pourgholam, a Frontend Developer specializing in building exceptional digital experiences. With deep expertise in React.js, Next.js, and TypeScript, I transform complex ideas into elegant, high-performance web applications.",
-      bio2: 'Beyond web development, I architect intelligent Telegram bots with Python — automating workflows and creating seamless user interactions at scale. I believe clean, maintainable code is the foundation of any great product.',
-      bio3: "When I'm not shipping features, I'm exploring new technologies, contributing to open-source, and constantly pushing the boundaries of what's possible on the web.",
+      subtitle: 'Frontend developer · Kish Island, Iran · Open to freelance.',
+      bio1: "I'm Alireza Pourgholam, a Frontend Developer based in Kish Island, Iran. I design and build custom web applications with a focus on clean UI, solid architecture, and smooth user experience — turning complex ideas into products that actually feel good to use.",
+      bio2: "I stay current with the latest tools and technologies, including AI, and use them naturally as part of how I work — not as a gimmick, but as a genuine productivity layer. I'm also active in open-source, building Telegram bots and web applications that solve real problems.",
+      bio3: "Good code, to me, means code that's readable, maintainable, and built to last. I care about the craft — from pixel-level details in the UI to the architecture decisions that hold everything together.",
       stats: [
         { value: '5+', label: 'Years Experience' },
         { value: '11+', label: 'Projects Delivered' },
@@ -309,10 +309,10 @@ export const content = {
     },
     about: {
       title: 'درباره من',
-      subtitle: 'توسعه‌دهنده‌ای پرشور. متفکری خلاق. حل‌کننده مسئله.',
-      bio1: 'من علیرضا پورغلام هستم، توسعه‌دهنده فرانت‌اند با تخصص در ساخت تجربه‌های دیجیتال استثنایی. با تسلط عمیق بر React.js، Next.js و TypeScript، ایده‌های پیچیده را به وب‌اپلیکیشن‌های زیبا و پرفرمنس تبدیل می‌کنم.',
-      bio2: 'علاوه بر توسعه وب، ربات‌های تلگرامی هوشمند با Python طراحی می‌کنم — اتوماسیون فرآیندها و خلق تعاملات روان با کاربران در مقیاس بزرگ. کد تمیز و قابل نگهداری را پایه هر محصول باکیفیت می‌دانم.',
-      bio3: 'در اوقات فراغت، به کاوش تکنولوژی‌های نوین، مشارکت در پروژه‌های متن‌باز و گسترش مرزهای ممکن در توسعه وب می‌پردازم.',
+      subtitle: 'توسعه‌دهنده فرانت‌اند · جزیره کیش · آماده همکاری فریلنسری.',
+      bio1: 'علیرضا پورغلام هستم، توسعه‌دهنده فرانت‌اند ساکن جزیره کیش. وب‌اپلیکیشن‌های سفارشی طراحی و می‌سازم — با تمرکز بر رابط کاربری تمیز، معماری محکم و تجربه‌کاربری روان. ایده‌های پیچیده را به محصولاتی تبدیل می‌کنم که واقعاً استفاده از آن‌ها لذت‌بخش باشد.',
+      bio2: 'با آخرین ابزارها و فناوری‌ها — از جمله هوش مصنوعی — همگام می‌مانم و آن‌ها را به‌طور طبیعی در فرآیند کارم به کار می‌برم؛ نه به‌عنوان یک مُد زودگذر، بلکه به‌عنوان یک لایه واقعی بهره‌وری. در حوزه متن‌باز هم فعالم و پروژه‌هایی در قالب ربات تلگرام و وب‌اپلیکیشن می‌سازم.',
+      bio3: 'کد خوب برایم یعنی کدی که خواندنش راحت، نگهداریش ساده و برای ماندن ساخته شده باشد. به جزئیات اهمیت می‌دهم — از ریزترین نکات بصری در رابط کاربری تا تصمیمات معماری که همه چیز را سرپا نگه می‌دارد.',
       stats: [
         { value: '+۵', label: 'سال تجربه' },
         { value: '+۱۱', label: 'پروژه تحویل‌داده‌شده' },
