@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { Mail, MapPin, CheckCircle, Send, Loader2, Phone } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { content } from '@/lib/content'
@@ -13,7 +13,6 @@ function GithubSvg({ className }: { className?: string }) {
     </svg>
   )
 }
-
 function LinkedinSvg({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -21,7 +20,6 @@ function LinkedinSvg({ className }: { className?: string }) {
     </svg>
   )
 }
-
 function TelegramSvg({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -34,6 +32,95 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Github: GithubSvg,
   Linkedin: LinkedinSvg,
   Send: TelegramSvg,
+}
+
+/* ── Floating-label input — RTL aware ── */
+function FloatingInput({
+  id, label, type = 'text', value, onChange, required, forceLtr, isRTL,
+}: {
+  id: string
+  label: string
+  type?: string
+  value: string
+  onChange: (v: string) => void
+  required?: boolean
+  forceLtr?: boolean   // email, phone — always LTR
+  isRTL?: boolean
+}) {
+  const hasValue = value.length > 0
+  const rtl = isRTL && !forceLtr
+
+  return (
+    <div className="relative group">
+      <input
+        id={id}
+        type={type}
+        required={required}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder=" "
+        className="peer w-full px-4 pt-5 pb-2 rounded-xl border text-sm dark:bg-white/5 bg-white/80 dark:text-gray-200 text-gray-800 focus:outline-none transition-all duration-200 dark:border-white/10 border-indigo-200/60 focus:border-indigo-500/60 focus:ring-2 focus:ring-indigo-500/15"
+        style={{ direction: forceLtr ? 'ltr' : rtl ? 'rtl' : 'ltr' }}
+      />
+      <label
+        htmlFor={id}
+        className={`absolute text-xs font-medium pointer-events-none transition-all duration-200 ${
+          rtl
+            ? hasValue
+              ? 'top-1.5 right-4 text-[10px] text-indigo-400'
+              : 'top-3.5 right-4 text-gray-400 peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:text-indigo-400'
+            : hasValue
+              ? 'top-1.5 left-4 text-[10px] text-indigo-400'
+              : 'top-3.5 left-4 text-gray-400 peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:text-indigo-400'
+        }`}
+      >
+        {label}
+      </label>
+    </div>
+  )
+}
+
+/* ── Floating-label textarea — RTL aware ── */
+function FloatingTextarea({
+  id, label, value, onChange, required, isRTL,
+}: {
+  id: string
+  label: string
+  value: string
+  onChange: (v: string) => void
+  required?: boolean
+  isRTL?: boolean
+}) {
+  const hasValue = value.length > 0
+
+  return (
+    <div className="relative group">
+      <textarea
+        id={id}
+        required={required}
+        rows={6}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder=" "
+        className="peer w-full px-4 pt-6 pb-3 rounded-xl border text-sm dark:bg-white/5 bg-white/80 dark:text-gray-200 text-gray-800 focus:outline-none transition-all duration-200 dark:border-white/10 border-indigo-200/60 focus:border-indigo-500/60 focus:ring-2 focus:ring-indigo-500/15 resize-none"
+        style={{ direction: isRTL ? 'rtl' : 'ltr' }}
+      />
+      <label
+        htmlFor={id}
+        className={`absolute text-xs font-medium pointer-events-none transition-all duration-200 ${
+          isRTL
+            ? hasValue
+              ? 'top-2 right-4 text-[10px] text-indigo-400'
+              : 'top-4 right-4 text-gray-400 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-indigo-400'
+            : hasValue
+              ? 'top-2 left-4 text-[10px] text-indigo-400'
+              : 'top-4 left-4 text-gray-400 peer-focus:top-2 peer-focus:text-[10px] peer-focus:text-indigo-400'
+        }`}
+      >
+        {label}
+      </label>
+    </div>
+  )
 }
 
 export default function Contact() {
@@ -68,112 +155,101 @@ export default function Contact() {
 
   const infoItems: Array<{
     icon: React.ComponentType<{ className?: string }>
-    label: string
-    value: string
-    href?: string
-    ltr?: boolean
-    compact?: boolean
+    label: string; value: string; href?: string; forceLtr?: boolean; compact?: boolean
   }> = [
-    {
-      icon: Phone,
-      label: lang === 'en' ? 'Phone' : 'تلفن',
-      value: t.info.phone,
-      href: 'tel:+989113101767',
-      ltr: true,
-    },
-    {
-      icon: Mail,
-      label: lang === 'en' ? 'Email' : 'ایمیل',
-      value: t.info.email,
-      href: `mailto:${t.info.email}`,
-      ltr: true,
-      compact: true,
-    },
-    {
-      icon: MapPin,
-      label: lang === 'en' ? 'Location' : 'آدرس',
-      value: t.info.location,
-    },
-    {
-      icon: CheckCircle,
-      label: lang === 'en' ? 'Status' : 'وضعیت',
-      value: t.info.availability,
-    },
+    { icon: Phone,       label: lang === 'en' ? 'Phone' : 'تلفن',    value: t.info.phone,        href: 'tel:+989113101767',      forceLtr: true },
+    { icon: Mail,        label: lang === 'en' ? 'Email' : 'ایمیل',   value: t.info.email,        href: `mailto:${t.info.email}`, forceLtr: true, compact: true },
+    { icon: MapPin,      label: lang === 'en' ? 'Location' : 'آدرس', value: t.info.location },
+    { icon: CheckCircle, label: lang === 'en' ? 'Status' : 'وضعیت', value: t.info.availability },
   ]
-
-  const inputBase =
-    'w-full px-4 py-3 rounded-xl border text-sm dark:bg-white/5 bg-white/80 dark:text-gray-200 text-gray-800 placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none transition-all dark:border-white/10 border-indigo-200/60 focus:border-indigo-500/60 focus:ring-2 focus:ring-indigo-500/15'
 
   return (
     <section
       id="contact"
       ref={ref}
-      className="relative py-20 px-4"
+      className="relative py-20 md:py-28 px-4 sm:px-6"
       style={{ direction: isRTL ? 'rtl' : 'ltr' }}
     >
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-indigo-600/8 rounded-full blur-3xl pointer-events-none" />
+      {/* Ambient glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] dark:bg-indigo-600/8 bg-indigo-400/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto">
+
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
           className="mb-14"
         >
-          <p className="text-xs font-mono text-indigo-400 mb-2 tracking-widest uppercase">
+          <p className="text-xs font-mono text-indigo-400 mb-2 tracking-[0.18em] uppercase">
             {lang === 'en' ? '// get in touch' : '// در تماس باش'}
           </p>
-          <h2 className="text-3xl md:text-4xl font-black mb-3 dark:text-white text-gray-900">
+          <h2 className="text-3xl md:text-4xl font-black mb-3 dark:text-white text-gray-900 tracking-tight">
             {t.title}
           </h2>
-          <p className="text-gray-500 text-base max-w-lg">{t.subtitle}</p>
+          <p className="text-gray-500 text-base max-w-lg leading-relaxed">{t.subtitle}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
           {/* Left: Info + Social */}
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
+            initial={{ opacity: 0, x: isRTL ? 48 : -48 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
             className="lg:col-span-2 space-y-3"
           >
             {infoItems.map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
+                initial={{ opacity: 0, x: isRTL ? 16 : -16 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.3 + i * 0.08 }}
-                className="flex items-start gap-3 p-4 dark:bg-white/5 bg-white/70 dark:border-white/10 border-indigo-100/80 border rounded-2xl hover:border-indigo-500/30 transition-colors group"
+                className="flex items-center gap-3.5 p-4 glass-card rounded-2xl hover:border-indigo-500/30 transition-all duration-200 group cursor-default"
+                style={{ borderRadius: '1rem' }}
               >
-                <div className="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-indigo-500/20 transition-colors">
+                {/* Icon badge */}
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-200 group-hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(99,102,241,0.18), rgba(139,92,246,0.12))',
+                    border: '1px solid rgba(99,102,241,0.25)',
+                    boxShadow: '0 0 16px rgba(99,102,241,0.12)',
+                  }}
+                >
                   <item.icon className="w-4 h-4 text-indigo-400" />
                 </div>
+
                 <div className="min-w-0 flex-1">
-                  <div className="text-xs text-gray-500 font-medium mb-0.5">{item.label}</div>
+                  <div className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest mb-0.5">
+                    {item.label}
+                  </div>
                   {item.href ? (
                     <a
                       href={item.href}
-                      className={`${item.compact ? 'text-xs' : 'text-sm'} font-medium dark:text-gray-200 text-gray-700 hover:text-indigo-500 transition-colors break-all`}
-                      style={item.ltr ? { direction: 'ltr', display: 'inline-block' } : undefined}
+                      className={`${item.compact ? 'text-xs' : 'text-sm'} font-medium dark:text-gray-200 text-gray-700 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors break-all cursor-pointer`}
+                      style={item.forceLtr ? { direction: 'ltr', display: 'inline-block' } : undefined}
                     >
                       {item.value}
                     </a>
                   ) : (
-                    <div className="text-sm dark:text-gray-200 text-gray-700 leading-snug">{item.value}</div>
+                    <div className="text-sm dark:text-gray-200 text-gray-700 leading-snug">
+                      {item.value}
+                    </div>
                   )}
                 </div>
               </motion.div>
             ))}
 
-            {/* Social */}
+            {/* Social links */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ delay: 0.7 }}
               className="pt-2"
             >
-              <p className="text-xs text-gray-500 font-medium mb-3 uppercase tracking-widest">
+              <p className="text-[10px] text-gray-500 font-semibold mb-4 uppercase tracking-[0.16em]">
                 {lang === 'en' ? 'Find me on' : 'پیدام کن'}
               </p>
               <div className="flex gap-3">
@@ -185,9 +261,9 @@ export default function Contact() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.12, y: -2 }}
+                      whileHover={{ scale: 1.12, y: -3 }}
                       whileTap={{ scale: 0.9 }}
-                      className="w-11 h-11 rounded-2xl dark:bg-white/5 bg-white/70 dark:border-white/10 border-indigo-100 border flex items-center justify-center text-gray-400 hover:text-indigo-400 hover:border-indigo-500/40 transition-all"
+                      className="w-11 h-11 rounded-2xl glass-card flex items-center justify-center text-gray-400 hover:text-indigo-400 hover:border-indigo-500/40 transition-all duration-200 cursor-pointer"
                       title={link.name}
                     >
                       <Icon className="w-5 h-5" />
@@ -200,61 +276,60 @@ export default function Contact() {
 
           {/* Right: Form */}
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
+            initial={{ opacity: 0, x: isRTL ? -48 : 48 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
             className="lg:col-span-3"
           >
             <form
               onSubmit={handleSubmit}
-              className="dark:bg-white/5 bg-white/70 dark:border-white/10 border-indigo-100/80 border rounded-3xl p-6 space-y-4"
+              className="glass-card rounded-3xl p-6 space-y-4"
+              style={{ borderRadius: '1.5rem' }}
             >
+              {/* Name + Email row */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-medium text-gray-500 mb-1.5">{t.form.name}</label>
-                  <input
-                    type="text"
-                    required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder={t.form.name}
-                    className={inputBase}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-500 mb-1.5">{t.form.email}</label>
-                  <input
-                    type="email"
-                    required
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    placeholder={t.form.email}
-                    className={inputBase}
-                    style={{ direction: 'ltr' }}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1.5">{t.form.message}</label>
-                <textarea
+                <FloatingInput
+                  id="contact-name"
+                  label={t.form.name}
+                  value={form.name}
+                  onChange={(v) => setForm({ ...form, name: v })}
                   required
-                  rows={6}
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  placeholder={t.form.message}
-                  className={`${inputBase} resize-none`}
+                  isRTL={isRTL}
+                />
+                <FloatingInput
+                  id="contact-email"
+                  label={t.form.email}
+                  type="email"
+                  value={form.email}
+                  onChange={(v) => setForm({ ...form, email: v })}
+                  required
+                  forceLtr
+                  isRTL={isRTL}
                 />
               </div>
 
+              {/* Message */}
+              <FloatingTextarea
+                id="contact-message"
+                label={t.form.message}
+                value={form.message}
+                onChange={(v) => setForm({ ...form, message: v })}
+                required
+                isRTL={isRTL}
+              />
+
+              {/* Submit */}
               <motion.button
                 type="submit"
                 disabled={status === 'sending' || status === 'success'}
                 whileHover={{ scale: status === 'idle' ? 1.02 : 1 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-3.5 rounded-2xl font-semibold text-white relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full py-4 rounded-2xl font-semibold text-white relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+                style={{ boxShadow: '0 8px 28px rgba(99, 102, 241, 0.35)' }}
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-sky-500 group-hover:from-indigo-500 group-hover:to-sky-400 transition-all duration-300" />
+                <span className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-sky-500 group-hover:from-indigo-500 group-hover:to-sky-400 transition-all duration-300" />
+                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.10) 0%, transparent 50%)' }} />
                 <span className="relative flex items-center justify-center gap-2">
                   {status === 'sending' && <Loader2 className="w-4 h-4 animate-spin" />}
                   {status === 'success' && <CheckCircle className="w-4 h-4" />}
@@ -265,6 +340,20 @@ export default function Contact() {
                   {status === 'error' && t.form.error}
                 </span>
               </motion.button>
+
+              {/* Status message */}
+              <AnimatePresence>
+                {status === 'error' && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    className="text-xs text-red-400 text-center font-medium"
+                  >
+                    {t.form.error}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </form>
           </motion.div>
         </div>

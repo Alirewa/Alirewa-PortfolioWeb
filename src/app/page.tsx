@@ -8,12 +8,14 @@ import Contact from '@/components/sections/Contact'
 import Footer from '@/components/Footer'
 import CursorGlow from '@/components/CursorGlow'
 import AuroraBackground from '@/components/AuroraBackground'
+import BackgroundShapes from '@/components/BackgroundShapes'
 import PhaseDivider from '@/components/PhaseDivider'
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen dark:bg-[#06060a] bg-[#f4f6ff] transition-colors duration-500">
+    <main className="relative min-h-screen dark:bg-[#020208] bg-[#f4f6ff] transition-colors duration-500">
       <AuroraBackground />
+      <BackgroundShapes />
       <CursorGlow />
 
       <div className="relative z-10">

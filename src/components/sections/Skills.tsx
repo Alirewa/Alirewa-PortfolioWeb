@@ -7,11 +7,15 @@ import { useLang } from '@/lib/LangContext'
 import { content } from '@/lib/content'
 
 function CategoryIcon({ name, color }: { name: string; color: string }) {
-  const Icon = ((Icons as unknown) as Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>>)[name] ?? Icons.Code2
-  return <Icon className="w-5 h-5" style={{ color }} />
+  const Icon = ((Icons as unknown) as Record<
+    string,
+    React.ComponentType<{ className?: string; style?: React.CSSProperties }>
+  >)[name] ?? Icons.Code2
+  return <Icon className="w-4.5 h-4.5" style={{ color }} />
 }
 
-interface SkillBarProps {
+/* ── Clean gradient slider ── */
+interface SkillSliderProps {
   name: string
   level: number
   color: string
@@ -19,32 +23,53 @@ interface SkillBarProps {
   isInView: boolean
 }
 
-function SkillBar({ name, level, color, delay, isInView }: SkillBarProps) {
+function SkillSlider({ name, level, color, delay, isInView }: SkillSliderProps) {
   return (
     <div className="space-y-2">
-      <div className="flex justify-between items-center gap-2">
-        {/* Skill name stays LTR even in FA mode (English tech names) */}
+      <div className="flex justify-between items-center gap-3">
         <span
           className="text-sm font-medium dark:text-gray-300 text-gray-600 font-mono"
           style={{ direction: 'ltr', display: 'inline-block' }}
         >
           {name}
         </span>
-        <span className="text-xs font-bold text-indigo-400 font-mono shrink-0">{level}%</span>
-      </div>
-      <div className="h-2 bg-gray-200 dark:bg-white/5 rounded-full overflow-hidden">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={isInView ? { width: `${level}%` } : {}}
-          transition={{ duration: 1.2, delay, ease: 'easeOut' }}
-          className="h-full rounded-full relative"
-          style={{
-            background: `linear-gradient(90deg, ${color}cc, ${color})`,
-            transformOrigin: 'left',
-          }}
+        <motion.span
+          className="text-[11px] font-bold font-mono shrink-0 tabular-nums"
+          style={{ color }}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.4, delay: delay + 0.5 }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/20 rounded-full" />
-        </motion.div>
+          {level}%
+        </motion.span>
+      </div>
+
+      {/* Track */}
+      <div
+        className="relative h-[3px] w-full rounded-full"
+        style={{ background: 'rgba(255,255,255,0.07)' }}
+      >
+        {/* Fill */}
+        <motion.div
+          className="absolute left-0 top-0 h-full rounded-full"
+          style={{
+            background: `linear-gradient(90deg, ${color}45 0%, ${color}bb 60%, ${color} 100%)`,
+          }}
+          initial={{ width: '0%' }}
+          animate={isInView ? { width: `${level}%` } : { width: '0%' }}
+          transition={{ duration: 1.3, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+        />
+        {/* Thumb */}
+        <motion.div
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full"
+          style={{
+            background: `radial-gradient(circle at 35% 35%, #fff, ${color})`,
+            boxShadow: `0 0 0 2px rgba(0,0,0,0.5), 0 0 8px ${color}, 0 0 18px ${color}50`,
+          }}
+          initial={{ left: '0%' }}
+          animate={isInView ? { left: `${level}%` } : { left: '0%' }}
+          transition={{ duration: 1.3, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+        />
       </div>
     </div>
   )
@@ -60,98 +85,113 @@ export default function Skills() {
     <section
       id="skills"
       ref={ref}
-      className="relative py-20 px-4"
+      className="relative py-20 md:py-28 px-4 sm:px-6"
       style={{ direction: isRTL ? 'rtl' : 'ltr' }}
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-0 w-px h-96 bg-gradient-to-b from-transparent via-indigo-500/20 to-transparent" />
-        <div className="absolute top-1/2 right-0 w-px h-96 bg-gradient-to-b from-transparent via-sky-500/20 to-transparent" />
-      </div>
+      {/* Subtle grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none dark:opacity-15 opacity-20"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(99,102,241,0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(99,102,241,0.06) 1px, transparent 1px)
+          `,
+          backgroundSize: '48px 48px',
+        }}
+      />
+      {/* Top accent line */}
+      <div
+        className="absolute inset-x-0 top-0 h-px dark:opacity-100 opacity-0"
+        style={{
+          background: 'linear-gradient(90deg, transparent, rgba(99,102,241,0.20) 30%, rgba(139,92,246,0.20) 70%, transparent)',
+        }}
+      />
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto relative">
+
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="mb-14"
+          className="mb-12"
         >
-          <p className="text-xs font-mono text-indigo-400 mb-2 tracking-widest uppercase">
+          <p className="text-xs font-mono text-indigo-400 mb-2 tracking-[0.18em] uppercase">
             {lang === 'en' ? '// what I know' : '// مهارت‌های من'}
           </p>
-          <h2 className="text-3xl md:text-4xl font-black mb-3 dark:text-white text-gray-900">
+          <h2 className="text-3xl md:text-4xl font-black mb-3 dark:text-white text-gray-900 tracking-tight">
             {t.title}
           </h2>
-          <p className="text-gray-500 text-base max-w-lg">{t.subtitle}</p>
+          <p className="text-gray-500 text-base max-w-lg leading-relaxed">{t.subtitle}</p>
         </motion.div>
 
-        {/* Skills — slider on mobile, grid on lg+ */}
-        <div className="relative mb-12">
-          <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}
-          >
-            {t.categories.map((category, catIndex) => (
-              <motion.div
-                key={category.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: catIndex * 0.15 }}
-                className="snap-start shrink-0 w-[min(340px,82vw)] md:w-[330px] dark:bg-white/5 bg-white/80 backdrop-blur-xl dark:border-white/8 border-indigo-100/70 border rounded-2xl p-6 hover:border-indigo-500/25 transition-colors"
-              >
-                <div className="flex items-center gap-3 mb-6">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center"
-                    style={{ background: `${category.color}18`, border: `1px solid ${category.color}28` }}
-                  >
-                    <CategoryIcon name={category.icon} color={category.color} />
-                  </div>
-                  <h3 className="text-lg font-bold dark:text-white text-gray-800">{category.name}</h3>
+        {/* Two-column grid — no card wrappers, clean flat layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-10 mb-12">
+          {t.categories.map((category, catIndex) => (
+            <motion.div
+              key={category.name}
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: catIndex * 0.15 }}
+            >
+              {/* Category header */}
+              <div className="flex items-center gap-2.5 mb-5">
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                  style={{
+                    background: `${category.color}16`,
+                    border: `1px solid ${category.color}28`,
+                  }}
+                >
+                  <CategoryIcon name={category.icon} color={category.color} />
                 </div>
+                <h3 className="text-base font-bold dark:text-white text-gray-800">
+                  {category.name}
+                </h3>
+              </div>
 
-                <div className="space-y-4" style={{ direction: 'ltr' }}>
-                  {category.skills.map((skill, skillIndex) => (
-                    <SkillBar
-                      key={skill.name}
-                      name={skill.name}
-                      level={skill.level}
-                      color={category.color}
-                      delay={catIndex * 0.15 + skillIndex * 0.08}
-                      isInView={isInView}
-                    />
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          {/* Scroll-continue shadow — dark */}
-          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none hidden dark:block"
-            style={{ background: 'linear-gradient(to left, rgba(6,6,10,1) 0%, rgba(6,6,10,0) 100%)' }} />
-          {/* Scroll-continue shadow — light */}
-          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none dark:hidden"
-            style={{ background: 'linear-gradient(to left, rgba(244,246,255,1) 0%, rgba(244,246,255,0) 100%)' }} />
-          <p className="text-center text-xs text-gray-400 mt-3 lg:hidden">swipe →</p>
+              {/* Color-matched divider */}
+              <div
+                className="h-px mb-6"
+                style={{ background: `linear-gradient(90deg, ${category.color}40, transparent)` }}
+              />
+
+              {/* Skill sliders — LTR regardless of page direction */}
+              <div className="space-y-5" style={{ direction: 'ltr' }}>
+                {category.skills.map((skill, skillIndex) => (
+                  <SkillSlider
+                    key={skill.name}
+                    name={skill.name}
+                    level={skill.level}
+                    color={category.color}
+                    delay={catIndex * 0.10 + skillIndex * 0.07}
+                    isInView={isInView}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Tech bubble cloud */}
+        {/* Tech bubble cloud — full-width below both columns */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center"
         >
-          <p className="text-sm text-gray-500 mb-6 font-mono">
+          <p className="text-xs text-gray-500 mb-4 font-mono tracking-widest uppercase">
             {lang === 'en' ? '// also comfortable with' : '// همچنین آشنا با'}
           </p>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2">
             {['Figma', 'Docker', 'Redis', 'MongoDB', 'Supabase', 'Vercel', 'VS Code', 'Linux', 'Webpack', 'ESLint'].map((tech, i) => (
               <motion.span
                 key={tech}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 0.7 + i * 0.04 }}
-                whileHover={{ scale: 1.1, y: -2 }}
-                className="px-4 py-2 text-sm font-medium rounded-xl glass border border-white/10 text-gray-500 dark:text-gray-400 hover:border-indigo-500/30 hover:text-indigo-500 dark:hover:text-indigo-400 transition-all cursor-default"
+                whileHover={{ scale: 1.08, y: -2 }}
+                className="px-3 py-1.5 text-sm font-medium rounded-full dark:bg-white/5 bg-white/70 border dark:border-white/10 border-indigo-100/60 text-gray-500 dark:text-gray-400 hover:border-indigo-500/35 hover:text-indigo-500 dark:hover:text-indigo-400 transition-all duration-200 cursor-default"
               >
                 {tech}
               </motion.span>

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Send, Heart } from 'lucide-react'
+import { Heart, Code2, Zap, Palette } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { content } from '@/lib/content'
 
@@ -12,7 +12,6 @@ function GithubSvg({ className }: { className?: string }) {
     </svg>
   )
 }
-
 function LinkedinSvg({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -20,7 +19,6 @@ function LinkedinSvg({ className }: { className?: string }) {
     </svg>
   )
 }
-
 function TelegramSvg({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -34,6 +32,12 @@ const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> 
   Linkedin: LinkedinSvg,
   Send: TelegramSvg,
 }
+
+const BUILT_WITH = [
+  { Icon: Code2,   label: 'Next.js',   color: '#94a3b8' },
+  { Icon: Zap,     label: 'Three.js',  color: '#6366f1' },
+  { Icon: Palette, label: 'Tailwind',  color: '#06b6d4' },
+]
 
 export default function Footer() {
   const { lang, isRTL } = useLang()
@@ -55,14 +59,26 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative border-t dark:border-white/5 border-indigo-100/60 pt-10 pb-5 px-4"
+      className="relative pt-12 pb-6 px-4 sm:px-6"
       style={{ direction: isRTL ? 'rtl' : 'ltr' }}
     >
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-px bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent" />
+      {/* Rainbow gradient top line */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{
+          background: 'linear-gradient(90deg, transparent 0%, #6366f1 25%, #a855f7 50%, #0ea5e9 75%, transparent 100%)',
+          opacity: 0.5,
+        }}
+      />
+      {/* Subtle glow above line */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-16 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, transparent 70%)', filter: 'blur(20px)' }} />
 
       <div className="max-w-6xl mx-auto">
-        {/* Grid — 2 cols on mobile, 3 on md+ */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+
+        {/* Main grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-10">
+
           {/* Col 1 — Logo + tagline */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -70,11 +86,15 @@ export default function Footer() {
             transition={{ delay: 0.1 }}
             className="col-span-2 md:col-span-1"
           >
-            <div className="mb-3">
-              <div className="gradient-text font-black text-sm tracking-tight leading-none">Alireza Pourgholam</div>
-              <div className="text-[10px] text-gray-500 font-medium mt-1">Frontend Developer</div>
+            <div className="mb-4">
+              <div className="gradient-text font-black text-base tracking-tight leading-none mb-1">
+                Alireza Pourgholam
+              </div>
+              <div className="text-[10px] text-gray-500 font-medium uppercase tracking-widest">
+                Frontend Developer
+              </div>
             </div>
-            <p className="text-xs text-gray-500 leading-relaxed max-w-[200px]">
+            <p className="text-xs text-gray-500 leading-relaxed max-w-[220px]">
               {t.tagline}
             </p>
           </motion.div>
@@ -85,15 +105,15 @@ export default function Footer() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
           >
-            <h4 className="text-xs font-semibold dark:text-gray-400 text-gray-600 mb-3 uppercase tracking-widest">
+            <h4 className="text-[10px] font-bold dark:text-gray-400 text-gray-500 mb-4 uppercase tracking-[0.16em]">
               {t.quickLinks}
             </h4>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <button
                     onClick={() => scrollTo(link.href)}
-                    className="text-xs text-gray-500 hover:text-indigo-400 transition-colors"
+                    className="text-xs text-gray-500 hover:text-indigo-400 transition-colors duration-200 cursor-pointer hover:underline underline-offset-2"
                   >
                     {link.label}
                   </button>
@@ -108,21 +128,21 @@ export default function Footer() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h4 className="text-xs font-semibold dark:text-gray-400 text-gray-600 mb-3 uppercase tracking-widest">
+            <h4 className="text-[10px] font-bold dark:text-gray-400 text-gray-500 mb-4 uppercase tracking-[0.16em]">
               {t.connect}
             </h4>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2.5">
               {social.map((link) => {
-                const Icon = SOCIAL_ICONS[link.icon] ?? Send
+                const Icon = SOCIAL_ICONS[link.icon] ?? GithubSvg
                 return (
                   <a
                     key={link.name}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs text-gray-500 hover:text-indigo-400 transition-colors group"
+                    className="inline-flex items-center gap-2.5 text-xs text-gray-500 hover:text-indigo-400 transition-colors duration-200 group cursor-pointer"
                   >
-                    <span className="w-7 h-7 rounded-lg dark:bg-white/5 bg-white/70 dark:border-white/10 border-indigo-100 border flex items-center justify-center group-hover:border-indigo-500/30 group-hover:bg-indigo-500/10 transition-all">
+                    <span className="w-7 h-7 rounded-lg glass-card flex items-center justify-center group-hover:border-indigo-500/35 group-hover:bg-indigo-500/10 transition-all duration-200">
                       <Icon className="w-3.5 h-3.5" />
                     </span>
                     {link.name}
@@ -134,14 +154,30 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t dark:border-white/5 border-indigo-100/40 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-xs text-gray-500">
-            © {year} Alireza Pourgholam. {t.rights}
+        <div className="border-t dark:border-white/5 border-indigo-100/40 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-[11px] text-gray-500">
+            © {year} Alireza Pourgholam · {t.rights}
           </p>
-          <div className="flex items-center gap-1 text-xs text-gray-500">
+
+          <div className="flex items-center gap-2 text-[11px] text-gray-500">
             <span>{t.builtWith}</span>
             <Heart className="w-3 h-3 text-rose-400 fill-rose-400 mx-0.5" />
-            <span>Next.js · Three.js · Tailwind</span>
+            <div className="flex items-center gap-1.5">
+              {BUILT_WITH.map(({ Icon, label, color }) => (
+                <span
+                  key={label}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium"
+                  style={{
+                    background: `${color}12`,
+                    color,
+                    border: `1px solid ${color}22`,
+                  }}
+                >
+                  <Icon className="w-2.5 h-2.5" />
+                  {label}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -22,7 +22,7 @@ function GithubIcon() {
 
 export default function Projects() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
   const { lang, isRTL } = useLang()
   const t = content[lang].projects
   const [showAll, setShowAll] = useState(false)
@@ -31,7 +31,6 @@ export default function Projects() {
 
   const displayed = showAll ? projects : projects.filter((p) => p.featured)
 
-  // Helper: get live star count for a project's github URL
   const getStars = (githubUrl: string | null): number | null => {
     if (!githubUrl) return null
     const repoName = githubUrl.split('/').pop()
@@ -43,63 +42,68 @@ export default function Projects() {
     <section
       id="projects"
       ref={ref}
-      className="relative py-20 px-4"
+      className="relative py-20 md:py-28 px-4 sm:px-6"
       style={{ direction: isRTL ? 'rtl' : 'ltr' }}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
+
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
           className="mb-14"
         >
-          <p className="text-xs font-mono text-indigo-400 mb-2 tracking-widest uppercase">
+          <p className="text-xs font-mono text-indigo-400 mb-2 tracking-[0.18em] uppercase">
             {lang === 'en' ? '// what I built' : '// نمونه‌کارها'}
           </p>
-          <h2 className="text-3xl md:text-4xl font-black mb-3 dark:text-white text-gray-900">
+          <h2 className="text-3xl md:text-4xl font-black mb-3 dark:text-white text-gray-900 tracking-tight">
             {t.title}
           </h2>
-          <p className="text-gray-500 text-base max-w-lg">{t.subtitle}</p>
+          <p className="text-gray-500 text-base max-w-lg leading-relaxed">{t.subtitle}</p>
         </motion.div>
 
-        {/* Projects — horizontal slider on mobile, grid on md+ */}
-        <div className="relative">
-        <div
-          className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}
-        >
+        {/* Bento grid — 1-col mobile, 2-col md+ */}
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <AnimatePresence mode="popLayout">
             {displayed.map((project, i) => (
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, y: 30, scale: 0.94 }}
+                initial={{ opacity: 0, y: 24, scale: 0.96 }}
                 animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.45, delay: i * 0.07 }}
+                exit={{ opacity: 0, scale: 0.92 }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
                 onHoverStart={() => setHoveredId(project.id)}
                 onHoverEnd={() => setHoveredId(null)}
-                className="snap-start shrink-0 w-[min(300px,78vw)] md:w-[310px] relative group"
+                className="relative group cursor-default"
               >
                 <div
-                  className="relative h-full glass border rounded-3xl p-6 flex flex-col transition-all duration-500 overflow-hidden"
+                  className="relative h-full glass-card p-6 flex flex-col overflow-hidden transition-all duration-300"
                   style={{
-                    borderColor: hoveredId === project.id ? `${project.color}55` : 'rgba(255,255,255,0.08)',
-                    boxShadow: hoveredId === project.id ? `0 24px 64px ${project.color}18` : undefined,
+                    borderColor: hoveredId === project.id ? `${project.color}50` : undefined,
+                    boxShadow: hoveredId === project.id
+                      ? `0 0 0 1px ${project.color}30, 0 24px 56px ${project.color}15`
+                      : undefined,
+                    transform: hoveredId === project.id ? 'translateY(-4px)' : undefined,
+                    borderRadius: '1.25rem',
                   }}
                 >
                   {/* Radial glow on hover */}
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
-                    style={{ background: `radial-gradient(circle at top left, ${project.color}12, transparent 65%)` }}
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none rounded-[1.25rem]"
+                    style={{ background: `radial-gradient(circle at top left, ${project.color}10, transparent 60%)` }}
                   />
 
                   {/* Top row: icon + links */}
-                  <div className="flex items-start justify-between gap-2 mb-5 relative z-10">
+                  <div className="flex items-start justify-between gap-3 mb-5 relative z-10">
                     <div
-                      className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                      style={{ background: `${project.color}18`, border: `1px solid ${project.color}28` }}
+                      className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300"
+                      style={{
+                        background: `${project.color}16`,
+                        border: `1px solid ${project.color}30`,
+                        boxShadow: hoveredId === project.id ? `0 0 24px ${project.color}30` : 'none',
+                      }}
                     >
                       <ProjectIcon name={project.icon} color={project.color} />
                     </div>
@@ -112,12 +116,12 @@ export default function Projects() {
                           rel="noopener noreferrer"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg glass border border-white/10 text-gray-400 hover:text-white hover:border-indigo-500/30 transition-all text-xs"
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass border border-white/10 text-gray-500 hover:text-white hover:border-indigo-500/40 transition-all text-xs font-mono cursor-pointer h-9 min-w-[2.25rem] justify-center"
                           title={t.sourceCode}
                         >
                           <GithubIcon />
                           {getStars(project.github) !== null && (
-                            <span className="font-mono">{getStars(project.github)}</span>
+                            <span>{getStars(project.github)}</span>
                           )}
                         </motion.a>
                       )}
@@ -128,7 +132,7 @@ export default function Projects() {
                           rel="noopener noreferrer"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          className="w-8 h-8 rounded-lg glass border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-indigo-500/30 transition-all"
+                          className="w-9 h-9 rounded-lg glass border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:border-indigo-500/40 transition-all cursor-pointer"
                           title={t.liveDemo}
                         >
                           <Icons.ExternalLink className="w-3.5 h-3.5" />
@@ -138,64 +142,63 @@ export default function Projects() {
                   </div>
 
                   {/* Title + description */}
-                  <div className="flex-1 relative z-10">
+                  <div className="flex-1 relative z-10 mb-5">
                     <h3
-                      className="text-base font-bold dark:text-white text-gray-800 mb-2 transition-colors duration-300"
+                      className="text-lg font-bold dark:text-white text-gray-800 mb-2 transition-colors duration-300 leading-tight"
                       style={{ color: hoveredId === project.id ? project.color : undefined }}
                     >
                       {lang === 'fa' && project.titleFa ? project.titleFa : project.title}
                     </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-5">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2">
                       {lang === 'fa' && project.descriptionFa ? project.descriptionFa : project.description}
                     </p>
                   </div>
 
-                  {/* Tags */}
+                  {/* Tech tags — max 4 shown */}
                   <div className="flex flex-wrap gap-2 relative z-10">
-                    {project.tags.map((tag) => (
+                    {project.tags.slice(0, 4).map((tag) => (
                       <span
                         key={tag}
                         className="px-2.5 py-1 text-xs font-mono rounded-lg transition-colors"
                         style={{
-                          background: `${project.color}12`,
+                          background: `${project.color}10`,
                           color: project.color,
-                          border: `1px solid ${project.color}28`,
+                          border: `1px solid ${project.color}25`,
                         }}
                       >
                         {tag}
                       </span>
                     ))}
+                    {project.tags.length > 4 && (
+                      <span className="px-2.5 py-1 text-xs font-mono rounded-lg dark:bg-white/5 bg-gray-100 text-gray-500 border border-white/10">
+                        +{project.tags.length - 4}
+                      </span>
+                    )}
                   </div>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
-        </div>
+        </motion.div>
 
-          {/* Scroll-continue shadow — dark */}
-          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none hidden dark:block"
-            style={{ background: 'linear-gradient(to left, rgba(6,6,10,1) 0%, rgba(6,6,10,0) 100%)' }} />
-          {/* Scroll-continue shadow — light */}
-          <div className="absolute right-0 top-0 bottom-4 w-28 pointer-events-none dark:hidden"
-            style={{ background: 'linear-gradient(to left, rgba(244,246,255,1) 0%, rgba(244,246,255,0) 100%)' }} />
-        </div>
-        <p className="text-center text-xs text-gray-400 mt-2 mb-2 lg:hidden">swipe →</p>
-
-        {/* Show more/less */}
+        {/* Show more / less */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.7 }}
-          className="text-center mt-12"
+          className="text-center mt-10"
         >
           <motion.button
-            whileHover={{ scale: 1.04 }}
+            whileHover={{ scale: 1.04, y: -1 }}
             whileTap={{ scale: 0.96 }}
             onClick={() => setShowAll(!showAll)}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl glass border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10 transition-all font-medium"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl glass-card border border-indigo-500/25 dark:text-indigo-400 text-indigo-600 hover:bg-indigo-500/8 hover:border-indigo-500/40 transition-all duration-200 font-medium text-sm cursor-pointer"
           >
             {showAll ? t.showLess : t.viewMore}
-            <motion.span animate={{ rotate: showAll ? 180 : 0 }} transition={{ duration: 0.3 }}>
+            <motion.span
+              animate={{ rotate: showAll ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
               <Icons.ChevronDown className="w-4 h-4" />
             </motion.span>
           </motion.button>
