@@ -194,6 +194,15 @@ export default function Hero() {
                   transform: 'scale(1.4)',
                 }}
               />
+              {/* Light-mode backdrop so dark emissive materials remain visible */}
+              <div
+                className="absolute inset-0 rounded-full pointer-events-none dark:opacity-0 opacity-100"
+                style={{
+                  background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.12) 0%, rgba(139,92,246,0.10) 45%, transparent 75%)',
+                  transform: 'scale(1.6)',
+                  filter: 'blur(20px)',
+                }}
+              />
               <HeroOrb />
             </div>
           </motion.div>

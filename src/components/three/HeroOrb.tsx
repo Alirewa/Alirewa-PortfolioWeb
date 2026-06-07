@@ -19,60 +19,6 @@ function OrbitLight() {
   return <pointLight ref={ref} color="#c084fc" intensity={14} distance={7} />
 }
 
-/* ── Glowing orbital ring ── */
-function OrbitalRing({
-  radius,
-  tube,
-  color,
-  emissiveIntensity,
-  speedX = 0,
-  speedY = 0.5,
-  speedZ = 0,
-  initialRotation = [0, 0, 0],
-}: {
-  radius: number
-  tube: number
-  color: string
-  emissiveIntensity: number
-  speedX?: number
-  speedY?: number
-  speedZ?: number
-  initialRotation?: [number, number, number]
-}) {
-  const ref = useRef<THREE.Mesh>(null)
-
-  useFrame(({ clock }, delta) => {
-    if (!ref.current) return
-    ref.current.rotation.x += delta * speedX
-    ref.current.rotation.y += delta * speedY
-    ref.current.rotation.z += delta * speedZ
-
-    // Subtle pulse on emissive
-    const t = clock.getElapsedTime()
-    ;(ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity =
-      emissiveIntensity + Math.sin(t * 1.2) * 0.5
-  })
-
-  return (
-    <mesh
-      ref={ref}
-      rotation={initialRotation as [number, number, number]}
-    >
-      <torusGeometry args={[radius, tube, 6, 120]} />
-      <meshStandardMaterial
-        color={color}
-        emissive={color}
-        emissiveIntensity={emissiveIntensity}
-        transparent
-        opacity={0.82}
-        roughness={0.05}
-        metalness={0.9}
-        toneMapped={false}
-      />
-    </mesh>
-  )
-}
-
 /* ── </> Bracket ── */
 function BracketGroup() {
   const groupRef    = useRef<THREE.Group>(null)
@@ -112,38 +58,6 @@ function BracketGroup() {
 
   return (
     <group ref={groupRef}>
-      {/* Three orbital rings replacing the particle dots */}
-      <OrbitalRing
-        radius={1.72}
-        tube={0.013}
-        color="#6366f1"
-        emissiveIntensity={3.5}
-        speedX={0.08}
-        speedY={0.38}
-        speedZ={0}
-        initialRotation={[Math.PI / 2, 0, 0]}
-      />
-      <OrbitalRing
-        radius={1.62}
-        tube={0.010}
-        color="#38bdf8"
-        emissiveIntensity={3.0}
-        speedX={0}
-        speedY={-0.28}
-        speedZ={0.12}
-        initialRotation={[Math.PI / 5, Math.PI / 4, 0]}
-      />
-      <OrbitalRing
-        radius={1.85}
-        tube={0.008}
-        color="#a78bfa"
-        emissiveIntensity={2.6}
-        speedX={0.15}
-        speedY={0.18}
-        speedZ={-0.08}
-        initialRotation={[0, Math.PI / 6, Math.PI / 3]}
-      />
-
       {/* ── < (indigo) ── */}
       <mesh ref={leftTopRef} position={[-OFF, 0.23, 0]} rotation={[0, 0, ANG]}>
         <boxGeometry args={[L, W, D]} />

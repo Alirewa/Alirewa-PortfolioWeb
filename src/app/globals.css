@@ -28,8 +28,12 @@
   --background-start-rgb: 244, 246, 255;
   --background-end-rgb: 238, 242, 255;
 
+  /* Text contrast — WCAG 4.5:1 compliant */
+  --text-muted: #475569;   /* slate-600 — 5.1:1 on white */
+  --text-body: #1e293b;    /* slate-800 */
+
   /* Glass */
-  --glass-bg: rgba(255, 255, 255, 0.80);
+  --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(99, 102, 241, 0.14);
   --glass-blur: 20px;
   --glass-saturate: 160%;
@@ -49,6 +53,10 @@
   --foreground-rgb: 230, 235, 255;
   --background-start-rgb: 2, 2, 8;
   --background-end-rgb: 3, 3, 12;
+
+  /* Text contrast in dark mode */
+  --text-muted: #94a3b8;   /* slate-400 */
+  --text-body: #e2e8f0;    /* slate-200 */
 
   --glass-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.09);
