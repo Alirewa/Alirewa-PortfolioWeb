@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import * as Icons from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
@@ -140,14 +140,16 @@ export default function Projects() {
     return repo ? repo.stargazers_count : null
   }
 
-  // Responsive cards per page
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth
-      if (w >= 1024) setCardsPerPage(4)
-      else if (w >= 768) setCardsPerPage(3)
-      else setCardsPerPage(1)
-    }
+  // Responsive cards per page — useLayoutEffect to avoid initial flash
+  const calcCards = () => {
+    if (typeof window === 'undefined') return 1
+    const w = window.innerWidth
+    if (w >= 1024) return 4
+    if (w >= 768) return 3
+    return 1
+  }
+  useLayoutEffect(() => {
+    const update = () => setCardsPerPage(calcCards())
     update()
     window.addEventListener('resize', update)
     return () => window.removeEventListener('resize', update)
@@ -170,6 +172,7 @@ export default function Projects() {
   }, [cardsPerPage])
 
   const currentCards = projects.slice(page * cardsPerPage, page * cardsPerPage + cardsPerPage)
+  const slideDir = isRTL ? -1 : 1
 
   return (
     <section
@@ -205,28 +208,30 @@ export default function Projects() {
           onMouseLeave={() => setPaused(false)}
         >
           {/* Cards */}
-          <div className="overflow-hidden">
+          <div className="overflow-hidden w-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${page}-${cardsPerPage}`}
-                initial={{ opacity: 0, x: 30 }}
+                initial={{ opacity: 0, x: 30 * slideDir }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
+                exit={{ opacity: 0, x: -30 * slideDir }}
                 transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className={`grid gap-4 ${
+                className={`grid gap-4 min-w-0 ${
                   cardsPerPage === 4 ? 'grid-cols-4' :
                   cardsPerPage === 3 ? 'grid-cols-3' :
                   'grid-cols-1'
                 }`}
+                style={{ direction: 'ltr' }}
               >
                 {currentCards.map((project) => (
-                  <ProjectCard
-                    key={project.id}
-                    project={project}
-                    getStars={getStars}
-                    t={t}
-                    lang={lang}
-                  />
+                  <div key={project.id} className="min-w-0 h-full">
+                    <ProjectCard
+                      project={project}
+                      getStars={getStars}
+                      t={t}
+                      lang={lang}
+                    />
+                  </div>
                 ))}
               </motion.div>
             </AnimatePresence>

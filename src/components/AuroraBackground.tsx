@@ -85,7 +85,7 @@ export default function AuroraBackground() {
       />
 
       {/* Aurora blobs */}
-      <div className="dark:opacity-100 opacity-25 absolute inset-0">
+      <div className="dark:opacity-55 opacity-25 absolute inset-0">
         {BLOBS.map((b, i) => (
           <div
             key={i}

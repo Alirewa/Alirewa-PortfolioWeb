@@ -50,20 +50,20 @@
 }
 
 .dark {
-  --foreground-rgb: 230, 235, 255;
-  --background-start-rgb: 2, 2, 8;
-  --background-end-rgb: 3, 3, 12;
+  --foreground-rgb: 235, 240, 255;
+  --background-start-rgb: 5, 5, 22;    /* deep navy — not flat black */
+  --background-end-rgb: 2, 2, 10;
 
-  /* Text contrast in dark mode */
-  --text-muted: #94a3b8;   /* slate-400 */
-  --text-body: #e2e8f0;    /* slate-200 */
+  /* Text — brighter in dark for readability */
+  --text-muted: #a8b8d0;
+  --text-body: #e4ebf8;
 
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-bg: rgba(255, 255, 255, 0.045);
+  --glass-border: rgba(255, 255, 255, 0.10);
   --glass-blur: 20px;
   --glass-saturate: 185%;
 
-  --shadow-card: 0 8px 48px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255,255,255,0.07) inset;
+  --shadow-card: 0 8px 52px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255,255,255,0.07) inset;
 }
 
 /* ═══════════════════════════════════════════════════════
