@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import { ThemeProvider } from 'next-themes'
-import { LangProvider } from '@/lib/LangContext'
+import Providers from '@/components/Providers'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -71,11 +70,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="noise">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <LangProvider>
-            {children}
-          </LangProvider>
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
