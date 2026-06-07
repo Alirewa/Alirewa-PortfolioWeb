@@ -55,7 +55,7 @@ export default function Projects() {
           className="mb-14"
         >
           <p className="text-xs font-mono text-indigo-400 mb-2 tracking-widest uppercase">
-            {lang === 'en' ? '// what I built' : '// چه ساختم'}
+            {lang === 'en' ? '// what I built' : '// نمونه‌کارها'}
           </p>
           <h2 className="text-3xl md:text-4xl font-black mb-3 dark:text-white text-gray-900">
             {t.title}

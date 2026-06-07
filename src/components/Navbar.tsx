@@ -58,8 +58,12 @@ export default function Navbar() {
             className="flex flex-col leading-none text-start group"
             whileHover={{ scale: 1.03 }}
           >
-            <span className="gradient-text font-black text-sm tracking-tight">Alireza Pourgholam</span>
-            <span className="text-[10px] text-gray-500 dark:text-gray-500 font-medium mt-0.5 group-hover:text-indigo-400 transition-colors">Frontend Developer</span>
+            <span className="gradient-text font-black text-sm tracking-tight">
+              {lang === 'fa' ? 'علیرضا پورغلام' : 'Alireza Pourgholam'}
+            </span>
+            <span className="text-[10px] text-gray-500 dark:text-gray-500 font-medium mt-0.5 group-hover:text-indigo-400 transition-colors">
+              {lang === 'fa' ? 'توسعه‌دهنده وب' : 'Frontend Developer'}
+            </span>
           </motion.button>
 
           {/* Desktop nav */}

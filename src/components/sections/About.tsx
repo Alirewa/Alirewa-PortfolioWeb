@@ -41,7 +41,7 @@ export default function About() {
           className="mb-8"
         >
           <p className="text-xs font-mono text-indigo-400 mb-1 tracking-widest uppercase">
-            {lang === 'en' ? '// who I am' : '// من کی‌ام'}
+            {lang === 'en' ? '// who I am' : '// درباره من'}
           </p>
           <h2 className="text-3xl md:text-4xl font-black dark:text-white text-gray-900 mb-2">
             {t.title}

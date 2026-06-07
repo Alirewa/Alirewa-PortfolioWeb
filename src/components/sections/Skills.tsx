@@ -78,7 +78,7 @@ export default function Skills() {
           className="mb-14"
         >
           <p className="text-xs font-mono text-indigo-400 mb-2 tracking-widest uppercase">
-            {lang === 'en' ? '// what I know' : '// چه بلدم'}
+            {lang === 'en' ? '// what I know' : '// مهارت‌های من'}
           </p>
           <h2 className="text-3xl md:text-4xl font-black mb-3 dark:text-white text-gray-900">
             {t.title}
