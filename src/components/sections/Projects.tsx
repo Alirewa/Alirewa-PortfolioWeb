@@ -175,6 +175,16 @@ export default function Projects() {
   const currentCards = projects.slice(page, page + cardsPerPage)
   const slideDir = isRTL ? -1 : 1
 
+  const goNext = useCallback(() => setPage((p) => Math.min(totalPages - 1, p + 1)), [totalPages])
+  const goPrev = useCallback(() => setPage((p) => Math.max(0, p - 1)), [])
+
+  const handleDragEnd = useCallback((_: unknown, info: { offset: { x: number } }) => {
+    const threshold = 40
+    if (info.offset.x < -threshold) isRTL ? goPrev() : goNext()
+    else if (info.offset.x > threshold) isRTL ? goNext() : goPrev()
+    setPaused(false)
+  }, [isRTL, goNext, goPrev])
+
   return (
     <section
       id="projects"
@@ -208,8 +218,15 @@ export default function Projects() {
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          {/* Cards */}
-          <div className="w-full py-3">
+          {/* Draggable track */}
+          <motion.div
+            className="w-full py-3 cursor-grab active:cursor-grabbing select-none"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.12}
+            onDragStart={() => setPaused(true)}
+            onDragEnd={handleDragEnd}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${page}-${cardsPerPage}`}
@@ -235,7 +252,7 @@ export default function Projects() {
                 ))}
               </motion.div>
             </AnimatePresence>
-          </div>
+          </motion.div>
 
           {/* Dots */}
           <div className="flex items-center justify-center gap-2 mt-6">

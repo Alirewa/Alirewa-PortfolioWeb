@@ -11,7 +11,6 @@ import CursorGlow from '@/components/CursorGlow'
 import AuroraBackground from '@/components/AuroraBackground'
 import BackgroundShapes from '@/components/BackgroundShapes'
 import OrbRings from '@/components/OrbRings'
-import PhaseDivider from '@/components/PhaseDivider'
 import SectionReveal from '@/components/SectionReveal'
 
 export default function Home() {
@@ -25,37 +24,12 @@ export default function Home() {
       <div className="relative z-10">
         <Navbar />
         <Hero />
-
-        <PhaseDivider num="01" color="#6366f1" />
-        <SectionReveal>
-          <About />
-        </SectionReveal>
-
-        <PhaseDivider num="02" color="#818cf8" />
-        <SectionReveal>
-          <ProfileCard />
-        </SectionReveal>
-
-        <PhaseDivider num="03" color="#0ea5e9" />
-        <SectionReveal>
-          <Skills />
-        </SectionReveal>
-
-        <PhaseDivider num="04" color="#8b5cf6" />
-        <SectionReveal>
-          <Projects />
-        </SectionReveal>
-
-        <PhaseDivider num="05" color="#a855f7" />
-        <SectionReveal>
-          <AITools />
-        </SectionReveal>
-
-        <PhaseDivider num="06" color="#10b981" />
-        <SectionReveal>
-          <Contact />
-        </SectionReveal>
-
+        <SectionReveal><About /></SectionReveal>
+        <SectionReveal><ProfileCard /></SectionReveal>
+        <SectionReveal><Skills /></SectionReveal>
+        <SectionReveal><Projects /></SectionReveal>
+        <SectionReveal><AITools /></SectionReveal>
+        <SectionReveal><Contact /></SectionReveal>
         <Footer />
       </div>
     </main>

@@ -76,7 +76,11 @@ export default function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black mb-5 tracking-tight leading-[0.95]"
+              className={`font-black mb-4 tracking-tight leading-[1.05] ${
+                isRTL
+                  ? 'text-4xl sm:text-5xl lg:text-6xl xl:text-6xl'
+                  : 'text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.95]'
+              }`}
             >
               <span className="gradient-text glow-text">{t.name}</span>
             </motion.h1>
@@ -107,7 +111,9 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="text-base md:text-lg dark:text-gray-400 text-gray-500 max-w-[52ch] mb-8 leading-[1.75]"
+              className={`text-base dark:text-gray-400 text-gray-500 mb-7 leading-[1.75] ${
+                isRTL ? 'max-w-[38ch]' : 'md:text-lg max-w-[52ch]'
+              }`}
             >
               {t.tagline}
             </motion.p>
@@ -117,7 +123,9 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex flex-wrap items-center gap-3 mb-8"
+              className={`flex flex-wrap items-center gap-3 mb-7 ${
+                isRTL ? 'justify-center lg:justify-end' : 'justify-center lg:justify-start'
+              }`}
             >
               {/* Primary */}
               <motion.button
@@ -155,7 +163,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className={`flex flex-wrap gap-2 justify-center ${isRTL ? 'lg:justify-end' : 'lg:justify-start'}`}
+              className={`flex flex-wrap gap-2 ${isRTL ? 'justify-center lg:justify-end' : 'justify-center lg:justify-start'}`}
             >
               {TECH_TAGS.map((tech, i) => (
                 <motion.span
