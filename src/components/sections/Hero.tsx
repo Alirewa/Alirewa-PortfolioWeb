@@ -148,14 +148,6 @@ export default function Hero() {
                 {t.ctaSecondary}
               </motion.button>
 
-              {/* Available badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full glass border border-green-500/22 bg-green-500/5">
-                <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-                </span>
-                <span className="text-xs font-semibold text-green-400 whitespace-nowrap">{t.available}</span>
-              </div>
             </motion.div>
 
             {/* Tech tags */}

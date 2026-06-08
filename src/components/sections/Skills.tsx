@@ -130,15 +130,6 @@ function CategoryPanel({
           ))}
         </div>
 
-        {/* Honest disclaimer for secondary categories */}
-        {!category.isPrimary && category.note && (
-          <p
-            className="mt-3 text-[11px] italic text-slate-600 dark:text-slate-400 leading-snug"
-            style={{ direction: 'ltr' }}
-          >
-            {lang === 'fa' && category.noteFa ? category.noteFa : category.note}
-          </p>
-        )}
       </div>
     </motion.div>
   )

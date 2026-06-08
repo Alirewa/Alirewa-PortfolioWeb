@@ -34,7 +34,7 @@ function ProjectCard({
   const [hovered, setHovered] = useState(false)
   return (
     <div
-      className="h-full glass-card p-5 flex flex-col overflow-hidden transition-all duration-300 cursor-default rounded-[1.25rem]"
+      className="h-full glass-card p-5 flex flex-col transition-all duration-300 cursor-default rounded-[1.25rem]"
       style={{
         borderColor: hovered ? `${project.color}50` : undefined,
         boxShadow: hovered ? `0 0 0 1px ${project.color}28, 0 20px 48px ${project.color}14` : undefined,
@@ -208,7 +208,7 @@ export default function Projects() {
           onMouseLeave={() => setPaused(false)}
         >
           {/* Cards */}
-          <div className="overflow-hidden w-full">
+          <div className="w-full py-3">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${page}-${cardsPerPage}`}
