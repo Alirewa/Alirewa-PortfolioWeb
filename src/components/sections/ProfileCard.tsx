@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { content } from '@/lib/content'
-import { useGithubProfile, useGithubRepos } from '@/lib/useGithubData'
+import { useGithubProfile, useGithubRepos, useGithubContributions } from '@/lib/useGithubData'
 
 /* ── 3×3 tech badge grid ── */
 const TECH_GRID = [
@@ -43,6 +43,7 @@ export default function ProfileCard() {
 
   const { profile } = useGithubProfile()
   const { repos, totalStars } = useGithubRepos()
+  const { count: contributions } = useGithubContributions()
 
   const ghBadges = profile
     ? [
@@ -51,12 +52,11 @@ export default function ProfileCard() {
       ]
     : []
 
-  // Live stat cards — override static content once GitHub data loads
   const liveStats = profile
     ? [
-        { value: '5+',               label: lang === 'en' ? 'Years Experience'      : 'سال تجربه'       },
-        { value: String(repos.length), label: lang === 'en' ? 'Open Source Projects' : 'پروژه متن‌باز'   },
-        { value: String(totalStars),   label: lang === 'en' ? 'GitHub Stars'         : 'ستاره گیتهاب'   },
+        { value: '5+',                                       label: lang === 'en' ? 'Years Experience'      : 'سال تجربه'       },
+        { value: String(repos.length),                       label: lang === 'en' ? 'Open Source Projects'  : 'پروژه متن‌باز'   },
+        { value: contributions !== null ? String(contributions) : '…', label: lang === 'en' ? 'Recent Contributions' : 'مشارکت اخیر' },
       ]
     : t.stats
 

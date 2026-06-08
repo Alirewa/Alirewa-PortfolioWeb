@@ -128,10 +128,10 @@ export default function Projects() {
   const { repos } = useGithubRepos()
 
   const [page, setPage] = useState(0)
+  const [animKey, setAnimKey] = useState(0)
   const [cardsPerPage, setCardsPerPage] = useState(1)
   const [paused, setPaused] = useState(false)
 
-  // Show cardsPerPage cards but advance 1 at a time → more dots
   const totalPages = Math.max(1, projects.length - cardsPerPage + 1)
 
   const getStars = (githubUrl: string | null): number | null => {
@@ -156,9 +156,10 @@ export default function Projects() {
     return () => window.removeEventListener('resize', update)
   }, [])
 
-  // Auto-rotate
+  // Auto-rotate: bumps animKey so slide animation fires
   const advance = useCallback(() => {
     setPage((p) => (p + 1) % totalPages)
+    setAnimKey((k) => k + 1)
   }, [totalPages])
 
   useEffect(() => {
@@ -167,23 +168,23 @@ export default function Projects() {
     return () => clearInterval(iv)
   }, [advance, paused, isInView])
 
-  // Reset page when cardsPerPage changes
   useEffect(() => {
     setPage(0)
+    setAnimKey(0)
   }, [cardsPerPage])
 
   const currentCards = projects.slice(page, page + cardsPerPage)
   const slideDir = isRTL ? -1 : 1
 
-  const goNext = useCallback(() => setPage((p) => Math.min(totalPages - 1, p + 1)), [totalPages])
-  const goPrev = useCallback(() => setPage((p) => Math.max(0, p - 1)), [])
-
+  // Drag: page only — no animKey → no slide animation
   const handleDragEnd = useCallback((_: unknown, info: { offset: { x: number } }) => {
     const threshold = 40
-    if (info.offset.x < -threshold) isRTL ? goPrev() : goNext()
-    else if (info.offset.x > threshold) isRTL ? goNext() : goPrev()
+    if (info.offset.x < -threshold)
+      setPage((p) => isRTL ? Math.max(0, p - 1) : Math.min(totalPages - 1, p + 1))
+    else if (info.offset.x > threshold)
+      setPage((p) => isRTL ? Math.min(totalPages - 1, p + 1) : Math.max(0, p - 1))
     setPaused(false)
-  }, [isRTL, goNext, goPrev])
+  }, [isRTL, totalPages])
 
   return (
     <section
@@ -229,7 +230,7 @@ export default function Projects() {
           >
             <AnimatePresence mode="wait">
               <motion.div
-                key={`${page}-${cardsPerPage}`}
+                key={`${animKey}-${cardsPerPage}`}
                 initial={{ opacity: 0, x: 30 * slideDir }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -30 * slideDir }}
@@ -259,7 +260,7 @@ export default function Projects() {
             {Array.from({ length: totalPages }).map((_, i) => (
               <button
                 key={i}
-                onClick={() => setPage(i)}
+                onClick={() => { setPage(i); setAnimKey((k) => k + 1) }}
                 className="transition-all duration-300 rounded-full cursor-pointer"
                 style={{
                   width: i === page ? 22 : 6,

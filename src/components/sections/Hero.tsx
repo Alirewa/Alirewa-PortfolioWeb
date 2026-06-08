@@ -51,7 +51,7 @@ export default function Hero() {
             className={`flex-1 flex flex-col items-center text-center ${
               isRTL ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'
             }`}
-            style={{ direction: isRTL ? 'rtl' : 'ltr' }}
+            style={{ direction: 'ltr' }}
           >
             {/* Greeting */}
             {!isRTL && (
@@ -111,8 +111,8 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className={`text-base dark:text-gray-400 text-gray-500 mb-7 leading-[1.75] ${
-                isRTL ? 'max-w-[38ch]' : 'md:text-lg max-w-[52ch]'
+              className={`text-base md:text-lg dark:text-gray-400 text-gray-500 max-w-[52ch] mb-7 leading-[1.75] ${
+                isRTL ? 'text-right' : ''
               }`}
             >
               {t.tagline}
