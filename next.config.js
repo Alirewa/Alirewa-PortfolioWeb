@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const isGitHubPages = process.env.GITHUB_PAGES === 'true'
-const basePath = isGitHubPages ? '/Alirewa-portfolio-website' : ''
+const basePath = isGitHubPages ? '/MyPersonal-Portfolio-Website' : ''
 
 const nextConfig = {
   output: 'export',

@@ -40,7 +40,7 @@ jobs:
       - name: Fix self-hosted font paths for subdirectory deployment
         run: |
           find out/_next/static/css -name "*.css" -type f -exec \
-            sed -i 's|url(/fonts/|url(/Alirewa-portfolio-website/fonts/|g' {} + \
+            sed -i 's|url(/fonts/|url(/MyPersonal-Portfolio-Website/fonts/|g' {} + \
             2>/dev/null || echo "No CSS font paths to fix"
 
       - name: Add .nojekyll (disable Jekyll processing)
