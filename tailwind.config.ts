@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['DM Sans', 'sans-serif'],
         fa: ['Vazirmatn', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },

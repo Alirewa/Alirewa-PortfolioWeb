@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://alirezapourgholam.dev'),
   title: 'Alireza Pourgholam | Frontend Developer & React Specialist',
   description:
-    'Alireza Pourgholam is a passionate Frontend Developer specializing in React.js, Next.js, TypeScript, and Telegram Bot development. Building beautiful, performant web experiences.',
+    'Alireza Pourgholam is a Frontend Developer specializing in React.js, Next.js, TypeScript, and modern web technologies. Building fast, beautiful, and scalable web experiences.',
   keywords: [
     'Alireza Pourgholam',
     'Frontend Developer',
@@ -14,10 +14,13 @@ export const metadata: Metadata = {
     'Next.js',
     'TypeScript',
     'Tailwind CSS',
-    'Telegram Bot',
-    'Python',
+    'JavaScript',
     'Web Developer Iran',
     'UI Developer',
+    'Kish Island',
+    'Framer Motion',
+    'Three.js',
+    'Open Source',
   ],
   authors: [{ name: 'Alireza Pourgholam' }],
   creator: 'Alireza Pourgholam',
@@ -27,7 +30,7 @@ export const metadata: Metadata = {
     url: 'https://alirezapourgholam.dev',
     title: 'Alireza Pourgholam | Frontend Developer',
     description:
-      'Crafting digital experiences at the intersection of code and creativity. React.js, Next.js, TypeScript & Telegram Bot specialist.',
+      'Frontend Developer crafting fast, modern, and scalable web experiences with React.js, Next.js, and TypeScript.',
     siteName: 'Alireza Pourgholam Portfolio',
     images: [
       {
@@ -41,7 +44,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Alireza Pourgholam | Frontend Developer',
-    description: 'Crafting digital experiences at the intersection of code and creativity.',
+    description: 'Frontend Developer crafting fast, modern, and scalable web experiences.',
     images: ['/og-image.png'],
   },
   robots: {
@@ -66,8 +69,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="noise">
         <Providers>{children}</Providers>

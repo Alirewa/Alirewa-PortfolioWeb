@@ -20,7 +20,7 @@ export default function OrbRings() {
   return (
     <motion.div
       style={{ opacity, zIndex: 2 }}
-      className="fixed inset-0 pointer-events-none overflow-hidden"
+      className="fixed inset-0 pointer-events-none overflow-hidden hidden md:block"
       aria-hidden="true"
     >
       {/* Center point: orb lives in the right column ~62% from left, ~42% from top */}

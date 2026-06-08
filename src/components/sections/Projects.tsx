@@ -178,7 +178,7 @@ export default function Projects() {
     <section
       id="projects"
       ref={ref}
-      className="relative py-20 md:py-28 px-4 sm:px-6"
+      className="relative py-16 md:py-24 px-4 sm:px-6"
       style={{ direction: isRTL ? 'rtl' : 'ltr' }}
     >
       <div className="max-w-6xl mx-auto">

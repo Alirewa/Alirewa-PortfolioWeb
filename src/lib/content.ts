@@ -138,7 +138,7 @@ export const content = {
     },
     about: {
       title: 'About Me',
-      subtitle: 'Frontend developer · Kish Island, Iran · Open to freelance.',
+      subtitle: 'Frontend developer · Open to freelance.',
       bio1: "Hi, I'm Alireza Pourgholam — a Frontend Developer passionate about building modern, practical user experiences. Based on Kish Island, I focus on fast, clean, and scalable UIs using the latest web technologies. From UI/UX design and implementation to performance optimization and frontend architecture, I always strive to balance visual aesthetics with great user experience.",
       bio2: "Throughout development I use AI tools like Claude, Cursor, Gemini, ChatGPT, and other smart assistants to make the process faster, more precise, and more efficient. I believe AI doesn't replace developers — it's a powerful tool for boosting productivity and staying focused on solving more meaningful problems.",
       bio3: "Beyond commercial work, I'm passionate about open-source. I spend part of my time building tools, libraries, and public projects, publishing them on GitHub so other developers can use, extend, or draw inspiration from them. Continuous learning, knowledge sharing, and contributing to the open-source community are some of my favorite parts of programming.",
@@ -157,7 +157,7 @@ export const content = {
           name: 'Frontend',
           badge: 'Primary Expertise',
           icon: 'Monitor',
-          color: '#6366f1',
+          color: '#f59e0b',
           isPrimary: true,
           skills: [
             { name: 'React.js', level: 95 },
@@ -172,7 +172,7 @@ export const content = {
           name: 'DevOps & Deploy',
           badge: 'Strong Skills',
           icon: 'Server',
-          color: '#10b981',
+          color: '#6b7280',
           isPrimary: false,
           skills: [
             { name: 'Git & GitHub', level: 92 },
@@ -186,10 +186,8 @@ export const content = {
           name: 'Backend & APIs',
           badge: 'Supporting Role',
           icon: 'Wrench',
-          color: '#f59e0b',
+          color: '#6b7280',
           isPrimary: false,
-          note: 'Supporting skills — not my primary focus.',
-          noteFa: 'مهارت‌های پشتیبان — تخصص اصلی من نیست.',
           skills: [
             { name: 'Python', level: 82 },
             { name: 'Telegram Bot API', level: 88 },
@@ -302,7 +300,7 @@ export const content = {
     },
     about: {
       title: 'درباره من',
-      subtitle: 'توسعه‌دهنده فرانت‌اند · جزیره کیش · آماده همکاری فریلنسری.',
+      subtitle: 'توسعه‌دهنده فرانت‌اند · آماده همکاری فریلنسری.',
       bio1: 'سلام، من علیرضا پورغلام هستم؛ توسعه‌دهنده فرانت‌اند و علاقه‌مند به ساخت تجربه‌های کاربری مدرن و کاربردی. در جزیره کیش فعالیت می‌کنم و تمرکزم روی توسعه رابط‌های کاربری سریع، تمیز و مقیاس‌پذیر با تکنولوژی‌های روز وب است. از طراحی و پیاده‌سازی UI/UX گرفته تا بهینه‌سازی عملکرد، معماری فرانت‌اند و تبدیل ایده‌ها به محصولی قابل استفاده، همیشه سعی می‌کنم بین زیبایی بصری و تجربه کاربری تعادل برقرار کنم.',
       bio2: 'در مسیر توسعه، از ابزارهای هوش مصنوعی مانند Claude، Cursor، Gemini، ChatGPT و سایر دستیارهای هوشمند به عنوان ابزارهای کمکی استفاده می‌کنم تا فرآیند توسعه سریع‌تر، دقیق‌تر و بهینه‌تر پیش برود. به نظرم هوش مصنوعی جایگزین توسعه‌دهنده نیست؛ بلکه ابزاری قدرتمند برای افزایش بهره‌وری و تمرکز روی حل مسائل مهم‌تر است.',
       bio3: 'علاوه بر پروژه‌های تجاری، به توسعه پروژه‌های متن‌باز نیز علاقه زیادی دارم. بخشی از زمانم را صرف ساخت ابزارها، کتابخانه‌ها و پروژه‌های عمومی می‌کنم و آن‌ها را در گیت‌هاب منتشر می‌کنم تا برای سایر توسعه‌دهندگان نیز مفید باشند. یادگیری مداوم، اشتراک دانش و مشارکت در جامعه متن‌باز از بخش‌های مورد علاقه من در دنیای برنامه‌نویسی است.',
@@ -321,7 +319,7 @@ export const content = {
           name: 'فرانت‌اند',
           badge: 'تخصص اصلی',
           icon: 'Monitor',
-          color: '#6366f1',
+          color: '#f59e0b',
           isPrimary: true,
           skills: [
             { name: 'React.js', level: 95 },
@@ -336,7 +334,7 @@ export const content = {
           name: 'دپلوی و DevOps',
           badge: 'مهارت قوی',
           icon: 'Server',
-          color: '#10b981',
+          color: '#6b7280',
           isPrimary: false,
           skills: [
             { name: 'Git & GitHub', level: 92 },
@@ -350,10 +348,8 @@ export const content = {
           name: 'بک‌اند و API',
           badge: 'نقش پشتیبان',
           icon: 'Wrench',
-          color: '#f59e0b',
+          color: '#6b7280',
           isPrimary: false,
-          note: 'Supporting skills — not my primary focus.',
-          noteFa: 'مهارت‌های پشتیبان — تخصص اصلی من نیست.',
           skills: [
             { name: 'Python', level: 82 },
             { name: 'Telegram Bot API', level: 88 },

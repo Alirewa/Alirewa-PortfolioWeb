@@ -42,7 +42,7 @@ export default function Hero() {
 
         {/* ── Main layout ── */}
         <div
-          className="flex flex-col-reverse items-center gap-10 lg:flex-row lg:items-center lg:gap-12 xl:gap-16"
+          className="flex flex-col-reverse items-center gap-6 lg:flex-row lg:items-center lg:gap-10 xl:gap-12"
           style={{ direction: 'ltr' }}
         >
 

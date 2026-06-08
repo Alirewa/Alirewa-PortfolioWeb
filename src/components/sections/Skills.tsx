@@ -14,45 +14,46 @@ function CategoryIcon({ name, color }: { name: string; color: string }) {
   return <Icon className="w-4 h-4" style={{ color }} />
 }
 
-/* ── Single square skill card — filled, no number ── */
 function SkillCard({
   name,
   color,
   delay,
   isInView,
+  isPrimary,
 }: {
   name: string
   color: string
   delay: number
   isInView: boolean
+  isPrimary: boolean
 }) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.88, y: 10 }}
       animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.88, y: 10 }}
       transition={{ duration: 0.35, delay }}
-      whileHover={{ y: -2, scale: 1.05 }}
-      className="relative flex items-center justify-center text-center px-2 py-3 rounded-xl cursor-default transition-all duration-200 overflow-hidden"
+      whileHover={{ y: -2, scale: 1.04 }}
+      className="relative flex items-center justify-center text-center px-2 py-3 rounded-xl cursor-default transition-all duration-200"
       style={{
-        background: `${color}14`,
-        border: `1px solid ${color}30`,
-        minHeight: '52px',
+        background: `${color}${isPrimary ? '18' : '0e'}`,
+        border: `1px solid ${color}${isPrimary ? '38' : '22'}`,
+        minHeight: isPrimary ? '54px' : '46px',
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
-        el.style.background = `${color}24`
-        el.style.boxShadow = `0 4px 18px ${color}28`
-        el.style.borderColor = `${color}50`
+        el.style.background = `${color}28`
+        el.style.boxShadow = `0 4px 16px ${color}30`
+        el.style.borderColor = `${color}55`
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement
-        el.style.background = `${color}14`
+        el.style.background = `${color}${isPrimary ? '18' : '0e'}`
         el.style.boxShadow = ''
-        el.style.borderColor = `${color}30`
+        el.style.borderColor = `${color}${isPrimary ? '38' : '22'}`
       }}
     >
       <span
-        className="text-xs font-semibold leading-tight"
+        className={`leading-tight ${isPrimary ? 'text-xs font-semibold' : 'text-[11px] font-medium opacity-80'}`}
         style={{ color, direction: 'ltr' }}
       >
         {name}
@@ -61,7 +62,6 @@ function SkillCard({
   )
 }
 
-/* ── Category panel ── */
 function CategoryPanel({
   category,
   catIndex,
@@ -74,51 +74,60 @@ function CategoryPanel({
   isInView: boolean
   lang: string
 }) {
+  const isPrimary = category.isPrimary
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
       transition={{ duration: 0.55, delay: catIndex * 0.12 }}
-      className="relative rounded-2xl overflow-hidden dark:bg-white/[0.02] bg-white/60 border dark:border-white/8 border-gray-200/60"
+      className={`relative rounded-2xl overflow-hidden border h-full ${
+        isPrimary
+          ? 'dark:bg-amber-500/[0.05] bg-amber-50/70 dark:border-amber-400/25 border-amber-200/60'
+          : 'dark:bg-white/[0.018] bg-white/55 dark:border-white/7 border-gray-200/55 opacity-85'
+      }`}
+      style={isPrimary ? {
+        boxShadow: '0 0 52px rgba(245,158,11,0.14), 0 8px 32px rgba(0,0,0,0.10)',
+      } : undefined}
     >
       {/* Header */}
       <div
-        className="flex items-center justify-between gap-3 px-5 py-4 border-b dark:border-white/6 border-gray-200/50"
-        style={{ background: `${category.color}08` }}
+        className="flex items-center justify-between gap-3 px-5 py-4 border-b"
+        style={{
+          background: `${category.color}${isPrimary ? '12' : '07'}`,
+          borderColor: `${category.color}${isPrimary ? '28' : '14'}`,
+        }}
       >
         <div className="flex items-center gap-2.5">
           <div
             className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-            style={{ background: `${category.color}18`, border: `1px solid ${category.color}30` }}
+            style={{
+              background: `${category.color}${isPrimary ? '22' : '14'}`,
+              border: `1px solid ${category.color}35`,
+            }}
           >
             <CategoryIcon name={category.icon} color={category.color} />
           </div>
-          <div>
-            <h3 className="text-sm font-bold dark:text-white text-gray-800 leading-tight">
-              {category.name}
-            </h3>
-          </div>
+          <h3 className={`font-bold dark:text-white text-gray-800 leading-tight ${isPrimary ? 'text-base' : 'text-sm'}`}>
+            {category.name}
+          </h3>
         </div>
 
-        {/* Badge */}
         <span
-          className={`shrink-0 text-[9px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap ${
-            category.isPrimary ? 'ring-1' : ''
-          }`}
+          className="shrink-0 text-[9px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap"
           style={{
-            background: `${category.color}18`,
-            color: category.color,
-            border: `1px solid ${category.color}35`,
-            ...(category.isPrimary ? { ringColor: category.color } : {}),
+            background: `${category.color}${isPrimary ? '20' : '12'}`,
+            color: isPrimary ? category.color : `${category.color}bb`,
+            border: `1px solid ${category.color}${isPrimary ? '40' : '25'}`,
           }}
         >
           {category.badge}
         </span>
       </div>
 
-      {/* Skill cards grid */}
+      {/* Skill grid */}
       <div className="p-4">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-2 gap-2">
           {category.skills.map((skill: { name: string; level: number }, si: number) => (
             <SkillCard
               key={skill.name}
@@ -126,10 +135,10 @@ function CategoryPanel({
               color={category.color}
               delay={catIndex * 0.08 + si * 0.06}
               isInView={isInView}
+              isPrimary={isPrimary}
             />
           ))}
         </div>
-
       </div>
     </motion.div>
   )
@@ -148,7 +157,7 @@ export default function Skills() {
     <section
       id="skills"
       ref={ref}
-      className="relative py-20 md:py-28 px-4 sm:px-6"
+      className="relative py-16 md:py-24 px-4 sm:px-6"
       style={{ direction: isRTL ? 'rtl' : 'ltr' }}
     >
       {/* Grid background */}
@@ -162,7 +171,6 @@ export default function Skills() {
           backgroundSize: '48px 48px',
         }}
       />
-      {/* Top accent */}
       <div
         className="absolute inset-x-0 top-0 h-px dark:opacity-100 opacity-0"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(99,102,241,0.20) 30%, rgba(139,92,246,0.20) 70%, transparent)' }}
@@ -186,18 +194,28 @@ export default function Skills() {
           <p className="text-slate-600 dark:text-slate-400 text-base max-w-lg leading-relaxed">{t.subtitle}</p>
         </motion.div>
 
-        {/* Primary category — full width */}
-        <div className="mb-5">
-          {primary.map((cat, i) => (
-            <CategoryPanel key={cat.name} category={cat} catIndex={i} isInView={isInView} lang={lang} />
-          ))}
-        </div>
+        {/* 3-column: secondary | primary (golden) | secondary */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
+          {/* DevOps — left on desktop, second on mobile */}
+          <div className="order-2 md:order-1">
+            {secondary[0] && (
+              <CategoryPanel category={secondary[0]} catIndex={1} isInView={isInView} lang={lang} />
+            )}
+          </div>
 
-        {/* Secondary categories — 2-col */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {secondary.map((cat, i) => (
-            <CategoryPanel key={cat.name} category={cat} catIndex={i + primary.length} isInView={isInView} lang={lang} />
-          ))}
+          {/* Frontend — center on desktop, first on mobile */}
+          <div className="order-1 md:order-2">
+            {primary[0] && (
+              <CategoryPanel category={primary[0]} catIndex={0} isInView={isInView} lang={lang} />
+            )}
+          </div>
+
+          {/* Backend — right on desktop, third on mobile */}
+          <div className="order-3">
+            {secondary[1] && (
+              <CategoryPanel category={secondary[1]} catIndex={2} isInView={isInView} lang={lang} />
+            )}
+          </div>
         </div>
 
       </div>
