@@ -107,12 +107,12 @@ export default function HeroOrb({ isDark = true }: { isDark?: boolean }) {
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         dpr={[1, 1.5]}
       >
-        <ambientLight intensity={isDark ? 0.28 : 0.5} />
-        <pointLight position={[0, 0, 3.5]} color="#ffffff" intensity={isDark ? 5 : 6} />
-        <pointLight position={[2.5, 3, 2.5]} color="#818cf8" intensity={isDark ? 22 : 32} />
-        <pointLight position={[-2, -2, 2]} color="#38bdf8" intensity={isDark ? 14 : 38} />
-        <pointLight position={[0, 1, -2]} color="#a78bfa" intensity={isDark ? 8 : 18} />
-        <pointLight position={[1.5, -1.5, 1.5]} color="#0ea5e9" intensity={isDark ? 9 : 28} distance={6} />
+        <ambientLight intensity={isDark ? 0.28 : 0.12} />
+        <pointLight position={[0, 0, 3.5]} color="#ffffff" intensity={isDark ? 5 : 2} />
+        <pointLight position={[2.5, 3, 2.5]} color="#818cf8" intensity={isDark ? 22 : 30} />
+        <pointLight position={[-2, -2, 2]} color="#38bdf8" intensity={isDark ? 14 : 48} />
+        <pointLight position={[0, 1, -2]} color="#a78bfa" intensity={isDark ? 8 : 22} />
+        <pointLight position={[1.5, -1.5, 1.5]} color="#0ea5e9" intensity={isDark ? 9 : 40} distance={6} />
         <OrbitLight />
         <BracketGroup />
       </Canvas>

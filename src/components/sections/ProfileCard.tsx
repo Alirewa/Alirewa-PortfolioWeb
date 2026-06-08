@@ -42,15 +42,23 @@ export default function ProfileCard() {
   const t = content[lang].about
 
   const { profile } = useGithubProfile()
-  const { totalStars } = useGithubRepos()
+  const { repos, totalStars } = useGithubRepos()
 
   const ghBadges = profile
     ? [
-        { icon: Users, value: profile.followers,    label: lang === 'en' ? 'Followers' : 'فالوور' },
-        { icon: Code2, value: profile.public_repos, label: lang === 'en' ? 'Repos'     : 'ریپو'   },
-        { icon: Star,  value: totalStars,            label: lang === 'en' ? 'Stars'     : 'ستاره'  },
+        { icon: Users, value: profile.followers, label: lang === 'en' ? 'Followers' : 'فالوور' },
+        { icon: Star,  value: totalStars,         label: lang === 'en' ? 'Stars'     : 'ستاره'  },
       ]
     : []
+
+  // Live stat cards — override static content once GitHub data loads
+  const liveStats = profile
+    ? [
+        { value: '5+',               label: lang === 'en' ? 'Years Experience'      : 'سال تجربه'       },
+        { value: String(repos.length), label: lang === 'en' ? 'Open Source Projects' : 'پروژه متن‌باز'   },
+        { value: String(totalStars),   label: lang === 'en' ? 'GitHub Stars'         : 'ستاره گیتهاب'   },
+      ]
+    : t.stats
 
   return (
     <section
@@ -156,7 +164,7 @@ export default function ProfileCard() {
           >
             {/* Stat cards */}
             <div className="flex gap-3 flex-wrap">
-              {t.stats.map((stat, i) => (
+              {liveStats.map((stat, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 10 }}

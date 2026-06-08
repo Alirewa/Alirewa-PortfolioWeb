@@ -131,7 +131,8 @@ export default function Projects() {
   const [cardsPerPage, setCardsPerPage] = useState(1)
   const [paused, setPaused] = useState(false)
 
-  const totalPages = Math.ceil(projects.length / cardsPerPage)
+  // Show cardsPerPage cards but advance 1 at a time → more dots
+  const totalPages = Math.max(1, projects.length - cardsPerPage + 1)
 
   const getStars = (githubUrl: string | null): number | null => {
     if (!githubUrl) return null
@@ -171,7 +172,7 @@ export default function Projects() {
     setPage(0)
   }, [cardsPerPage])
 
-  const currentCards = projects.slice(page * cardsPerPage, page * cardsPerPage + cardsPerPage)
+  const currentCards = projects.slice(page, page + cardsPerPage)
   const slideDir = isRTL ? -1 : 1
 
   return (
