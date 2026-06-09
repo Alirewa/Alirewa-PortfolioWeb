@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -100,12 +100,19 @@ function BracketGroup() {
 }
 
 export default function HeroOrb({ isDark = true }: { isDark?: boolean }) {
+  const [ready, setReady] = useState(false)
+
   return (
-    <div className="mx-auto mb-2 pointer-events-none select-none w-[300px] h-[200px] lg:w-[460px] lg:h-[320px]">
+    <div
+      className="mx-auto mb-2 pointer-events-none select-none w-[300px] h-[200px] lg:w-[460px] lg:h-[320px] transition-opacity duration-700"
+      style={{ opacity: ready ? 1 : 0 }}
+    >
       <Canvas
         camera={{ position: [0, 0, 3.0], fov: 44 }}
-        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-        dpr={[1, 1.5]}
+        gl={{ antialias: false, alpha: true, powerPreference: 'default' }}
+        dpr={1}
+        performance={{ min: 0.5 }}
+        onCreated={() => setReady(true)}
       >
         <ambientLight intensity={isDark ? 0.28 : 0.12} />
         <pointLight position={[0, 0, 3.5]} color="#ffffff" intensity={isDark ? 5 : 2} />

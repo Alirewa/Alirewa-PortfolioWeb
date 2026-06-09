@@ -10,7 +10,16 @@ import { content } from '@/lib/content'
 
 const HeroOrb = dynamic(() => import('@/components/three/HeroOrb'), {
   ssr: false,
-  loading: () => <div className="w-[300px] h-[200px] lg:w-[440px] lg:h-[300px]" />,
+  loading: () => (
+    <div className="w-[300px] h-[200px] lg:w-[460px] lg:h-[320px] flex items-center justify-center">
+      <div className="relative w-24 h-24">
+        <div className="absolute inset-0 rounded-full border border-indigo-500/20 animate-ping" style={{ animationDuration: '1.8s' }} />
+        <div className="absolute inset-2 rounded-full border border-indigo-400/30 animate-spin" style={{ animationDuration: '3s', borderTopColor: 'transparent' }} />
+        <div className="absolute inset-4 rounded-full border border-sky-400/25 animate-spin" style={{ animationDuration: '2s', animationDirection: 'reverse', borderTopColor: 'transparent' }} />
+        <div className="absolute inset-0 rounded-full" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)' }} />
+      </div>
+    </div>
+  ),
 })
 
 const TECH_TAGS = ['React.js', 'Next.js', 'TypeScript', 'Tailwind', 'Python', 'Three.js']
