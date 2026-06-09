@@ -2,7 +2,7 @@
 
 Personal portfolio website built with Next.js, React Three Fiber, and Framer Motion. Bilingual (English / Persian), with full dark mode, responsive layout, and a 3D interactive element in the hero.
 
-**Live:** [alirezapourgholam.dev](https://alirezapourgholam.dev)
+**Live:** https://alirewa.github.io/MyPersonal-Portfolio-Website/
 
 ---
 
