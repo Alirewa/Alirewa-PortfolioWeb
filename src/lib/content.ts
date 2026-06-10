@@ -224,7 +224,7 @@ export const content = {
         },
         {
           name: 'Graphic Design',
-          badge: 'Creative',
+          badge: '2 Years',
           icon: 'Palette',
           color: '#f43f5e',
           isPrimary: false,
@@ -414,7 +414,7 @@ export const content = {
         },
         {
           name: 'طراحی گرافیک',
-          badge: 'خلاقانه',
+          badge: '۲ سال',
           icon: 'Palette',
           color: '#f43f5e',
           isPrimary: false,

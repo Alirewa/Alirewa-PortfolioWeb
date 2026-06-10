@@ -26,6 +26,7 @@ export default function SectionReveal({ children, className }: SectionRevealProp
       initial={{ opacity: 0, y: 36 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 36 }}
       transition={{ duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
+      style={{ willChange: 'transform, opacity' }}
       className={className}
     >
       {children}

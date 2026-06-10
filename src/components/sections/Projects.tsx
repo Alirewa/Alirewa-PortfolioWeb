@@ -190,8 +190,12 @@ export default function Projects() {
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div ref={emblaRef} className="overflow-hidden w-full cursor-grab active:cursor-grabbing">
-            <div className="flex py-3" style={{ marginLeft: '-1rem' }}>
+          <div
+            ref={emblaRef}
+            className="w-full cursor-grab active:cursor-grabbing"
+            style={{ overflowX: 'clip', overflowY: 'visible', paddingBlock: '14px', marginBlock: '-14px' }}
+          >
+            <div className="flex py-0" style={{ marginLeft: '-1rem' }}>
               {projects.map((project) => (
                 <div
                   key={project.id}

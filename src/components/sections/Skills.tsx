@@ -1,7 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { ChevronDown, ChevronUp } from 'lucide-react'
 import * as Icons from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { content } from '@/lib/content'
@@ -150,6 +151,8 @@ export default function Skills() {
   const { lang, isRTL } = useLang()
   const t = content[lang].skills
 
+  const [showSecondary, setShowSecondary] = useState(false)
+
   const primary   = t.categories.filter((c) => c.isPrimary)
   const secondary = t.categories.filter((c) => !c.isPrimary)
   // Row 1: DevOps, Frontend, Backend — Row 2: WordPress, Graphic Design
@@ -209,11 +212,54 @@ export default function Skills() {
           </div>
         </div>
 
+        {/* Toggle button for secondary skills */}
+        <AnimatePresence>
+          {!showSecondary && (
+            <motion.div
+              key="show-btn"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.3 }}
+              className="flex justify-center mt-5"
+            >
+              <button
+                onClick={() => setShowSecondary(true)}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium border border-dashed border-indigo-400/40 dark:text-indigo-400 text-indigo-600 hover:border-indigo-400/70 hover:bg-indigo-500/5 transition-all duration-200 cursor-pointer"
+              >
+                <ChevronDown className="w-4 h-4" />
+                {lang === 'en' ? 'Show All Skills & Experience' : 'مشاهده همه مهارت‌ها و تجربه‌ها'}
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Row 2: WordPress | Graphic Design — lighter treatment */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl mx-auto opacity-80">
-          {wordpress && <CategoryPanel category={wordpress} catIndex={3} isInView={isInView} lang={lang} />}
-          {graphicDesign && <CategoryPanel category={graphicDesign} catIndex={4} isInView={isInView} lang={lang} />}
-        </div>
+        <AnimatePresence>
+          {showSecondary && (
+            <motion.div
+              key="secondary-row"
+              initial={{ opacity: 0, height: 0, overflow: 'hidden' }}
+              animate={{ opacity: 1, height: 'auto', overflow: 'visible' }}
+              exit={{ opacity: 0, height: 0, overflow: 'hidden' }}
+              transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl mx-auto opacity-80 mt-5">
+                {wordpress && <CategoryPanel category={wordpress} catIndex={3} isInView={isInView} lang={lang} />}
+                {graphicDesign && <CategoryPanel category={graphicDesign} catIndex={4} isInView={isInView} lang={lang} />}
+              </div>
+              <div className="flex justify-center mt-4">
+                <button
+                  onClick={() => setShowSecondary(false)}
+                  className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-medium text-slate-500 dark:text-slate-500 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors cursor-pointer"
+                >
+                  <ChevronUp className="w-3.5 h-3.5" />
+                  {lang === 'en' ? 'Show Less' : 'بستن'}
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </section>
