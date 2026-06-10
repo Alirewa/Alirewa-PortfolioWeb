@@ -190,12 +190,14 @@ export default function Projects() {
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div
-            ref={emblaRef}
-            className="w-full cursor-grab active:cursor-grabbing"
-            style={{ overflowX: 'clip', overflowY: 'visible', paddingBlock: '14px', marginBlock: '-14px' }}
-          >
-            <div className="flex py-0" style={{ marginLeft: '-1rem' }}>
+          {/* Outer wrapper clips carousel width; inner ref stays overflow:visible so card shadows show on all sides */}
+          <div style={{ overflow: 'hidden', marginInline: '-8px' }}>
+            <div
+              ref={emblaRef}
+              className="w-full cursor-grab active:cursor-grabbing"
+              style={{ overflow: 'visible', paddingBlock: '14px', marginBlock: '-14px', paddingInline: '8px' }}
+            >
+            <div className="flex" style={{ marginLeft: '-1rem' }}>
               {projects.map((project) => (
                 <div
                   key={project.id}
@@ -205,6 +207,7 @@ export default function Projects() {
                   <ProjectCard project={project} getStars={getStars} t={t} lang={lang} />
                 </div>
               ))}
+            </div>
             </div>
           </div>
 
