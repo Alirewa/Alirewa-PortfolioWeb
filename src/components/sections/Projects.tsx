@@ -1,7 +1,9 @@
 'use client'
 
-import { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
+import AutoPlay from 'embla-carousel-autoplay'
+import { motion, useInView } from 'framer-motion'
 import * as Icons from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { content, projects } from '@/lib/content'
@@ -127,12 +129,28 @@ export default function Projects() {
   const t = content[lang].projects
   const { repos } = useGithubRepos()
 
-  const [page, setPage] = useState(0)
-  const [animKey, setAnimKey] = useState(0)
-  const [cardsPerPage, setCardsPerPage] = useState(1)
-  const [paused, setPaused] = useState(false)
+  const autoplay = useRef(AutoPlay({ delay: 3500, stopOnInteraction: true, stopOnMouseEnter: true }))
 
-  const totalPages = Math.max(1, projects.length - cardsPerPage + 1)
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: 'start', direction: isRTL ? 'rtl' : 'ltr', dragFree: false },
+    [autoplay.current],
+  )
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setSelectedIndex(emblaApi.selectedScrollSnap())
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    setScrollSnaps(emblaApi.scrollSnapList())
+    onSelect()
+    emblaApi.on('select', onSelect)
+    return () => { emblaApi.off('select', onSelect) }
+  }, [emblaApi, onSelect])
 
   const getStars = (githubUrl: string | null): number | null => {
     if (!githubUrl) return null
@@ -140,51 +158,6 @@ export default function Projects() {
     const repo = repos.find((r) => r.name === repoName)
     return repo ? repo.stargazers_count : null
   }
-
-  // Responsive cards per page — useLayoutEffect to avoid initial flash
-  const calcCards = () => {
-    if (typeof window === 'undefined') return 1
-    const w = window.innerWidth
-    if (w >= 1024) return 4
-    if (w >= 768) return 3
-    return 1
-  }
-  useLayoutEffect(() => {
-    const update = () => setCardsPerPage(calcCards())
-    update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
-  }, [])
-
-  // Auto-rotate: bumps animKey so slide animation fires
-  const advance = useCallback(() => {
-    setPage((p) => (p + 1) % totalPages)
-    setAnimKey((k) => k + 1)
-  }, [totalPages])
-
-  useEffect(() => {
-    if (paused || !isInView) return
-    const iv = setInterval(advance, 3500)
-    return () => clearInterval(iv)
-  }, [advance, paused, isInView])
-
-  useEffect(() => {
-    setPage(0)
-    setAnimKey(0)
-  }, [cardsPerPage])
-
-  const currentCards = projects.slice(page, page + cardsPerPage)
-  const slideDir = isRTL ? -1 : 1
-
-  // Drag: page only — no animKey → no slide animation
-  const handleDragEnd = useCallback((_: unknown, info: { offset: { x: number } }) => {
-    const threshold = 40
-    if (info.offset.x < -threshold)
-      setPage((p) => isRTL ? Math.max(0, p - 1) : Math.min(totalPages - 1, p + 1))
-    else if (info.offset.x > threshold)
-      setPage((p) => isRTL ? Math.min(totalPages - 1, p + 1) : Math.max(0, p - 1))
-    setPaused(false)
-  }, [isRTL, totalPages])
 
   return (
     <section
@@ -211,61 +184,37 @@ export default function Projects() {
           <p className="text-slate-600 dark:text-slate-400 text-base max-w-lg leading-relaxed">{t.subtitle}</p>
         </motion.div>
 
-        {/* Carousel */}
+        {/* Embla carousel */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
         >
-          {/* Draggable track */}
-          <motion.div
-            className="w-full py-3 cursor-grab active:cursor-grabbing select-none"
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.12}
-            onDragStart={() => setPaused(true)}
-            onDragEnd={handleDragEnd}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`${animKey}-${cardsPerPage}`}
-                initial={{ opacity: 0, x: 30 * slideDir }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 * slideDir }}
-                transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className={`grid gap-4 min-w-0 ${
-                  cardsPerPage === 4 ? 'grid-cols-4' :
-                  cardsPerPage === 3 ? 'grid-cols-3' :
-                  'grid-cols-1'
-                }`}
-              >
-                {currentCards.map((project) => (
-                  <div key={project.id} className="min-w-0 h-full">
-                    <ProjectCard
-                      project={project}
-                      getStars={getStars}
-                      t={t}
-                      lang={lang}
-                    />
-                  </div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
+          <div ref={emblaRef} className="overflow-hidden w-full cursor-grab active:cursor-grabbing">
+            <div className="flex py-3" style={{ marginLeft: '-1rem' }}>
+              {projects.map((project) => (
+                <div
+                  key={project.id}
+                  className="shrink-0 min-w-0 w-full md:w-1/3 lg:w-1/4"
+                  style={{ paddingLeft: '1rem' }}
+                >
+                  <ProjectCard project={project} getStars={getStars} t={t} lang={lang} />
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* Dots */}
           <div className="flex items-center justify-center gap-2 mt-6">
-            {Array.from({ length: totalPages }).map((_, i) => (
+            {scrollSnaps.map((_, i) => (
               <button
                 key={i}
-                onClick={() => { setPage(i); setAnimKey((k) => k + 1) }}
+                onClick={() => emblaApi?.scrollTo(i)}
                 className="transition-all duration-300 rounded-full cursor-pointer"
                 style={{
-                  width: i === page ? 22 : 6,
+                  width: i === selectedIndex ? 22 : 6,
                   height: 6,
-                  background: i === page ? '#6366f1' : 'rgba(99,102,241,0.28)',
+                  background: i === selectedIndex ? '#6366f1' : 'rgba(99,102,241,0.28)',
                 }}
               />
             ))}

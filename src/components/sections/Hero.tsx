@@ -1,33 +1,16 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
-import { useTheme } from 'next-themes'
 import { TypeAnimation } from 'react-type-animation'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { content } from '@/lib/content'
-
-const HeroOrb = dynamic(() => import('@/components/three/HeroOrb'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-[300px] h-[200px] lg:w-[460px] lg:h-[320px] flex items-center justify-center">
-      <div className="relative w-24 h-24">
-        <div className="absolute inset-0 rounded-full border border-indigo-500/20 animate-ping" style={{ animationDuration: '1.8s' }} />
-        <div className="absolute inset-2 rounded-full border border-indigo-400/30 animate-spin" style={{ animationDuration: '3s', borderTopColor: 'transparent' }} />
-        <div className="absolute inset-4 rounded-full border border-sky-400/25 animate-spin" style={{ animationDuration: '2s', animationDirection: 'reverse', borderTopColor: 'transparent' }} />
-        <div className="absolute inset-0 rounded-full" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)' }} />
-      </div>
-    </div>
-  ),
-})
+import HeroVisual from '@/components/HeroVisual'
 
 const TECH_TAGS = ['React.js', 'Next.js', 'TypeScript', 'Tailwind', 'Python', 'Three.js']
 
 export default function Hero() {
   const { lang, isRTL } = useLang()
-  const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme !== 'light'
   const t = content[lang].hero
   const roles = t.roles.flatMap((role) => [role, 2000])
 
@@ -189,35 +172,10 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* ── Column B: 3D Orb — 40% on desktop ── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.75 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-            className="shrink-0 flex justify-center lg:w-[40%]"
-          >
-            {/* Glow ring behind orb */}
-            <div className="relative">
-              <div
-                className="absolute inset-0 rounded-full pointer-events-none"
-                style={{
-                  background: 'radial-gradient(ellipse, rgba(99,102,241,0.18) 0%, transparent 70%)',
-                  filter: 'blur(32px)',
-                  transform: 'scale(1.4)',
-                }}
-              />
-              {/* Light-mode backdrop so dark emissive materials remain visible */}
-              <div
-                className="absolute inset-0 rounded-full pointer-events-none dark:opacity-0 opacity-100"
-                style={{
-                  background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.12) 0%, rgba(139,92,246,0.10) 45%, transparent 75%)',
-                  transform: 'scale(1.6)',
-                  filter: 'blur(20px)',
-                }}
-              />
-              <HeroOrb isDark={isDark} />
-            </div>
-          </motion.div>
+          {/* ── Column B: CSS 3D Visual ── */}
+          <div className="shrink-0 flex justify-center lg:w-[40%]">
+            <HeroVisual />
+          </div>
 
         </div>
 

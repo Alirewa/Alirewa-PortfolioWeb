@@ -152,6 +152,8 @@ export default function Skills() {
 
   const primary   = t.categories.filter((c) => c.isPrimary)
   const secondary = t.categories.filter((c) => !c.isPrimary)
+  // Row 1: DevOps, Frontend, Backend — Row 2: WordPress, Graphic Design
+  const [devops, backend, wordpress, graphicDesign] = secondary
 
   return (
     <section
@@ -194,28 +196,23 @@ export default function Skills() {
           <p className="text-slate-600 dark:text-slate-400 text-base max-w-lg leading-relaxed">{t.subtitle}</p>
         </motion.div>
 
-        {/* 3-column: secondary | primary (golden) | secondary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
-          {/* DevOps — left on desktop, second on mobile */}
+        {/* Row 1: DevOps | Frontend (golden) | Backend */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start mb-5">
           <div className="order-2 md:order-1">
-            {secondary[0] && (
-              <CategoryPanel category={secondary[0]} catIndex={1} isInView={isInView} lang={lang} />
-            )}
+            {devops && <CategoryPanel category={devops} catIndex={1} isInView={isInView} lang={lang} />}
           </div>
-
-          {/* Frontend — center on desktop, first on mobile */}
           <div className="order-1 md:order-2">
-            {primary[0] && (
-              <CategoryPanel category={primary[0]} catIndex={0} isInView={isInView} lang={lang} />
-            )}
+            {primary[0] && <CategoryPanel category={primary[0]} catIndex={0} isInView={isInView} lang={lang} />}
           </div>
-
-          {/* Backend — right on desktop, third on mobile */}
           <div className="order-3">
-            {secondary[1] && (
-              <CategoryPanel category={secondary[1]} catIndex={2} isInView={isInView} lang={lang} />
-            )}
+            {backend && <CategoryPanel category={backend} catIndex={2} isInView={isInView} lang={lang} />}
           </div>
+        </div>
+
+        {/* Row 2: WordPress | Graphic Design — lighter treatment */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl mx-auto opacity-80">
+          {wordpress && <CategoryPanel category={wordpress} catIndex={3} isInView={isInView} lang={lang} />}
+          {graphicDesign && <CategoryPanel category={graphicDesign} catIndex={4} isInView={isInView} lang={lang} />}
         </div>
 
       </div>
