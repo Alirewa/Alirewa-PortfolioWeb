@@ -39,7 +39,7 @@ function ProjectCard({
       className="h-full glass-card p-5 flex flex-col transition-all duration-300 cursor-default rounded-[1.25rem]"
       style={{
         borderColor: hovered ? `${project.color}50` : undefined,
-        boxShadow: hovered ? `0 0 0 1px ${project.color}28, 0 20px 48px ${project.color}14` : undefined,
+        boxShadow: hovered ? `0 0 0 1px ${project.color}35, 0 8px 24px -4px ${project.color}30` : undefined,
         transform: hovered ? 'translateY(-3px)' : undefined,
       }}
       onMouseEnter={() => setHovered(true)}
@@ -190,24 +190,21 @@ export default function Projects() {
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          {/* Outer clips horizontal scroll; inner ref has overflow:visible so card shadows render freely */}
-          <div style={{ overflow: 'hidden', marginInline: '-20px' }}>
-            <div
-              ref={emblaRef}
-              className="w-full cursor-grab active:cursor-grabbing"
-              style={{ overflow: 'visible', paddingBlock: '16px', marginBlock: '-16px' }}
-            >
-              <div className="flex" style={{ marginLeft: '-1rem', paddingInline: '20px' }}>
-                {projects.map((project) => (
-                  <div
-                    key={project.id}
-                    className="shrink-0 min-w-0 w-full md:w-1/3 lg:w-1/4"
-                    style={{ paddingLeft: '1rem' }}
-                  >
-                    <ProjectCard project={project} getStars={getStars} t={t} lang={lang} />
-                  </div>
-                ))}
-              </div>
+          <div
+            ref={emblaRef}
+            className="w-full overflow-hidden cursor-grab active:cursor-grabbing"
+            style={{ paddingBlock: '20px', marginBlock: '-20px' }}
+          >
+            <div className="flex" style={{ marginLeft: '-1rem' }}>
+              {projects.map((project) => (
+                <div
+                  key={project.id}
+                  className="shrink-0 min-w-0 w-full md:w-1/3 lg:w-1/4"
+                  style={{ paddingLeft: '1rem' }}
+                >
+                  <ProjectCard project={project} getStars={getStars} t={t} lang={lang} />
+                </div>
+              ))}
             </div>
           </div>
 
