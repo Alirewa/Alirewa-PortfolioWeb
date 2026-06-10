@@ -134,11 +134,17 @@ export default function Contact() {
 
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [showModal, setShowModal] = useState(false)
 
   const WEBHOOK_URL = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL ?? ''
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!WEBHOOK_URL) {
+      setForm({ name: '', email: '', message: '' })
+      setShowModal(true)
+      return
+    }
     setStatus('sending')
     try {
       const res = await fetch(WEBHOOK_URL, {
@@ -147,13 +153,17 @@ export default function Contact() {
         body: JSON.stringify({ ...form, timestamp: new Date().toISOString(), source: 'portfolio' }),
       })
       if (!res.ok) throw new Error()
-      setStatus('success')
       setForm({ name: '', email: '', message: '' })
+      setShowModal(true)
     } catch {
       setStatus('error')
-    } finally {
       setTimeout(() => setStatus('idle'), 6000)
     }
+  }
+
+  const closeModal = () => {
+    setShowModal(false)
+    setStatus('idle')
   }
 
   const infoItems: Array<{
@@ -173,6 +183,51 @@ export default function Contact() {
       className="relative py-16 md:py-24 px-4 sm:px-6"
       style={{ direction: isRTL ? 'rtl' : 'ltr' }}
     >
+      {/* Success modal */}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            key="success-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+            style={{ backdropFilter: 'blur(6px)', background: 'rgba(0,0,0,0.55)' }}
+            onClick={closeModal}
+          >
+            <motion.div
+              initial={{ scale: 0.88, opacity: 0, y: 24 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.88, opacity: 0, y: 24 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-sm rounded-2xl p-8 text-center dark:bg-[#0f0f18] bg-white border dark:border-white/10 border-gray-200/70"
+              style={{ boxShadow: '0 0 60px rgba(99,102,241,0.25), 0 24px 48px rgba(0,0,0,0.3)' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="w-14 h-14 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto mb-5">
+                <CheckCircle className="w-7 h-7 text-emerald-400" />
+              </div>
+              <h3 className="text-lg font-bold dark:text-white text-gray-900 mb-2">
+                {lang === 'en' ? 'Message received!' : 'پیامت رسید!'}
+              </h3>
+              <p className="text-sm dark:text-gray-400 text-gray-500 leading-relaxed mb-6">
+                {lang === 'en'
+                  ? "I'll get back to you as soon as possible."
+                  : 'به‌زودی باهات تماس می‌گیرم.'}
+              </p>
+              <button
+                onClick={closeModal}
+                className="px-6 py-2.5 rounded-xl font-semibold text-sm text-white cursor-pointer"
+                style={{ background: 'linear-gradient(135deg, #6366f1, #0ea5e9)' }}
+              >
+                {lang === 'en' ? 'Close' : 'بستن'}
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Ambient glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] dark:bg-indigo-600/8 bg-indigo-400/5 rounded-full blur-3xl pointer-events-none" />
 

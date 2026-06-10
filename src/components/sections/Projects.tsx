@@ -190,26 +190,24 @@ export default function Projects() {
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div
-            ref={emblaRef}
-            className="w-full overflow-hidden cursor-grab active:cursor-grabbing"
-            style={{
-              paddingBlock: '16px',
-              marginBlock: '-16px',
-              maskImage: 'linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%)',
-            }}
-          >
-            <div className="flex" style={{ marginLeft: '-1rem' }}>
-              {projects.map((project) => (
-                <div
-                  key={project.id}
-                  className="shrink-0 min-w-0 w-full md:w-1/3 lg:w-1/4"
-                  style={{ paddingLeft: '1rem' }}
-                >
-                  <ProjectCard project={project} getStars={getStars} t={t} lang={lang} />
-                </div>
-              ))}
+          {/* Outer clips horizontal scroll; inner ref has overflow:visible so card shadows render freely */}
+          <div style={{ overflow: 'hidden', marginInline: '-20px' }}>
+            <div
+              ref={emblaRef}
+              className="w-full cursor-grab active:cursor-grabbing"
+              style={{ overflow: 'visible', paddingBlock: '16px', marginBlock: '-16px' }}
+            >
+              <div className="flex" style={{ marginLeft: '-1rem', paddingInline: '20px' }}>
+                {projects.map((project) => (
+                  <div
+                    key={project.id}
+                    className="shrink-0 min-w-0 w-full md:w-1/3 lg:w-1/4"
+                    style={{ paddingLeft: '1rem' }}
+                  >
+                    <ProjectCard project={project} getStars={getStars} t={t} lang={lang} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 

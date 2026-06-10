@@ -1,8 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
-import { Download, ArrowRight } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { Download, ArrowRight, Clock } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { content } from '@/lib/content'
 
@@ -11,6 +11,7 @@ export default function About() {
   const isInView = useInView(ref, { once: false, margin: '-100px' })
   const { lang, isRTL } = useLang()
   const t = content[lang].about
+  const [showCvNotice, setShowCvNotice] = useState(false)
 
   return (
     <section
@@ -64,19 +65,37 @@ export default function About() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-wrap gap-3"
         >
-          <motion.a
-            href={process.env.NEXT_PUBLIC_CV_URL || '/cv.pdf'}
-            whileHover={{ scale: 1.03, y: -1 }}
-            whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm cursor-pointer relative overflow-hidden group"
-            style={{ boxShadow: '0 6px 22px rgba(99, 102, 241, 0.30)' }}
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-sky-500 transition-all duration-300 group-hover:from-indigo-500 group-hover:to-sky-400" />
-            <span className="relative flex items-center gap-2 text-white">
-              <Download className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
-              {t.downloadCv}
-            </span>
-          </motion.a>
+          <div className="flex flex-col gap-2">
+            <motion.button
+              onClick={() => setShowCvNotice(true)}
+              whileHover={{ scale: 1.03, y: -1 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm cursor-pointer relative overflow-hidden group"
+              style={{ boxShadow: '0 6px 22px rgba(99, 102, 241, 0.30)' }}
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-sky-500 transition-all duration-300 group-hover:from-indigo-500 group-hover:to-sky-400" />
+              <span className="relative flex items-center gap-2 text-white">
+                <Download className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
+                {t.downloadCv}
+              </span>
+            </motion.button>
+
+            <AnimatePresence>
+              {showCvNotice && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg border border-amber-400/30 bg-amber-500/8 text-amber-500 dark:text-amber-400 text-xs"
+                >
+                  <Clock className="w-3.5 h-3.5 shrink-0" />
+                  <span>{lang === 'en' ? 'CV coming soon — will be added here shortly.' : 'رزومه به‌زودی اینجا میذارم.'}</span>
+                  <button onClick={() => setShowCvNotice(false)} className="mr-auto text-amber-400/60 hover:text-amber-400 cursor-pointer text-base leading-none">×</button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           <motion.button
             onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
