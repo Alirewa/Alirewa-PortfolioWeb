@@ -1,79 +1,30 @@
-# Alireza Pourgholam — Portfolio
+# Alireza Pourgholam — Personal Portfolio
 
-Personal portfolio website built with Next.js, React Three Fiber, and Framer Motion. Bilingual (English / Persian), with full dark mode, responsive layout, and a 3D interactive element in the hero.
+Personal portfolio website I built to showcase my work and skills as a frontend developer.
 
-**Live:** https://alirewa.github.io/MyPersonal-Portfolio-Website/
-
----
-
-## Features
-
-- **Bilingual** — English and Persian (RTL) with live language switching
-- **Dark / Light mode** — system-aware with manual toggle, persistent via `next-themes`
-- **3D Hero element** — rotating `</>` bracket built with React Three Fiber / Three.js
-- **Animated background** — aurora blobs, floating particles, parallax geometric shapes
-- **Projects carousel** — responsive slide carousel with auto-rotate and RTL-aware animation
-- **Skills section** — 3-column layout with primary expertise highlighted
-- **Contact form** — EmailJS-powered, no backend required
-- **Static export** — fully static (`output: 'export'`), deployable to Vercel / GitHub Pages
+**Live demo:** https://alirewa.github.io/MyPersonal-Portfolio-Website/
 
 ---
 
-## Tech Stack
+## About
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 16 (App Router, static export) |
-| UI | React 19, Tailwind CSS 3, Framer Motion 11 |
-| 3D | Three.js, React Three Fiber (@react-three/fiber) |
-| Fonts | next/font/google — Space Grotesk · DM Sans · JetBrains Mono |
-| Persian font | Vazirmatn (self-hosted WOFF2) |
-| Theme | next-themes |
-| Icons | Lucide React |
-| Language | TypeScript 5 |
+Built entirely by me using **Next.js 16**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.
 
----
+Supports both **English** and **Persian (FA)** with full RTL layout, dark/light mode, a projects carousel, skills section, and a contact form.
 
-## Getting Started
+## Stack
 
-```bash
-# Install dependencies
-npm install
+Next.js · TypeScript · Tailwind CSS · Framer Motion · Lucide React · Embla Carousel
 
-# Run dev server
-npm run dev
+## Sections
 
-# Build for production
-npm run build
-```
-
-The build output goes to `/out` (static export). Deploy the `/out` folder to any static host.
+- Hero with animated 3D orbital element
+- About me
+- Technical skills
+- Featured projects (carousel)
+- AI-augmented workflow
+- Contact form
 
 ---
 
-## Project Structure
-
-```
-src/
-  app/           # Next.js App Router — layout, page, globals.css, not-found
-  components/
-    sections/    # Hero, About, Skills, Projects, AITools, Contact, Footer
-    three/       # HeroOrb (React Three Fiber)
-  lib/
-    content.ts   # All bilingual copy — English + Persian
-    LangContext  # Language / RTL context
-```
-
----
-
-## Fonts
-
-Google Fonts (Space Grotesk, DM Sans, JetBrains Mono) are loaded via `next/font/google`, which downloads and bundles them at build time — no external CDN dependency at runtime.
-
-Vazirmatn (Persian) is self-hosted under `public/fonts/` as WOFF2 files.
-
----
-
-## License
-
-MIT — feel free to use as a reference or starting point for your own portfolio.
+Built by [Alireza Pourgholam](https://github.com/Alirewa)
