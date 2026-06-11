@@ -31,7 +31,7 @@ export const projects: Project[] = [
   {
     id: 2,
     title: 'Apply Fa',
-    titleFa: 'Apply Fa',
+    titleFa: 'اپلای فا',
     description: 'Comprehensive portal for academic admissions, employment contracts, and Ausbildung placement in Germany — from document preparation to final acceptance.',
     descriptionFa: 'پورتال جامع اخذ پذیرش تحصیلی، قرارداد کاری و اوسبیلدونگ در آلمان — از آماده‌سازی مدارک تا پذیرش نهایی.',
     tags: ['Next.js', 'TypeScript', 'API Integration', 'Tailwind'],
@@ -64,7 +64,7 @@ export const projects: Project[] = [
     color: '#10b981',
     icon: 'Package',
     github: 'https://github.com/Alirewa/Inventory-App',
-    live: 'https://inventory-application-js.vercel.app',
+    live: null,
     featured: true,
   },
   {
@@ -103,7 +103,7 @@ export const projects: Project[] = [
     color: '#ec4899',
     icon: 'StickyNote',
     github: 'https://github.com/Alirewa/NoteApp',
-    live: 'https://note-app-alirewa.vercel.app',
+    live: null,
     featured: false,
   },
   {

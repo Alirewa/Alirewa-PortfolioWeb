@@ -61,7 +61,7 @@ function useMergedProjects(githubRepos: GithubRepo[]) {
         color: p.color,
         icon: p.icon,
         github: p.github,
-        live: p.live,
+        live: p.live ?? gh?.homepage ?? null,
         stars: gh?.stargazers_count ?? 0,
         forks: gh?.forks_count ?? 0,
         language: gh?.language ?? null,
