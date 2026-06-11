@@ -1,9 +1,11 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import useEmblaCarousel from 'embla-carousel-react'
 import AutoPlay from 'embla-carousel-autoplay'
 import { motion, useInView } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import * as Icons from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { content, projects } from '@/lib/content'
@@ -208,20 +210,33 @@ export default function Projects() {
             </div>
           </div>
 
-          {/* Dots */}
-          <div className="flex items-center justify-center gap-2 mt-6">
-            {scrollSnaps.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => emblaApi?.scrollTo(i)}
-                className="transition-all duration-300 rounded-full cursor-pointer"
-                style={{
-                  width: i === selectedIndex ? 22 : 6,
-                  height: 6,
-                  background: i === selectedIndex ? '#6366f1' : 'rgba(99,102,241,0.28)',
-                }}
-              />
-            ))}
+          {/* Dots + View All */}
+          <div className="flex flex-col items-center gap-4 mt-6">
+            <div className="flex items-center gap-2">
+              {scrollSnaps.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => emblaApi?.scrollTo(i)}
+                  className="transition-all duration-300 rounded-full cursor-pointer"
+                  style={{
+                    width: i === selectedIndex ? 22 : 6,
+                    height: 6,
+                    background: i === selectedIndex ? '#6366f1' : 'rgba(99,102,241,0.28)',
+                  }}
+                />
+              ))}
+            </div>
+
+            <Link href="/projects">
+              <motion.button
+                whileHover={{ scale: 1.04, y: -1 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border dark:border-indigo-500/30 border-indigo-400/40 dark:text-indigo-400 text-indigo-600 hover:bg-indigo-500/8 hover:border-indigo-500/55 transition-all duration-200 cursor-pointer"
+              >
+                {lang === 'fa' ? 'مشاهده همه پروژه‌ها' : 'View All Projects'}
+                <ArrowRight className={`w-4 h-4 ${isRTL ? '-scale-x-100' : ''}`} />
+              </motion.button>
+            </Link>
           </div>
         </motion.div>
 
