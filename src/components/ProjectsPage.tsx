@@ -20,8 +20,46 @@ const LANG_COLORS: Record<string, string> = {
   Shell: '#89e051', Vue: '#42b883',
 }
 
-/* ── Repos to hide (meta / config repos) ────────────────── */
-const HIDDEN_REPOS = ['MyPersonal-Portfolio-Website', 'V2ray-Configs']
+/* ── Repos to hide (meta / config / profile repos) ──────── */
+const HIDDEN_REPOS = ['MyPersonal-Portfolio-Website', 'V2ray-Configs', 'Alirewa']
+
+/* ── Persian translations for non-curated GitHub repos ───── */
+const normalizeKey = (name: string) => name.toLowerCase().replace(/[-_\s]/g, '')
+
+const REPO_FA: Record<string, { titleFa: string; descriptionFa?: string }> = {
+  'kishview': {
+    titleFa: 'کیش ویو',
+    descriptionFa: 'اپلیکیشن وب برای جستجو و کاوش اطلاعات گردشگری جزیره کیش — رستوران‌ها، هتل‌ها و جاذبه‌های دیدنی.',
+  },
+  'persianuikit': {
+    titleFa: 'کیت رابط کاربری فارسی',
+    descriptionFa: 'مجموعه کامپوننت‌های رابط کاربری با پشتیبانی کامل از RTL و زبان فارسی برای پروژه‌های وب.',
+  },
+  'todolist': {
+    titleFa: 'لیست کارها',
+    descriptionFa: 'اپلیکیشن مدیریت وظایف با قابلیت افزودن، حذف و علامت‌گذاری تسک‌ها.',
+  },
+  'resumebuilder': {
+    titleFa: 'رزومه‌ساز',
+    descriptionFa: 'ابزار آنلاین ساخت رزومه حرفه‌ای با قالب‌های آماده و قابلیت خروجی گرفتن.',
+  },
+  'footballworldcup': {
+    titleFa: 'جام جهانی فوتبال',
+    descriptionFa: 'وب‌اپلیکیشن نمایش اطلاعات، گروه‌بندی و نتایج بازی‌های جام جهانی فوتبال.',
+  },
+  'factorbuilder': {
+    titleFa: 'فاکتورساز',
+    descriptionFa: 'نرم‌افزار صدور فاکتور حرفه‌ای با مدیریت اقلام، محاسبه مالیات و قابلیت چاپ.',
+  },
+  'cybertoolkit': {
+    titleFa: 'جعبه‌ابزار سایبری',
+    descriptionFa: 'مجموعه ابزارهای امنیت سایبری برای تست و تحلیل امنیت شبکه.',
+  },
+  'letterbuilder': {
+    titleFa: 'نامه‌ساز',
+    descriptionFa: 'ابزار ساخت و طراحی نامه‌های رسمی و اداری با قالب‌های از پیش آماده.',
+  },
+}
 
 /* ── Merge curated + GitHub repos ───────────────────────── */
 function useMergedProjects(githubRepos: GithubRepo[]) {
@@ -45,6 +83,7 @@ function useMergedProjects(githubRepos: GithubRepo[]) {
       forks: number
       language: string | null
       curated: boolean
+      isProduction: boolean
     }> = []
 
     // First: all curated in order
@@ -66,6 +105,7 @@ function useMergedProjects(githubRepos: GithubRepo[]) {
         forks: gh?.forks_count ?? 0,
         language: gh?.language ?? null,
         curated: true,
+        isProduction: p.isProduction ?? false,
       })
     })
 
@@ -76,10 +116,13 @@ function useMergedProjects(githubRepos: GithubRepo[]) {
       .forEach((r) => {
         const lang = r.language ?? ''
         const color = LANG_COLORS[lang] ?? '#6366f1'
+        const faData = REPO_FA[normalizeKey(r.name)]
         enriched.push({
           id: `gh-${r.id}`,
           title: r.name.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+          titleFa: faData?.titleFa,
           description: r.description ?? 'Open-source project on GitHub.',
+          descriptionFa: faData?.descriptionFa,
           tags: r.topics.length ? r.topics : (lang ? [lang] : []),
           color,
           icon: 'Code2',
@@ -89,6 +132,7 @@ function useMergedProjects(githubRepos: GithubRepo[]) {
           forks: r.forks_count,
           language: lang,
           curated: false,
+          isProduction: false,
         })
       })
 
@@ -177,7 +221,12 @@ function ProjectCard({
                 {project.forks}
               </span>
             )}
-            {project.curated && (
+            {project.isProduction && (
+              <span className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                {lang === 'fa' ? 'پروداکشن' : 'Production'}
+              </span>
+            )}
+            {project.curated && !project.isProduction && (
               <span
                 className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
                 style={{ background: `${project.color}18`, color: project.color, border: `1px solid ${project.color}35` }}
@@ -325,11 +374,11 @@ export default function ProjectsPage() {
             {lang === 'fa' ? '// نمونه‌کارها' : '// all projects'}
           </p>
           <h1 className="text-4xl md:text-5xl font-black dark:text-white text-gray-900 tracking-tight mb-4">
-            {lang === 'fa' ? 'پروژه‌هام' : 'My Projects'}
+            {lang === 'fa' ? 'پروژه‌های من' : 'My Projects'}
           </h1>
           <p className="text-slate-600 dark:text-slate-400 text-base max-w-xl leading-relaxed">
             {lang === 'fa'
-              ? 'مجموعه‌ای از کارهایی که ساختم — از اپ‌های وب تا ابزارهای اتوماسیون.'
+              ? 'مجموعه‌ای از پروژه‌هایی که توسعه داده‌ام — از اپلیکیشن‌های وب تا ابزارهای اتوماسیون.'
               : 'A collection of things I built — from web apps to automation tools.'}
           </p>
 
@@ -433,6 +482,26 @@ export default function ProjectsPage() {
             <p className="text-sm">{lang === 'fa' ? 'پروژه‌ای یافت نشد.' : 'No projects found.'}</p>
           </motion.div>
         )}
+
+        {/* ── Get in touch ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-20 text-center"
+        >
+          <div className="inline-flex flex-col items-center gap-4 px-8 py-8 rounded-2xl dark:bg-white/[0.03] bg-white/70 border dark:border-white/8 border-gray-200/60">
+            <p className="text-sm text-slate-500 dark:text-gray-500">
+              {lang === 'fa' ? 'پروژه‌ای در ذهن دارید؟ با من در تماس باشید.' : 'Have a project in mind? Let\'s work together.'}
+            </p>
+            <a
+              href="mailto:alireza.pourgholam444@gmail.com"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-indigo-500 hover:bg-indigo-600 text-white transition-colors cursor-pointer"
+            >
+              {lang === 'fa' ? 'تماس با من' : 'Get in touch'}
+            </a>
+          </div>
+        </motion.div>
 
       </main>
     </div>

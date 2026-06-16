@@ -88,12 +88,19 @@ function ProjectCard({
 
       {/* Title + description */}
       <div className="flex-1 mb-4">
-        <h3
-          className="text-base font-bold dark:text-white text-gray-800 mb-1.5 leading-tight transition-colors duration-200"
-          style={{ color: hovered ? project.color : undefined }}
-        >
-          {lang === 'fa' && project.titleFa ? project.titleFa : project.title}
-        </h3>
+        <div className="flex items-center gap-2 flex-wrap mb-1.5">
+          <h3
+            className="text-base font-bold dark:text-white text-gray-800 leading-tight transition-colors duration-200"
+            style={{ color: hovered ? project.color : undefined }}
+          >
+            {lang === 'fa' && project.titleFa ? project.titleFa : project.title}
+          </h3>
+          {project.isProduction && (
+            <span className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+              {lang === 'fa' ? 'پروداکشن' : 'Production'}
+            </span>
+          )}
+        </div>
         <p className="text-xs text-slate-600 dark:text-gray-400 leading-relaxed line-clamp-3">
           {lang === 'fa' && project.descriptionFa ? project.descriptionFa : project.description}
         </p>

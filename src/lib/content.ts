@@ -12,13 +12,14 @@ export interface Project {
   github: string | null
   live: string | null
   featured: boolean
+  isProduction?: boolean
 }
 
 export const projects: Project[] = [
   {
     id: 1,
     title: 'Bim Faa',
-    titleFa: 'Bim Faa',
+    titleFa: 'بیم‌فا',
     description: 'BIM platform for multidisciplinary 3D building modeling — architecture, structural, mechanical, and electrical — enabling seamless coordination across design teams.',
     descriptionFa: 'پلتفرم مدلسازی اطلاعات ساختمان (BIM) در دیسیپلین‌های معماری، سازه، مکانیک و برق — هماهنگی یکپارچه میان تیم‌های طراحی.',
     tags: ['Next.js', 'TypeScript', 'Tailwind', 'React.js'],
@@ -27,6 +28,7 @@ export const projects: Project[] = [
     github: null,
     live: 'https://bimfaa.ir',
     featured: true,
+    isProduction: true,
   },
   {
     id: 2,
@@ -40,6 +42,7 @@ export const projects: Project[] = [
     github: null,
     live: 'https://applyfa.com',
     featured: true,
+    isProduction: true,
   },
   {
     id: 3,
