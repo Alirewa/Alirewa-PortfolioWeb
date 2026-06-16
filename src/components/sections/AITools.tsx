@@ -11,8 +11,8 @@ export default function AITools() {
   const { lang, isRTL } = useLang()
   const t = content[lang].aiTools
 
-  const primaryTool = t.tools.find((tool) => tool.name === 'Claude.ai')
-  const rest        = t.tools.filter((tool) => tool.name !== 'Claude.ai')
+  const primaryTool = t.tools.find((tool) => tool.badge === 'Primary' || tool.badge === 'اصلی')
+  const rest        = t.tools.filter((tool) => tool.badge !== 'Primary' && tool.badge !== 'اصلی')
 
   return (
     <section
