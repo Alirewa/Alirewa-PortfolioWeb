@@ -65,7 +65,7 @@ export default function Navbar() {
         className="fixed top-4 inset-x-0 z-50 flex justify-center px-4"
       >
         <nav
-          className="w-full max-w-5xl rounded-2xl glass-card border border-gray-200/60 dark:border-white/10 px-3 py-2 flex items-center justify-between gap-2"
+          className="w-full max-w-5xl rounded-2xl glass-card border border-gray-200/60 dark:border-white/10 px-3 h-14 flex items-center justify-between gap-2"
           style={{
             direction: isRTL ? 'rtl' : 'ltr',
             background: theme === 'dark' ? 'rgba(6,6,10,0.78)' : 'rgba(255,255,255,0.88)',

@@ -41,7 +41,7 @@ function ProjectCard({
       className="h-full glass-card p-5 flex flex-col transition-all duration-300 cursor-default rounded-[1.25rem]"
       style={{
         borderColor: hovered ? `${project.color}50` : undefined,
-        boxShadow: hovered ? `0 0 0 1px ${project.color}35, 0 8px 24px -4px ${project.color}30` : undefined,
+        boxShadow: 'none',
         transform: hovered ? 'translateY(-3px)' : undefined,
       }}
       onMouseEnter={() => setHovered(true)}
@@ -54,7 +54,6 @@ function ProjectCard({
           style={{
             background: `${project.color}16`,
             border: `1px solid ${project.color}30`,
-            boxShadow: hovered ? `0 0 20px ${project.color}28` : 'none',
           }}
         >
           <ProjectIcon name={project.icon} color={project.color} />
@@ -202,7 +201,6 @@ export default function Projects() {
           <div
             ref={emblaRef}
             className="w-full overflow-hidden cursor-grab active:cursor-grabbing"
-            style={{ paddingBlock: '20px', marginBlock: '-20px' }}
           >
             <div className="flex" style={{ marginLeft: '-1rem' }}>
               {projects.map((project) => (
