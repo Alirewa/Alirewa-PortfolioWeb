@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sun, Moon, Menu, X, Home, User, Cpu, FolderKanban, Mail } from 'lucide-react'
@@ -12,14 +13,22 @@ const SECTIONS = ['hero', 'about', 'skills', 'projects', 'contact']
 export default function Navbar() {
   const { theme, setTheme } = useTheme()
   const { lang, toggleLang, isRTL } = useLang()
+  const router = useRouter()
+  const pathname = usePathname()
+  const isHome = pathname === '/'
   const [menuOpen, setMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const [activeSection, setActiveSection] = useState('hero')
+  const [activeSection, setActiveSection] = useState('')
 
   const t = content[lang].nav
 
   useEffect(() => {
     setMounted(true)
+
+    if (!isHome) {
+      setActiveSection('')
+      return
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -37,8 +46,13 @@ export default function Navbar() {
       if (el) observer.observe(el)
     })
 
+    if (window.location.hash) {
+      const el = document.querySelector(window.location.hash)
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 150)
+    }
+
     return () => observer.disconnect()
-  }, [])
+  }, [isHome])
 
   const navItems = [
     { label: t.home,     href: '#hero',     id: 'hero',     Icon: Home },
@@ -50,6 +64,10 @@ export default function Navbar() {
 
   const scrollTo = (href: string) => {
     setMenuOpen(false)
+    if (!isHome) {
+      router.push(`/${href}`)
+      return
+    }
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
   }
 
