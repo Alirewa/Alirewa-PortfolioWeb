@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import {
-  Code2, Star, Users,
+  Code2, Star, Users, FolderGit2,
   Atom, Globe, FileCode2, Wind, Box, Zap,
   Terminal, GitBranch, Container,
 } from 'lucide-react'
@@ -47,8 +47,9 @@ export default function ProfileCard() {
 
   const ghBadges = profile
     ? [
-        { icon: Users, value: profile.followers, label: lang === 'en' ? 'Followers' : 'فالوور' },
-        { icon: Star,  value: totalStars,         label: lang === 'en' ? 'Stars'     : 'ستاره'  },
+        { icon: FolderGit2, value: profile.public_repos, label: lang === 'en' ? 'Public Repos' : 'ریپو پابلیک' },
+        { icon: Users,      value: profile.followers,     label: lang === 'en' ? 'Followers'    : 'فالوور'      },
+        { icon: Star,       value: totalStars,             label: lang === 'en' ? 'Stars'        : 'ستاره'      },
       ]
     : []
 

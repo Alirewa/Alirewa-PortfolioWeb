@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowLeft, Star, GitFork, ExternalLink, Code2,
-  Layers, Globe, Filter, ChevronDown
+  Layers, Globe, Filter, ChevronDown, Clock, ArrowUpDown
 } from 'lucide-react'
 import * as Icons from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
@@ -84,6 +84,7 @@ function useMergedProjects(githubRepos: GithubRepo[]) {
       language: string | null
       curated: boolean
       isProduction: boolean
+      updatedAt: string | null
     }> = []
 
     // First: all curated in order
@@ -106,6 +107,7 @@ function useMergedProjects(githubRepos: GithubRepo[]) {
         language: gh?.language ?? null,
         curated: true,
         isProduction: p.isProduction ?? false,
+        updatedAt: gh?.updated_at ?? null,
       })
     })
 
@@ -133,11 +135,26 @@ function useMergedProjects(githubRepos: GithubRepo[]) {
           language: lang,
           curated: false,
           isProduction: false,
+          updatedAt: r.updated_at,
         })
       })
 
     return enriched
   }, [githubRepos])
+}
+
+/* ── Relative time helper ─────────────────────────────────── */
+function timeAgo(iso: string | null, lang: string): string | null {
+  if (!iso) return null
+  const diffMs = Date.now() - new Date(iso).getTime()
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+  if (days < 1) return lang === 'fa' ? 'امروز' : 'today'
+  if (days === 1) return lang === 'fa' ? 'دیروز' : 'yesterday'
+  if (days < 30) return lang === 'fa' ? `${days} روز پیش` : `${days}d ago`
+  const months = Math.floor(days / 30)
+  if (months < 12) return lang === 'fa' ? `${months} ماه پیش` : `${months}mo ago`
+  const years = Math.floor(months / 12)
+  return lang === 'fa' ? `${years} سال پیش` : `${years}y ago`
 }
 
 /* ── Icon helper ─────────────────────────────────────────── */
@@ -238,12 +255,20 @@ function ProjectCard({
         </div>
 
         {/* Title */}
-        <h3
-          className="text-base font-bold dark:text-white text-gray-900 mb-2 leading-tight transition-colors duration-200 group-hover:text-[var(--accent)]"
-          style={{ '--accent': project.color } as React.CSSProperties}
-        >
-          {title}
-        </h3>
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <h3
+            className="text-base font-bold dark:text-white text-gray-900 leading-tight transition-colors duration-200 group-hover:text-[var(--accent)]"
+            style={{ '--accent': project.color } as React.CSSProperties}
+          >
+            {title}
+          </h3>
+          {project.updatedAt && (
+            <span className="flex items-center gap-1 text-[10px] shrink-0 text-slate-400 dark:text-gray-600">
+              <Clock className="w-3 h-3" />
+              {timeAgo(project.updatedAt, lang)}
+            </span>
+          )}
+        </div>
 
         {/* Description */}
         <p className="text-xs dark:text-gray-400 text-slate-600 leading-relaxed mb-4 flex-1 line-clamp-3">
@@ -313,6 +338,7 @@ export default function ProjectsPage() {
 
   const [activeFilter, setActiveFilter] = useState<string>('all')
   const [showFilters, setShowFilters] = useState(false)
+  const [sortBy, setSortBy] = useState<'recent' | 'stars'>('recent')
 
   /* Build filter options from all tags */
   const filterOptions = useMemo(() => {
@@ -324,12 +350,18 @@ export default function ProjectsPage() {
       .map(([tag]) => tag)
   }, [allProjects])
 
-  const filtered = useMemo(() =>
-    activeFilter === 'all'
+  const filtered = useMemo(() => {
+    const base = activeFilter === 'all'
       ? allProjects
-      : allProjects.filter((p) => p.tags.some((t) => t === activeFilter)),
-    [allProjects, activeFilter]
-  )
+      : allProjects.filter((p) => p.tags.some((t) => t === activeFilter))
+
+    return [...base].sort((a, b) => {
+      if (sortBy === 'stars') return b.stars - a.stars
+      const at = a.updatedAt ? new Date(a.updatedAt).getTime() : 0
+      const bt = b.updatedAt ? new Date(b.updatedAt).getTime() : 0
+      return bt - at
+    })
+  }, [allProjects, activeFilter, sortBy])
 
   const totalCount = allProjects.length
   const featuredCount = allProjects.filter((p) => p.curated).length
@@ -418,30 +450,45 @@ export default function ProjectsPage() {
             <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
           </button>
 
-          <div className={`flex flex-wrap gap-2 ${showFilters ? 'flex' : 'hidden sm:flex'}`}>
-            {['all', ...filterOptions].map((f) => (
-              <button
-                key={f}
-                onClick={() => setActiveFilter(f)}
-                className="px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer"
-                style={activeFilter === f ? {
-                  background: 'linear-gradient(135deg, #6366f1, #0ea5e9)',
-                  color: '#fff',
-                  boxShadow: '0 4px 14px rgba(99,102,241,0.35)',
-                } : {
-                  background: 'var(--glass-bg)',
-                  border: '1px solid var(--glass-border)',
-                  color: 'inherit',
-                }}
-              >
-                {f === 'all' ? (lang === 'fa' ? 'همه' : 'All') : f}
-                {f !== 'all' && (
-                  <span className="ml-1.5 opacity-50">
-                    {allProjects.filter((p) => p.tags.includes(f)).length}
-                  </span>
-                )}
-              </button>
-            ))}
+          <div className={`flex flex-wrap items-center justify-between gap-3 ${showFilters ? 'flex' : 'hidden sm:flex'}`}>
+            <div className="flex flex-wrap gap-2">
+              {['all', ...filterOptions].map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setActiveFilter(f)}
+                  className="px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer"
+                  style={activeFilter === f ? {
+                    background: 'linear-gradient(135deg, #6366f1, #0ea5e9)',
+                    color: '#fff',
+                    boxShadow: '0 4px 14px rgba(99,102,241,0.35)',
+                  } : {
+                    background: 'var(--glass-bg)',
+                    border: '1px solid var(--glass-border)',
+                    color: 'inherit',
+                  }}
+                >
+                  {f === 'all' ? (lang === 'fa' ? 'همه' : 'All') : f}
+                  {f !== 'all' && (
+                    <span className="ml-1.5 opacity-50">
+                      {allProjects.filter((p) => p.tags.includes(f)).length}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* Sort toggle */}
+            <button
+              onClick={() => setSortBy((s) => (s === 'recent' ? 'stars' : 'recent'))}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition-all duration-200 dark:text-gray-400 text-slate-600"
+              style={{ background: 'var(--glass-bg)', border: '1px solid var(--glass-border)' }}
+              title={lang === 'fa' ? 'تغییر ترتیب' : 'Change sort order'}
+            >
+              <ArrowUpDown className="w-3.5 h-3.5 text-indigo-400" />
+              {sortBy === 'recent'
+                ? (lang === 'fa' ? 'جدیدترین' : 'Most Recent')
+                : (lang === 'fa' ? 'پراستاره‌ترین' : 'Most Starred')}
+            </button>
           </div>
         </motion.div>
 

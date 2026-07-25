@@ -60,6 +60,7 @@ export function useGithubProfile() {
   useEffect(() => {
     fetch(`${BASE}/users/${USER}`, {
       headers: { Accept: 'application/vnd.github+json' },
+      cache: 'no-store',
     })
       .then((r) => r.json())
       .then((d) => {
@@ -72,52 +73,37 @@ export function useGithubProfile() {
   return { profile, loading }
 }
 
-const CACHE_KEY = 'gh-repos-cache-v1'
-const CACHE_TTL = 1000 * 60 * 30 // 30 min
-
 export function useGithubRepos() {
   const [repos, setRepos] = useState<GithubRepo[]>([])
   const [totalStars, setTotalStars] = useState(0)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Serve from cache immediately if fresh — avoids empty state on rate-limit/network hiccups
-    try {
-      const cached = sessionStorage.getItem(CACHE_KEY)
-      if (cached) {
-        const { repos: cachedRepos, stars, ts } = JSON.parse(cached)
-        if (Date.now() - ts < CACHE_TTL && Array.isArray(cachedRepos)) {
-          setRepos(cachedRepos)
-          setTotalStars(stars)
-          setLoading(false)
-        }
-      }
-    } catch {
-      // ignore corrupt cache
-    }
+    let cancelled = false
 
     fetch(`${BASE}/users/${USER}/repos?sort=updated&per_page=100&type=public`, {
       headers: { Accept: 'application/vnd.github+json' },
+      cache: 'no-store',
     })
       .then((r) => r.json())
       .then((data: unknown) => {
+        if (cancelled) return
         if (!Array.isArray(data)) {
-          // Rate-limited or errored — keep whatever cache/state we already have
+          // Rate-limited or errored — keep whatever state we already have
           setLoading(false)
           return
         }
-        const filtered = (data as GithubRepo[]).filter((r) => !r.fork)
+        const filtered = (data as GithubRepo[])
+          .filter((r) => !r.fork)
+          .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
         const stars = filtered.reduce((sum, r) => sum + r.stargazers_count, 0)
         setRepos(filtered)
         setTotalStars(stars)
         setLoading(false)
-        try {
-          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ repos: filtered, stars, ts: Date.now() }))
-        } catch {
-          // sessionStorage unavailable/full — non-fatal
-        }
       })
-      .catch(() => setLoading(false))
+      .catch(() => { if (!cancelled) setLoading(false) })
+
+    return () => { cancelled = true }
   }, [])
 
   return { repos, totalStars, loading }
